@@ -2,6 +2,8 @@
 
 Hand-authored monochrome SVG masters on a 24-unit grid. The shared generator supplies Windows renderer symbols and website aliases. Run `node design/icons/build-web.mjs --check` and `node design/icons/validate.mjs --svg-only` to verify the outputs.
 
+For browser raster checks, generate the local contact sheet with `node design/icons/build-contact-sheet.mjs`, then run `node design/icons/validate.mjs --render --strict-checklist` with `CHROME_PATH` pointing to Chrome or Edge. Generated review files stay ignored.
+
 <!-- TABLE:BEGIN -->
 | id | P | style | meaning | used in | replaces | construction (24 grid) | states |
 | --- | --- | --- | --- | --- | --- | --- | --- |
