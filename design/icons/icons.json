@@ -1068,38 +1068,6 @@
           "design/icons/svg/phone.svg"
         ]
       }
-    },
-    {
-      "id": "launcher-foreground",
-      "name": "Launcher foreground",
-      "meaning": "Adaptive icon colour layer: the brand mark",
-      "usedIn": [],
-      "replaces": "keep; do not redraw",
-      "priority": "P1",
-      "size": 108,
-      "style": "fill",
-      "construction": "Not on the 24 grid. See ICON-SPEC.md section 4. Regenerate from build/logo/mark.svg only.",
-      "states": {},
-      "outputs": {
-        "svg": []
-      }
-    },
-    {
-      "id": "launcher-monochrome",
-      "name": "Launcher monochrome",
-      "meaning": "Themed icon layer: the ring, the hands and the pin",
-      "usedIn": [],
-      "replaces": "keep geometry; align with section 4 (ring weight and hand lengths match the 24 grid clock icon)",
-      "priority": "P1",
-      "size": 108,
-      "style": "fill",
-      "construction": "Not on the 24 grid. See ICON-SPEC.md section 4.",
-      "states": {},
-      "outputs": {
-        "svg": [
-          "design/icons/svg/launcher-monochrome.svg (viewBox 0 0 108 108, for review only)"
-        ]
-      }
     }
   ],
   "direction": {
