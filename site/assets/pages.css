@@ -50,6 +50,34 @@
 
 .pg-hero h1 { margin-top: var(--s3); max-width: 17ch; font-size: clamp(2.3rem, 1.25rem + 3.9vw, 4.4rem); line-height: 1.02; font-weight: 500; letter-spacing: -0.035em; }
 .pg-lede { margin-top: var(--s5); max-width: 60ch; font-size: var(--fs-lede); line-height: 1.55; color: var(--fg-2); }
+/* Android beta uses the same navigation, hero, typography and footer as other pages. */
+.beta-page { --pg-sky: color-mix(in oklch, var(--accent) 26%, var(--canvas)); --pg-sky-2: color-mix(in oklch, var(--accent) 16%, var(--canvas)); background: color-mix(in oklch, var(--accent) 12%, var(--canvas)); }
+.beta-page .pg-hero { padding-bottom: clamp(48px, 6vw, 80px); }
+.beta-page .pg-hero::before { height: calc(100% + var(--nav-h)); background: linear-gradient(180deg, var(--pg-sky), transparent); }
+.beta-android { width: 104px; height: auto; margin-bottom: 24px; }
+.beta-page .pg-hero h1 { max-width: 22ch; margin-top: 0; }
+.beta-page h1 sup { font-size: .3em; vertical-align: super; margin-left: 2px; }
+.beta-page .pg-lede { max-width: 48ch; }
+.beta-steps { display: grid; gap: 32px; list-style: none; padding: 0; margin: 40px 0 0; max-width: 980px; }
+.beta-steps > li { display: flex; flex-direction: column; align-items: flex-start; }
+.beta-steps h2 { font-size: 1.5rem; font-weight: 500; letter-spacing: -.02em; }
+.beta-number { color: var(--accent-ink); margin-right: 4px; }
+.beta-steps p { max-width: 40ch; margin-top: 10px; color: var(--fg-2); line-height: 1.6; }
+.beta-group { min-height: 56px; margin-top: 24px; padding-inline: 20px; gap: 12px; white-space: normal; }
+.beta-group img { flex: none; }
+.beta-play { display: inline-flex; align-items: center; min-height: 56px; margin-top: 24px; border-radius: 8px; }
+.beta-play img { width: 190px; height: auto; }
+/* The English source badge includes clear space; the localized files do not. */
+.beta-page:lang(en) .beta-play { margin: 10px 0 -14px -14px; }
+.beta-page:lang(en) .beta-play img { width: 218px; }
+.beta-note { margin-top: 40px; color: var(--fg-2); font-size: .9375rem; line-height: 1.6; }
+.beta-note a, .beta-help a { color: inherit; text-underline-offset: 3px; }
+.beta-help { max-width: 760px; margin-top: 12px; border: 0; font-size: .9375rem; }
+.beta-help > summary { width: fit-content; min-height: 44px; padding: 10px 0; color: var(--fg-2); font-size: inherit; font-weight: 500; }
+.beta-help p { padding: 0; margin: 0 0 16px; color: var(--fg-2); line-height: 1.6; }
+.beta-help .beta-credit { font-size: .8125rem; }
+@media (min-width: 760px) { .beta-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 64px; } .beta-steps p { min-height: 3.2em; } }
+@media (max-width: 520px) { .beta-android { width: 76px; margin-bottom: 20px; } }
 .pg-cta { display: flex; flex-wrap: wrap; gap: var(--s3); margin-top: var(--s8); }
 .pg-facts { display: flex; flex-wrap: wrap; gap: var(--s2) var(--s5); margin: var(--s5) 0 0; padding: 0; list-style: none; font-size: .9375rem; color: var(--fg-2); }
 .pg-facts li { display: inline-flex; align-items: center; gap: 6px; }

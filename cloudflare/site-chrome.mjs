@@ -47,9 +47,9 @@ const W = {
     features: 'Features', converter: 'Converter', planner: 'Planner', map: 'World map', faq: 'FAQ',
     alt: 'Windows Clock alternative', wtb: 'World Time Buddy alternative', multi: 'Multiple time zones', download: 'Download', privacy: 'Privacy',
     fFaq: 'FAQ', fConverter: 'Time zone converter', fPlanner: 'Meeting planner', fMulti: 'Multiple time zones on Windows',
-    help: 'Support', source: 'Source on GitHub', kofi: 'Support the creator on Ko-fi',
+    help: 'Support', source: 'Source on GitHub', beta: 'Android beta', kofi: 'Support the creator on Ko-fi',
     support: 'Support the creator', supportName: 'Support the creator on Ko-fi', fab: 'Support the creator', fabName: 'Support the creator on Ko-fi',
-    legal: 'Free, open source, no telemetry. © {year} João Carvalho. Not affiliated with Microsoft.',
+    legal: 'Windows app: free, open source, no telemetry. © {year} João Carvalho. Not affiliated with Microsoft.',
   },
   pt: {
     skip: 'Pular para o conteúdo', main: 'Principal', footer: 'Rodapé', language: 'Idioma', menu: 'Menu', theme: 'Tema',
@@ -57,9 +57,9 @@ const W = {
     features: 'Recursos', converter: 'Conversor', planner: 'Planejador', map: 'Mapa-múndi', faq: 'Dúvidas',
     alt: 'Alternativa ao Relógio do Windows', wtb: 'Alternativa ao World Time Buddy', multi: 'Vários fusos horários', download: 'Baixar', privacy: 'Privacidade',
     fFaq: 'Perguntas frequentes', fConverter: 'Conversor de fuso horário', fPlanner: 'Planejador de reuniões', fMulti: 'Vários fusos horários no Windows',
-    help: 'Ajuda', source: 'Código-fonte no GitHub', kofi: 'Apoie o criador no Ko-fi',
+    help: 'Ajuda', source: 'Código-fonte no GitHub', beta: 'Beta para Android', kofi: 'Apoie o criador no Ko-fi',
     support: 'Apoie o criador', supportName: 'Apoie o criador no Ko-fi', fab: 'Apoie o criador', fabName: 'Apoie o criador no Ko-fi',
-    legal: 'Grátis, de código aberto e sem telemetria. © {year} João Carvalho. Sem vínculo com a Microsoft.',
+    legal: 'App para Windows: grátis, de código aberto e sem telemetria. © {year} João Carvalho. Sem vínculo com a Microsoft.',
   },
   es: {
     skip: 'Saltar al contenido', main: 'Principal', footer: 'Pie de página', language: 'Idioma', menu: 'Menú', theme: 'Tema',
@@ -67,9 +67,9 @@ const W = {
     features: 'Funciones', converter: 'Convertidor', planner: 'Planificador', map: 'Mapa mundial', faq: 'Preguntas',
     alt: 'Alternativa al Reloj de Windows', wtb: 'Alternativa a World Time Buddy', multi: 'Varias zonas horarias', download: 'Descargar', privacy: 'Privacidad',
     fFaq: 'Preguntas frecuentes', fConverter: 'Convertidor de zona horaria', fPlanner: 'Planificador de reuniones', fMulti: 'Varias zonas horarias en Windows',
-    help: 'Ayuda', source: 'Código fuente en GitHub', kofi: 'Apoya al creador en Ko-fi',
+    help: 'Ayuda', source: 'Código fuente en GitHub', beta: 'Beta para Android', kofi: 'Apoya al creador en Ko-fi',
     support: 'Apoya al creador', supportName: 'Apoya al creador en Ko-fi', fab: 'Apoya al creador', fabName: 'Apoya al creador en Ko-fi',
-    legal: 'Gratis, de código abierto, sin telemetría. © {year} João Carvalho. No está afiliado a Microsoft.',
+    legal: 'App para Windows: gratis, de código abierto, sin telemetría. © {year} João Carvalho. No está afiliado a Microsoft.',
   },
 };
 // the social card per language (cloudflare/og/og-card.html) and what it shows: the home page's headline
@@ -107,7 +107,7 @@ export function navHtml(lang, slug, headerAttrs) {
   return `<header ${headerAttrs}>
   <div class="wrap">
     <a class="brand" href="${home ? '#top' : PREFIX[lang]}" aria-label="${home ? w.top : w.home}"><img src="${a}assets/logo-small.svg" alt="" width="28" height="28"><span data-name>Open World Clock</span></a>
-    <nav aria-label="${w.main}"><ul class="nav-links"><li>${link('features', w.features)}</li><li class="wide">${link('time-zone-converter', w.converter)}</li><li class="wide">${link('meeting-planner', w.planner)}</li><li class="wide">${link('world-map', w.map)}</li><li>${link('faq', w.faq)}</li></ul><details class="nav-menu"><summary>${w.menu}</summary><ul><li class="in-bar">${link('features', w.features)}</li><li>${link('time-zone-converter', w.converter)}</li><li>${link('meeting-planner', w.planner)}</li><li>${link('world-map', w.map)}</li><li>${link('windows-clock-alternative', w.alt)}</li><li>${link('multiple-time-zones-windows', w.multi)}</li><li>${link('download', w.download)}</li><li class="in-bar">${link('faq', w.faq)}</li><li>${link('privacy', w.privacy)}</li>${menuLangs}</ul></details></nav>
+    <nav aria-label="${w.main}"><ul class="nav-links"><li>${link('features', w.features)}</li><li class="wide">${link('time-zone-converter', w.converter)}</li><li class="wide">${link('meeting-planner', w.planner)}</li><li class="wide">${link('world-map', w.map)}</li><li>${link('faq', w.faq)}</li></ul><details class="nav-menu"><summary>${w.menu}</summary><ul><li class="in-bar">${link('features', w.features)}</li><li>${link('time-zone-converter', w.converter)}</li><li>${link('meeting-planner', w.planner)}</li><li>${link('world-map', w.map)}</li><li>${link('windows-clock-alternative', w.alt)}</li><li>${link('multiple-time-zones-windows', w.multi)}</li><li>${link('download', w.download)}</li><li>${link('android-beta', w.beta)}</li><li class="in-bar">${link('faq', w.faq)}</li><li>${link('privacy', w.privacy)}</li>${menuLangs}</ul></details></nav>
     <div class="nav-actions">
       <details class="lang-menu"><summary aria-label="${w.language}: ${NAME[lang]}" title="${w.language}"><svg class="i" aria-hidden="true"><use href="#i-globe"/></svg><span aria-hidden="true">${CODE[lang]}</span></summary><ul>${langLinks(slug, lang).join('')}</ul></details>
       <button class="theme-btn" id="themeBtn" type="button" aria-label="${w.theme}">
@@ -137,7 +137,7 @@ export function footerHtml(lang, slug, mark = true) {
     <a class="brand" href="${home ? '#top' : PREFIX[lang]}"><img src="${a}assets/logo-small.svg" alt="" width="28" height="28"><span data-name>Open World Clock</span></a>
     <nav aria-label="${w.footer}">
       <ul class="footer-pages">
-${[li('features', w.features), li('download', w.download), li('faq', w.fFaq), li('time-zone-converter', w.fConverter),
+${[li('features', w.features), li('download', w.download), li('android-beta', w.beta), li('faq', w.fFaq), li('time-zone-converter', w.fConverter),
   li('meeting-planner', w.fPlanner), li('world-time-now', SEO[lang].now), li('utc-time', SEO[lang].utc),
   li('world-map', w.map), li('windows-clock-alternative', w.alt),
   li('multiple-time-zones-windows', w.fMulti), li('world-time-buddy-alternative', w.wtb),
