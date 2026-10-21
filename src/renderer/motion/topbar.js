@@ -55,14 +55,12 @@
       const NS = 'http://www.w3.org/2000/svg';
       check = document.createElementNS(NS, 'svg');
       check.setAttribute('class', 'wc-copy-check');
-      check.setAttribute('viewBox', '0 0 16 16');
+      check.setAttribute('viewBox', '0 0 24 24');
       check.setAttribute('width', '16'); check.setAttribute('height', '16');
       check.setAttribute('aria-hidden', 'true'); check.setAttribute('focusable', 'false');
-      const p = document.createElementNS(NS, 'path');
-      p.setAttribute('d', 'M3.5 8.5l3 3 6-7');
-      p.setAttribute('fill', 'none'); p.setAttribute('stroke', 'currentColor');
-      p.setAttribute('stroke-width', '1.75'); p.setAttribute('stroke-linecap', 'round'); p.setAttribute('stroke-linejoin', 'round');
-      check.appendChild(p);
+      const use = document.createElementNS(NS, 'use');
+      use.setAttribute('href', '#owc-check');
+      check.appendChild(use);
       b.appendChild(check);
     }
     const icon = b.querySelector('svg:not(.wc-copy-check)');

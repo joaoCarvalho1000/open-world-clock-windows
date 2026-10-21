@@ -22,6 +22,7 @@
 // check (npm test). Slugs stay English in every language (/pt/features), so a page's three addresses differ only in
 // the prefix.
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
+import { siteSymbols as SYMBOLS } from '../design/icons/web-symbols.mjs';
 import { extraSlugs, copy as SEO } from './seo-content.mjs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -81,13 +82,6 @@ const OG_ALT = {
 };
 const KOFI = 'https://ko-fi.com/joaothecarvalho';
 const REPO = 'https://github.com/joaoCarvalho1000/open-world-clock-windows';
-const SYMBOLS = {
-  'i-cup': '<symbol id="i-cup" viewBox="0 0 24 24"><path d="M4 8h12v5a5.5 5.5 0 0 1-5.5 5.5h-1A5.5 5.5 0 0 1 4 13Z"/><path d="M16 9.5h1.5a2.5 2.5 0 0 1 0 5H16"/><path d="M8 5V3.5M12 5V3.5"/></symbol>',
-  'i-globe': '<symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.4 2.4 3.4 5.2 3.4 8.5s-1 6.1-3.4 8.5c-2.4-2.4-3.4-5.2-3.4-8.5s1-6.1 3.4-8.5Z"/></symbol>',
-  // the direct-download buttons (Download installer, Portable exe)
-  'i-download': '<symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11"/><path d="m7 10.5 5 5 5-5"/><path d="M5 20h14"/></symbol>',
-  'i-file': '<symbol id="i-file" viewBox="0 0 24 24"><path d="M7 3.5h6.5L18 8v12.5H7Z"/><path d="M13.5 3.5V8H18"/><path d="M10 13h5M10 16.5h5"/></symbol>',
-};
 
 export const fileOf = (lang, slug) => join(SITE_DIR, lang === 'en' ? '' : lang, (slug || 'index') + '.html');
 // the address of a page in a language: '/pt/features', '/es/', '/'; 404 has none, so its links go to that language's home
@@ -204,11 +198,14 @@ export function applyChrome(html, lang, slug) {
   html = html.replace(/(<meta (?:property="og:image"|name="twitter:image") content="https:\/\/openworldclock\.com\/assets\/)og(?:-pt|-es)?\.png(">)/g, `$1${OG_IMAGE[lang]}$2`);
   html = html.replace(/(<meta (?:property="og:image:alt"|name="twitter:image:alt") content=")[^"]*(">)/g, `$1${OG_ALT[lang]}$2`);
 
-  // the sprite has the nav's symbols
+  // Every website symbol comes from the same approved masters as Android and Windows.
   const sprite = html.match(/<svg width="0" height="0"[^>]*>[\s\S]*?<\/svg>/);
   if (!sprite) throw new Error('no icon sprite');
   let sp = sprite[0];
-  for (const [id, sym] of Object.entries(SYMBOLS)) if (!sp.includes(`id="${id}"`)) sp = sp.replace(/\n?<\/svg>$/, `\n  ${sym}\n</svg>`);
+  for (const [id, sym] of Object.entries(SYMBOLS)) {
+    const existing = new RegExp('<symbol id="' + id + '"[^>]*>[\\s\\S]*?</symbol>');
+    sp = existing.test(sp) ? sp.replace(existing, sym) : sp.replace(/\n?<\/svg>$/, '\n  ' + sym + '\n</svg>');
+  }
   html = html.replace(sprite[0], sp);
 
   // the floating Ko-fi button's name
