@@ -1406,14 +1406,12 @@ try {
       const NS = 'http://www.w3.org/2000/svg';
       check = document.createElementNS(NS, 'svg');
       check.setAttribute('class', 'wc-copy-check');
-      check.setAttribute('viewBox', '0 0 16 16');
+      check.setAttribute('viewBox', '0 0 24 24');
       check.setAttribute('width', '16'); check.setAttribute('height', '16');
       check.setAttribute('aria-hidden', 'true'); check.setAttribute('focusable', 'false');
-      const p = document.createElementNS(NS, 'path');
-      p.setAttribute('d', 'M3.5 8.5l3 3 6-7');
-      p.setAttribute('fill', 'none'); p.setAttribute('stroke', 'currentColor');
-      p.setAttribute('stroke-width', '1.75'); p.setAttribute('stroke-linecap', 'round'); p.setAttribute('stroke-linejoin', 'round');
-      check.appendChild(p);
+      const use = document.createElementNS(NS, 'use');
+      use.setAttribute('href', '#owc-check');
+      check.appendChild(use);
       b.appendChild(check);
     }
     const icon = b.querySelector('svg:not(.wc-copy-check)');
@@ -2345,7 +2343,7 @@ try {
     c.innerHTML = `
       <div class="card-head">
         <div class="head-text"><div class="city-row"><span class="city"></span><span class="pin" hidden></span><span class="src-badge" hidden></span></div><div class="phase-row"><span class="phase"></span><span class="moon" role="img" hidden></span></div><div class="dst-note" hidden></div></div>
-        <button class="icon-btn more" aria-haspopup="menu" aria-expanded="false" aria-controls="cardMenu"><svg width="15" height="15" viewBox="0 0 16 16" aria-hidden="true"><g fill="currentColor"><circle cx="3.5" cy="8" r="1.35"/><circle cx="8" cy="8" r="1.35"/><circle cx="12.5" cy="8" r="1.35"/></g></svg></button>
+        <button class="icon-btn more" aria-haspopup="menu" aria-expanded="false" aria-controls="cardMenu"><svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" data-icon="more-horiz"><use href="#owc-more-horiz"/></svg></button>
       </div>
       <div class="display">
         <div class="time"><span class="hm"></span><span class="sec"></span><span class="ampm"></span></div>
@@ -2357,7 +2355,7 @@ try {
         <div class="meta"><span class="tzname"></span><span class="utc"></span><span class="dshift" aria-hidden="true" hidden></span><span class="rel"></span></div>
       </div>`;
     c._city = c.querySelector('.city');
-    const moon = c.querySelector('.moon'); moon.textContent = '☾'; moon.setAttribute('aria-label', t('card.asleep')); moon.title = t('card.asleep');
+    const moon = c.querySelector('.moon'); moon.innerHTML = '<svg width="11" height="11" viewBox="0 0 24 24" aria-hidden="true" data-icon="moon"><use href="#owc-moon"/></svg>'; moon.setAttribute('aria-label', t('card.asleep')); moon.title = t('card.asleep');
     c.addEventListener('wheel', onCardWheel, { passive: false });
     attachArcScrub(c, zone);
     c.querySelector('.pin').textContent = t('card.home');
@@ -2435,7 +2433,13 @@ try {
     const pin = c.querySelector('.pin');
     if (pin.hidden === isHome) pin.hidden = !isHome;
     const sky = c.querySelector('.sky');
-    setText(sky, (key === 'night' || key === 'dusk') ? '\u{1F319}' : '☀️');
+    const skyIcon = (key === 'night' || key === 'dusk') ? 'moon' : 'sun';
+    if (sky.dataset.icon !== skyIcon) {
+      sky.dataset.icon = skyIcon;
+      sky.innerHTML = skyIcon === 'moon'
+        ? '<svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><use href="#owc-moon"/></svg>'
+        : '<svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><use href="#owc-sun"/></svg>';
+    }
 
     const diff = T.dayDiff(zone, date, refZone);
     const dateStr = T.fmt(zone, { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' }, locale()).format(date);
