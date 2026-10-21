@@ -63,6 +63,10 @@ Everyone taking part is expected to follow the [code of conduct](CODE_OF_CONDUCT
 
 ### Website releases
 
+The website publisher is `joaoCarvalho1000/open-world-clock-windows`. The private
+mobile repository must have `WEBSITE_DEPLOY_ENABLED=false` before publishing here.
+The Cloudflare project and domain remain `open-world-clock` and `openworldclock.com`.
+
 Production deploys use the website artifact from the successful CI run on `main`.
 The `website-production` GitHub environment permits only `main`. Its Cloudflare
 credential needs Pages Edit for this account; do not store a personal OAuth token.

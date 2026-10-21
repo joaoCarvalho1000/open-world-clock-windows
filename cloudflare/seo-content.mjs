@@ -20,7 +20,7 @@ export const pairs = [
 export const pairSlug = ([a, b]) => `${a}-to-${b}-time`;
 // Two live tools with their own search task: the current time in many places, and UTC itself.
 export const toolSlugs = ['world-time-now', 'utc-time'];
-export const extraSlugs = [...pairs.map(pairSlug), ...toolSlugs, 'daylight-saving-meetings', 'always-on-top-world-clock', 'press'];
+export const extraSlugs = [...pairs.map(pairSlug), ...toolSlugs, 'daylight-saving-meetings', 'always-on-top-world-clock', 'press', 'android-beta'];
 // Major cities for the live world-time table: one per region and rule set, not a ranking.
 export const worldCities = [
   ['America/Los_Angeles', 'Los Angeles', 'Los Angeles', 'Los Ángeles'],

@@ -94,8 +94,7 @@ class ReleaseTests(unittest.TestCase):
     def test_main_check_rejects_pull_requests_and_stale_commits(self):
         env = {
             "GITHUB_REF": "refs/pull/1/merge",
-            # Production deployment remains owned by the private repository.
-            "GITHUB_REPOSITORY": "joaoCarvalho1000/open-world-clock",
+            "GITHUB_REPOSITORY": "joaoCarvalho1000/open-world-clock-windows",
             "GH_TOKEN": "fixture",
         }
         with patch.dict(os.environ, env), self.assertRaisesRegex(RuntimeError, "only accepts main"):
@@ -111,6 +110,27 @@ class ReleaseTests(unittest.TestCase):
         ):
             with self.assertRaisesRegex(RuntimeError, "stale"):
                 release.latest_main("open-world-clock", self.sha)
+
+    def test_main_check_uses_public_publisher_and_rejects_former_publisher(self):
+        env = {
+            "GITHUB_REF": "refs/heads/main",
+            "GITHUB_REPOSITORY": "joaoCarvalho1000/open-world-clock-windows",
+            "GH_TOKEN": "fixture",
+        }
+        with (
+            patch.dict(os.environ, env),
+            patch.object(release, "api_urlopen", return_value=io.BytesIO(
+                json.dumps({"object": {"sha": self.sha}}).encode()
+            )) as request,
+        ):
+            release.latest_main("open-world-clock", self.sha)
+            self.assertEqual(request.call_args.args[0].full_url,
+                "https://api.github.com/repos/joaoCarvalho1000/open-world-clock-windows/git/ref/heads/main")
+        env["GITHUB_REPOSITORY"] = "joaoCarvalho1000/open-world-clock"
+        with patch.dict(os.environ, env), patch.object(release, "api_urlopen") as request:
+            with self.assertRaisesRegex(RuntimeError, "Unexpected repository"):
+                release.latest_main("open-world-clock", self.sha)
+            request.assert_not_called()
 
     def test_failed_smoke_rolls_back_only_our_deployment(self):
         self.packaged()

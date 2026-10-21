@@ -22,6 +22,10 @@ SITES = {
     "audio-as-code": ("audioascode.com", "web/cloudflare", "output/site"),
     "open-world-clock": ("openworldclock.com", "cloudflare", "site"),
 }
+PUBLISHERS = {
+    "audio-as-code": "joaoCarvalho1000/audio-as-code",
+    "open-world-clock": "joaoCarvalho1000/open-world-clock-windows",
+}
 
 
 class NoCredentialRedirect(HTTPRedirectHandler):
@@ -141,11 +145,12 @@ def owns_deployment(kind, deployed, sha, marker):
 
 def latest_main(kind, sha):
     require(os.environ.get("GITHUB_REF") == "refs/heads/main", "Production only accepts main")
+    repository = PUBLISHERS[kind]
     require(
-        os.environ.get("GITHUB_REPOSITORY") == "joaoCarvalho1000/" + kind, "Unexpected repository"
+        os.environ.get("GITHUB_REPOSITORY") == repository, "Unexpected repository"
     )
     request = Request(
-        f"https://api.github.com/repos/joaoCarvalho1000/{kind}/git/ref/heads/main",
+        f"https://api.github.com/repos/{repository}/git/ref/heads/main",
         headers={
             "Authorization": "Bearer " + os.environ["GH_TOKEN"],
             "User-Agent": "website-release",

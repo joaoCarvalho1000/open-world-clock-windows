@@ -83,12 +83,14 @@ function plannerGuide(lang) {
 function generate(lang,slug,title,heading,description,body,tool='',zones='') {
   const editorial = path.join(ROOT, 'cloudflare', 'editorial', lang, slug);
   let modified = REVIEW_DATE;
+  let published = REVIEW_DATE;
   let editorialSchema = [];
   if (fs.existsSync(editorial + '.json')) {
     const metadata = JSON.parse(fs.readFileSync(editorial + '.json', 'utf8'));
     title = metadata.title;
     description = metadata.description;
     modified = metadata.modified || REVIEW_DATE;
+    published = metadata.published || REVIEW_DATE;
     editorialSchema = metadata.schema || [];
   }
   const w=copy[lang],p=prefix(lang),url=ORIGIN+p+slug,crumb={now:w.now,utc:w.utc}[tool]||title;
@@ -98,7 +100,7 @@ function generate(lang,slug,title,heading,description,body,tool='',zones='') {
     .replace(/(<meta (?:property="og:title"|name="twitter:title") content=")[^"]*"/g,`$1${e(title)}"`)
     .replace(/<main[\s\S]*?<\/main>/,`<main id="main" class="pg"><section class="pg-hero" aria-labelledby="h1"><div class="wrap"><nav class="crumbs" aria-label="${w.home}"><ol><li><a href="${p}">${w.home}</a></li><li><span aria-current="page">${e(crumb)}</span></li></ol></nav><h1 id="h1">${e(heading)}</h1><p class="pg-lede">${e(description)}</p>${tool?toolHtml(lang,tool,zones):''}</div></section>${body}<section class="cta-band"><div class="wrap"><h2 class="pg-h2">${w.desktop}</h2><p class="pg-sub">${w.pinNote}</p><p class="more"><a class="btn btn-primary" href="${p}download">${w.windows}</a></p></div></section></main>`);
   if (fs.existsSync(editorial + '.html')) html = html.replace(/<main[\s\S]*?<\/main>/, () => fs.readFileSync(editorial + '.html', 'utf8').trim());
-  const page = {'@type':'WebPage','@id':url+'#page',url,name:title,description,inLanguage:{en:'en',pt:'pt-BR',es:'es-419'}[lang],datePublished:REVIEW_DATE,dateModified:modified,isPartOf:{'@id':ORIGIN+p+'#website'},author:{'@type':'Person',name:'João Carvalho',url:'https://github.com/joaoCarvalho1000'}};
+  const page = {'@type':'WebPage','@id':url+'#page',url,name:title,description,inLanguage:{en:'en',pt:'pt-BR',es:'es-419'}[lang],datePublished:published,dateModified:modified,isPartOf:{'@id':ORIGIN+p+'#website'},author:{'@type':'Person',name:'João Carvalho',url:'https://github.com/joaoCarvalho1000'}};
   const graph=[page,{'@type':'BreadcrumbList',itemListElement:[{'@type':'ListItem',position:1,name:w.home,item:ORIGIN+p},{'@type':'ListItem',position:2,name:title,item:url}]}];
   graph.push(...editorialSchema);
   if(tool) graph.push({'@type':'WebApplication','@id':url+'#tool',name:title,url,applicationCategory:'UtilitiesApplication',operatingSystem:'Web browser',isAccessibleForFree:true,offers:{'@type':'Offer',price:'0',priceCurrency:'USD'}});
@@ -109,6 +111,8 @@ function generate(lang,slug,title,heading,description,body,tool='',zones='') {
 }
 for(const lang of ['en','pt','es']) {
   const w=copy[lang],p=prefix(lang);
+  const beta = JSON.parse(fs.readFileSync(path.join(ROOT, 'cloudflare', 'editorial', lang, 'android-beta.json'), 'utf8'));
+  generate(lang, 'android-beta', beta.title, beta.title, beta.description, '');
   for(const pair of pairs) {
     const [a,b]=pair,an=cityName(a,lang),bn=cityName(b,lang),slug=pairSlug(pair);
     const zones=[cities[a][0],cities[b][0]].join(',');

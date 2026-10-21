@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://openworldclock.com/</loc>
-    <lastmod>2026-10-12</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://openworldclock.com/"/>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://openworldclock.com/pt/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://openworldclock.com/es/"/>
@@ -18,7 +18,7 @@
   </url>
   <url>
     <loc>https://openworldclock.com/download</loc>
-    <lastmod>2026-10-12</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://openworldclock.com/download"/>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://openworldclock.com/pt/download"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://openworldclock.com/es/download"/>
@@ -217,8 +217,16 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://openworldclock.com/press"/>
   </url>
   <url>
+    <loc>https://openworldclock.com/android-beta</loc>
+    <lastmod>2026-10-21</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://openworldclock.com/android-beta"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://openworldclock.com/pt/android-beta"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://openworldclock.com/es/android-beta"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://openworldclock.com/android-beta"/>
+  </url>
+  <url>
     <loc>https://openworldclock.com/pt/</loc>
-    <lastmod>2026-10-12</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://openworldclock.com/"/>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://openworldclock.com/pt/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://openworldclock.com/es/"/>
@@ -234,7 +242,7 @@
   </url>
   <url>
     <loc>https://openworldclock.com/pt/download</loc>
-    <lastmod>2026-10-12</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://openworldclock.com/download"/>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://openworldclock.com/pt/download"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://openworldclock.com/es/download"/>
@@ -433,8 +441,16 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://openworldclock.com/press"/>
   </url>
   <url>
+    <loc>https://openworldclock.com/pt/android-beta</loc>
+    <lastmod>2026-10-21</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://openworldclock.com/android-beta"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://openworldclock.com/pt/android-beta"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://openworldclock.com/es/android-beta"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://openworldclock.com/android-beta"/>
+  </url>
+  <url>
     <loc>https://openworldclock.com/es/</loc>
-    <lastmod>2026-10-12</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://openworldclock.com/"/>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://openworldclock.com/pt/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://openworldclock.com/es/"/>
@@ -450,7 +466,7 @@
   </url>
   <url>
     <loc>https://openworldclock.com/es/download</loc>
-    <lastmod>2026-10-12</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://openworldclock.com/download"/>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://openworldclock.com/pt/download"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://openworldclock.com/es/download"/>
@@ -647,5 +663,13 @@
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://openworldclock.com/pt/press"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://openworldclock.com/es/press"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://openworldclock.com/press"/>
+  </url>
+  <url>
+    <loc>https://openworldclock.com/es/android-beta</loc>
+    <lastmod>2026-10-21</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://openworldclock.com/android-beta"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://openworldclock.com/pt/android-beta"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://openworldclock.com/es/android-beta"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://openworldclock.com/android-beta"/>
   </url>
 </urlset>
