@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Privacy policy · Open World Clock</title>
-<meta name="description" content="The Open World Clock apps have no telemetry, keep your cities on your device and work offline. How the website counts visits without cookies, and how Ko-fi loads only on a click.">
+<meta name="description" content="How Open World Clock keeps settings on your device, verifies Android purchases, and handles website analytics. Includes the upcoming Premium release.">
 <link rel="canonical" href="https://openworldclock.com/privacy">
 <link rel="alternate" hreflang="en" href="https://openworldclock.com/privacy">
 <link rel="alternate" hreflang="pt-BR" href="https://openworldclock.com/pt/privacy">
@@ -20,7 +20,7 @@
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Open World Clock">
 <meta property="og:title" content="Privacy policy · Open World Clock">
-<meta property="og:description" content="The apps collect no data and work offline. This site uses cookieless, anonymous analytics.">
+<meta property="og:description" content="How Open World Clock keeps settings on your device, verifies Android purchases, and handles website analytics. Includes the upcoming Premium release.">
 <meta property="og:url" content="https://openworldclock.com/privacy">
 <meta property="og:image" content="https://openworldclock.com/assets/og.png">
 <meta property="og:image:width" content="1200">
@@ -29,7 +29,7 @@
 <meta property="og:image:alt" content="Open World Clock: a strip of city clocks, light cards for day and navy cards for night, under the line The world clock Windows should have shipped with.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Privacy policy · Open World Clock">
-<meta name="twitter:description" content="The apps collect no data and work offline. This site uses cookieless, anonymous analytics.">
+<meta name="twitter:description" content="How Open World Clock keeps settings on your device, verifies Android purchases, and handles website analytics. Includes the upcoming Premium release.">
 <meta name="twitter:image" content="https://openworldclock.com/assets/og.png">
 <meta name="twitter:image:alt" content="Open World Clock: a strip of city clocks, light cards for day and navy cards for night, under the line The world clock Windows should have shipped with.">
 <link rel="icon" href="favicon.ico" sizes="any">
@@ -71,12 +71,12 @@
   <div class="wrap">
     <article>
       <h1>Privacy policy</h1>
-      <p class="updated">Last updated: 19 October 2026</p>
-      <p class="summary"><strong>The short version:</strong> the <span data-name>Open World Clock</span> apps have no telemetry and no usage tracking. Your cities and settings stay on your device, and the clocks work offline. The Windows app contacts our servers only for updates: when you ask, or automatically if that option is on (see Network access for each build's default). The iPhone app makes no network requests. The Android app connects to Google Play for optional Supporter purchases and reviews; it sends no personal data to a developer server. This website counts visits with cookieless, anonymous analytics, and skips them entirely if your browser sends Do Not Track or Global Privacy Control. Ko-fi loads only if you click Support the creator.</p>
+      <p class="updated">Last updated: 21 October 2026</p>
+      <p class="summary"><strong>The short version:</strong> the <span data-name>Open World Clock</span> apps have no telemetry and no usage tracking. Your cities and settings stay on your device, and the clocks work offline. The Windows app contacts our servers only for updates: when you ask, or automatically if that option is on (see Network access for each build's default). The iPhone app makes no network requests. Android v4 uses Google Play for optional purchases and reviews, without sending receipts to our server. The upcoming Premium release will send signed receipts to our Cloudflare verification service, as explained below. This website counts visits with cookieless, anonymous analytics, and skips them entirely if your browser sends Do Not Track or Global Privacy Control. Ko-fi loads only if you click Support the creator.</p>
 
       <p class="intro">Open World Clock is a world clock and time zone converter for Windows and Android. The Android app and its widgets are available through Google Play testing with optional Supporter purchases. An iPhone app with widgets is in development. Each platform has its own section below.</p>
 
-      <h2>Data the app collects</h2>
+      <h2>Data the Windows app collects</h2>
       <p>No telemetry and no usage tracking. Your cities and settings never leave your device, and there is no account and no sign-in. The app's only network requests are update checks and, in a code-signed installer, update downloads; the information they carry is listed under Network access.</p>
 
       <h2>Data stored on your device</h2>
@@ -99,13 +99,18 @@
       </ul>
 
       <h2>Third parties</h2>
-      <p>None of the apps include analytics, crash reporting or advertising SDKs. The sections above are about the Windows app, which includes no third-party services at all. The Android app includes two Google libraries, Play Billing and Play In-App Review, which talk only to Google Play and are described in its own section next. The iPhone app follows it, and the last section is only about this website.</p>
+      <p>The Windows app has no analytics, crash reporting or advertising SDKs. Android uses Google Play Billing and Play In-App Review. The upcoming Android release also includes advertising and consent SDKs that remain inactive while production ads are disabled. Android purchase verification is described below; the website has its own section.</p>
 
       <h2 id="android">Android app and widgets</h2>
-      <p>The Android app and its widgets work offline. There is no account, no analytics, no crash reporting and no ads, and the app's own code makes no network requests: time zone rules are built in and everything is calculated on your phone. It does not ask for location permission; your reference city is the one you choose, or otherwise the phone's own time zone setting. Its only connection is to Google Play, described below.</p>
+      <p><strong>Published version and upcoming release.</strong> Android v4, currently published through Google Play testing, checks purchases on the device using Google Play and the public licensing key. It does not send receipts to a developer server. The server verification described below is for the upcoming Premium release and is not active in v4.</p>
+      <p>The clocks and widgets work offline, with no app account, analytics or crash reporting. Cities and time calculations stay on your phone. The app does not request location permission: it uses your selected reference city or the phone’s time zone.</p>
       <p>Your cities and their order, custom labels, working hours and workdays, reference city, language, theme and 12 or 24-hour clock are saved in the app's private storage on your phone (the settings file <code>world_clock.xml</code>). Each widget you place keeps its own setup under that widget's id, and you can save up to 12 widget looks. The app opts out of Android backup and device transfer (<code>allowBackup="false"</code>, with extraction rules that exclude everything), so none of this is copied to Google or to a new phone. Uninstalling the app removes it all.</p>
-      <p>Optional Supporter purchases are sold and managed by Google Play. The app supports a one-time lifetime purchase and a monthly subscription; Play shows the purchase options available to you and their local prices. Google handles payment. The app never receives your payment method, card number, billing address, name or email, and we run no purchase server. The Play Billing library uses the <code>INTERNET</code>, <code>ACCESS_NETWORK_STATE</code> and <code>com.android.vending.BILLING</code> permissions to load prices, open checkout and check ownership. Google's processing is covered by <a href="https://policies.google.com/privacy">Google's privacy policy</a>. Purchase management opens Google Play.</p>
-      <p>The app stores Play's signed receipt and its last verification time in private device storage. The receipt contains an order number, product, purchase time and purchase token, but no name, email or payment details. Receipts are verified with the app's public licensing key. Lifetime purchases remain available offline; monthly subscription access requires a successful Play check within the previous 24 hours. A successful ownership check can remove access after a refund or expiry. These receipts are never sent to a developer server.</p>
+      <p><strong>Purchases.</strong> Google Play handles checkout and payment. The upcoming “Buy me a coffee” offer is a one-time purchase for lifetime Premium; existing monthly and yearly subscriptions remain supported. Play shows the available product and local price. You can restore eligible purchases on Android using the same Google Play account; they do not unlock purchases on another operating system. The app and our verification service do not receive your card number, payment method, billing address, name or email. <a href="https://policies.google.com/privacy">Google’s privacy policy</a> covers Google’s processing.</p>
+      <p><strong>Upcoming server verification.</strong> To verify, restore or recheck ownership, the app will send the original signed Play receipt and signature over HTTPS to our verification service hosted on Cloudflare. The receipt contains the order number, product identifier, purchase time and purchase token. Our service checks the signature and asks Google’s Android Publisher API to verify the token and current purchase status. Google handles payment. Google also sends authenticated purchase and refund notifications so the service can recheck access.</p>
+      <p><strong>What the service retains.</strong> Cloudflare D1 stores only a one-way hash of the purchase token, product identifier, entitlement and acknowledgement status, and verification or expiry timestamps. The hash is pseudonymous purchase data, not anonymous usage analytics. We do not persist raw receipts, raw purchase tokens, order numbers or payment details on the server. The raw signed receipt remains in private app storage on your device; sending it for verification does not create a stored server copy. Billing records, including refund records, are retained to restore access and prevent refunded purchases from being restored. Uninstalling removes local data, not those server records; contact us about data requests.</p>
+      <p>The HTTPS connection exposes your IP address and standard request headers to Cloudflare. The service uses an ephemeral IP hash to limit abusive requests. Application logs contain only the route category, HTTP status and request duration, without receipts, tokens, IP addresses or payment details. This processing verifies purchases and protects the service; it is not app analytics. <a href="https://www.cloudflare.com/privacypolicy/">Cloudflare’s privacy policy</a> describes its processing.</p>
+      <p><strong>Offline access and refunds.</strong> Previously verified lifetime access remains available offline. Legacy subscriptions require a successful verification within 24 hours and, when known, cannot continue beyond Google’s expiry time. A confirmed refund or expiry can remove Premium access. A failed network check does not create new access or immediately erase previously verified access. Saved cities and widget configurations remain on the device.</p>
+      <p><strong>Advertising.</strong> Production ads remain disabled. The upcoming release may bundle Google Mobile Ads and User Messaging Platform SDKs, but they are not initialized and do not request ads or consent while disabled. This policy does not describe active advertising data collection. Any future activation requires an updated disclosure before rollout.</p>
       <p>Store reviewers can enter a reusable review code to access the paid features without an account, payment or trial. The code is checked on the device and stored privately until review access ends or the app is uninstalled. It is separate from purchase receipts. Review access does not change the app's content or data handling.</p>
       <p>The app may request Google's in-app review card after a week of use, at most once every six months. Usage counters used to pace that prompt stay on the device. Google handles any rating and review you choose to submit under its own terms; you can manage or delete them through Google Play or your Google Account.</p>
 
