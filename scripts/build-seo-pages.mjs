@@ -113,6 +113,8 @@ for(const lang of ['en','pt','es']) {
   const w=copy[lang],p=prefix(lang);
   const beta = JSON.parse(fs.readFileSync(path.join(ROOT, 'cloudflare', 'editorial', lang, 'android-beta.json'), 'utf8'));
   generate(lang, 'android-beta', beta.title, beta.title, beta.description, '');
+  const mobileTerms = JSON.parse(fs.readFileSync(path.join(ROOT, 'cloudflare', 'editorial', lang, 'mobile-terms.json'), 'utf8'));
+  generate(lang, 'mobile-terms', mobileTerms.title, mobileTerms.title, mobileTerms.description, '');
   for(const pair of pairs) {
     const [a,b]=pair,an=cityName(a,lang),bn=cityName(b,lang),slug=pairSlug(pair);
     const zones=[cities[a][0],cities[b][0]].join(',');
