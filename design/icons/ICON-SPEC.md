@@ -1,6 +1,6 @@
 # Playful icons
 
-Hand-authored monochrome SVG masters on a 24-unit grid. The shared generator supplies Windows renderer symbols and website aliases. Run `node design/icons/build-web.mjs --check` and `node design/icons/validate.mjs --svg-only` to verify the outputs.
+Hand-authored monochrome SVG masters on a 24-unit grid. The shared generator supplies Windows renderer symbols and website aliases. Run `node design/icons/validate.mjs` and `node design/icons/build-table.mjs --check` to verify this asset foundation. The `build-web.mjs` generator is supplied for the separate renderer adoption change; its output check requires that integration.
 
 For browser raster checks, generate the local contact sheet with `node design/icons/build-contact-sheet.mjs`, then run `node design/icons/validate.mjs --render --strict-checklist` with `CHROME_PATH` pointing to Chrome or Edge. Generated review files stay ignored.
 
@@ -65,6 +65,4 @@ For browser raster checks, generate the local contact sheet with `node design/ic
 | `download` | P2 | stroke | Download the installer |  | site #i-download | Downward download arrow into a shallow rounded tray. Exact coordinates and presentation: geometry.download. |  |
 | `file` | P2 | stroke | Portable executable download |  | site #i-file | Soft document with a folded corner and two short lines. Exact coordinates and presentation: geometry.file. |  |
 | `phone` | P2 | stroke | Mobile apps and widgets |  | site #i-phone | Rounded phone with the same home bar as Add widget. Exact coordinates and presentation: geometry.phone. |  |
-| `launcher-foreground` | P1 | fill | Adaptive icon colour layer: the brand mark |  | keep; do not redraw | Not on the 24 grid. See ICON-SPEC.md section 4. Regenerate from build/logo/mark.svg only. |  |
-| `launcher-monochrome` | P1 | fill | Themed icon layer: the ring, the hands and the pin |  | keep geometry; align with section 4 (ring weight and hand lengths match the 24 grid clock icon) | Not on the 24 grid. See ICON-SPEC.md section 4. |  |
 <!-- TABLE:END -->
