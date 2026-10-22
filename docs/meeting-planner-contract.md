@@ -17,3 +17,13 @@ Web and Windows share src/renderer. The recommendation panel retains the existin
 The planner defaults to Next available, with UTC starts from now through the next 48 hours. Explore date searches the selected reference-zone civil day and explicitly labels past recommendations. A stale Next result is recomputed before selection. Invalid acceptable-hour edits remove active results until corrected; leaving an invalid field restores its last valid value.
 
 A committed meeting stores its exact participant zones. Copy text, calendar descriptions and web/desktop share links use this snapshot, even if saved clocks differ. An excluded reference city is replaced with the first included participant for export. Link imports preserve the supplied participant list.
+
+## Recommendation presentation and interaction
+
+Explanations use the selected candidate's full-duration participant results. Outside acceptable hours is not automatically described as overnight: custom availability can exclude daytime. Preferred working shifts may still override acceptable limits as defined above. The explanation identifies affected cities and their actual status, without claiming that every compromise is comfortable.
+
+Alternative labels compare each person's penalty with the currently selected interval. Name who improves and who incurs a greater penalty. When no participant improves, use a neutral alternative label instead of inventing a benefit. Keep the existing maximum of two alternatives, with exact dated local ranges; do not substitute arbitrary offsets for ranked results.
+
+A timeline selection represents one absolute UTC interval across all rows. Dragging and keyboard adjustment update every city's dated local time together, including day changes and DST transitions. The full duration remains visible. Solar surface colours describe local daylight, while separate text and graphical markers describe preferred hours and meeting suitability. Colour alone never carries suitability.
+
+Changing the selected time must not rerun the entire recommendation search on every pointer event. Keep expensive suggestions keyed to search inputs and evaluate the selected interval separately. Visible and shareable results must match current participants, duration and availability.

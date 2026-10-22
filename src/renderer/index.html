@@ -68,12 +68,12 @@
   <section id="planner" class="planner no-drag" aria-label="Meeting planner" data-i18n-aria="plan.aria" hidden>
     <div class="plan-head">
       <span id="plannerSummary" class="plan-summary"></span>
-      <button id="planFind" class="pill plan-find-btn" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="planFindPanel" data-i18n="plan.find" hidden>Find a time</button>
+      <button id="planFind" class="pill plan-find-btn" type="button" aria-expanded="false" aria-controls="planFindPanel" data-i18n="plan.find" hidden>Find a time</button>
       <span id="plannerCaption" class="plan-caption"></span>
       <span id="planSelBar" class="plan-selbar" hidden><span id="planSel" class="plan-sel-text" aria-live="polite"></span><span class="plan-sel-actions"><button id="planCopy" class="pill plan-sel-btn" type="button" data-i18n="plan.copy">Copy times</button><button id="planLink" class="pill plan-sel-btn" type="button" data-i18n="plan.link" hidden>Copy link</button><button id="planIcs" class="pill plan-sel-btn" type="button" data-i18n="plan.ics">Calendar file</button></span><span id="planStatus" class="plan-status" role="status" hidden></span></span>
       <span class="plan-legend" aria-hidden="true"><span class="lg-item work"><i class="lg work"></i><span data-i18n="plan.legend.work">Working</span></span><span class="lg-item night"><i class="lg night"></i><span data-i18n="plan.legend.night">Night</span></span><span class="lg-item all"><i class="lg all"></i><span data-i18n="plan.legend.all">Everyone working</span></span><span class="lg-item sel"><i class="lg sel"></i><span data-i18n="plan.legend.sel">Selected</span></span></span>
     </div>
-    <div id="planFindPanel" class="find-panel" role="dialog" aria-labelledby="planFind" tabindex="-1" hidden></div>
+    <div id="planFindPanel" class="find-panel" role="region" aria-labelledby="planFind" tabindex="-1" hidden></div>
     <div id="planBody" class="plan-body"></div>
   </section>
 

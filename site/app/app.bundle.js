@@ -659,6 +659,21 @@ try {
 (() => {
   'use strict';
   const en = {
+    'plan.shareTime': 'Share this time', 'plan.useTime': 'Use time in hourly grid',
+    'plan.compareLocal': 'Compare local meeting times', 'plan.seeEveryCity': 'See it from every city',
+    'plan.dragHint': 'Drag the outlined meeting band or move the slider.',
+    'plan.preferred': 'Preferred hours', 'plan.yourMeeting': 'Your meeting', 'plan.axis': '{city} time',
+    'plan.moveTime': 'Move meeting time', 'plan.linkedHint': '15-minute steps. All rows move together.',
+    'plan.otherCompromise': 'A different kind of compromise',
+    'plan.skyMeaning': 'Sky colours describe the local light. Labels describe whether the full meeting fits each person’s day.',
+    'plan.headAvoid': 'Someone is outside their acceptable hours.', 'plan.headWorking': 'In everyone’s working hours.',
+    'plan.headComfortable': 'Preferred hours for everyone.', 'plan.headCompromise': 'A little give and take.',
+    'plan.customTime': 'Custom time',
+    'plan.why.working': '{city} stays in working hours.', 'plan.why.comfortable': '{city} is within acceptable hours.',
+    'plan.why.early': '{city} starts early.', 'plan.why.late': '{city} joins late.', 'plan.why.avoid': '{city} is outside acceptable hours.',
+    'plan.betterFor': 'Easier for {cities}', 'plan.anotherOption': 'Another option',
+    'plan.easesFor': 'Less inconvenience for {cities}.', 'plan.harderFor': 'More inconvenience for {cities}.',
+    'plan.noImprovement': 'No one has an easier time.', 'plan.noWorse': 'No participant has more inconvenience.',
     'plan.mode': 'Search', 'plan.next': 'Next available', 'plan.explore': 'Explore date',
     'plan.nextHorizon': 'Upcoming times in the next 48 hours.',
     'plan.exploreDate': 'Exploring {date}, in {city}.',
@@ -830,6 +845,21 @@ try {
     'plan.copy': 'Copy times', 'plan.link': 'Copy link', 'plan.ics': 'Calendar file', 'plan.fix': 'Fix the time to copy or share this meeting',
   };
   const pt = {
+    'plan.shareTime': 'Compartilhar horário', 'plan.useTime': 'Usar horário na grade',
+    'plan.compareLocal': 'Comparar horários locais', 'plan.seeEveryCity': 'Veja pela hora de cada cidade',
+    'plan.dragHint': 'Arraste a faixa da reunião ou mova o controle.',
+    'plan.preferred': 'Horário preferido', 'plan.yourMeeting': 'Sua reunião', 'plan.axis': 'Hora de {city}',
+    'plan.moveTime': 'Mover horário da reunião', 'plan.linkedHint': 'Passos de 15 minutos. Todas as linhas se movem juntas.',
+    'plan.otherCompromise': 'Outra forma de conciliar',
+    'plan.skyMeaning': 'As cores do céu descrevem a luz local. Os rótulos mostram se a reunião inteira cabe no dia de cada pessoa.',
+    'plan.headAvoid': 'Alguém está fora do horário aceitável.', 'plan.headWorking': 'Dentro do expediente de todos.',
+    'plan.headComfortable': 'Horário preferido para todos.', 'plan.headCompromise': 'Um pouco de flexibilidade de cada lado.',
+    'plan.customTime': 'Horário personalizado',
+    'plan.why.working': '{city} continua no expediente.', 'plan.why.comfortable': '{city} está no horário aceitável.',
+    'plan.why.early': '{city} começa cedo.', 'plan.why.late': '{city} participa mais tarde.', 'plan.why.avoid': '{city} está fora do horário aceitável.',
+    'plan.betterFor': 'Mais fácil para {cities}', 'plan.anotherOption': 'Outra opção',
+    'plan.easesFor': 'Menos inconveniência para {cities}.', 'plan.harderFor': 'Mais inconveniência para {cities}.',
+    'plan.noImprovement': 'Não fica mais fácil para ninguém.', 'plan.noWorse': 'Ninguém tem mais inconveniência.',
     'plan.mode': 'Busca', 'plan.next': 'Próximo horário', 'plan.explore': 'Explorar data',
     'plan.nextHorizon': 'Próximos horários nas próximas 48 horas.',
     'plan.exploreDate': 'Explorando {date}, em {city}.',
@@ -1001,6 +1031,21 @@ try {
     'plan.copy': 'Copiar horários', 'plan.link': 'Copiar link', 'plan.ics': 'Arquivo de calendário', 'plan.fix': 'Corrija o horário para copiar ou compartilhar esta reunião',
   };
   const es = {
+    'plan.shareTime': 'Compartir este horario', 'plan.useTime': 'Usar horario en la cuadrícula',
+    'plan.compareLocal': 'Comparar horas locales', 'plan.seeEveryCity': 'Míralo desde cada ciudad',
+    'plan.dragHint': 'Arrastra la franja de la reunión o mueve el control.',
+    'plan.preferred': 'Horas preferidas', 'plan.yourMeeting': 'Tu reunión', 'plan.axis': 'Hora de {city}',
+    'plan.moveTime': 'Mover hora de la reunión', 'plan.linkedHint': 'Pasos de 15 minutos. Todas las filas se mueven juntas.',
+    'plan.otherCompromise': 'Otra forma de llegar a un acuerdo',
+    'plan.skyMeaning': 'Los colores del cielo describen la luz local. Las etiquetas indican si la reunión completa encaja en el día de cada persona.',
+    'plan.headAvoid': 'Alguien está fuera de sus horas aceptables.', 'plan.headWorking': 'Dentro del horario laboral de todos.',
+    'plan.headComfortable': 'Horas preferidas para todos.', 'plan.headCompromise': 'Un poco de flexibilidad de cada lado.',
+    'plan.customTime': 'Horario personalizado',
+    'plan.why.working': '{city} sigue en horario laboral.', 'plan.why.comfortable': '{city} está en horas aceptables.',
+    'plan.why.early': '{city} empieza temprano.', 'plan.why.late': '{city} participa tarde.', 'plan.why.avoid': '{city} está fuera de sus horas aceptables.',
+    'plan.betterFor': 'Más fácil para {cities}', 'plan.anotherOption': 'Otra opción',
+    'plan.easesFor': 'Menos inconveniencia para {cities}.', 'plan.harderFor': 'Más inconveniencia para {cities}.',
+    'plan.noImprovement': 'No resulta más fácil para nadie.', 'plan.noWorse': 'Nadie tiene más inconveniencia.',
     'plan.mode': 'Buscar', 'plan.next': 'Próximo horario', 'plan.explore': 'Explorar fecha',
     'plan.nextHorizon': 'Horarios disponibles en las próximas 48 horas.',
     'plan.exploreDate': 'Explorando {date}, en {city}.',
@@ -3837,6 +3882,7 @@ try {
     const hint = document.createElement('p'); hint.className = 'find-intro'; hint.textContent = t('plan.acceptableHint'); people.append(hint);
     panel.append(controls, people, results);
     function refresh() {
+      results.setAttribute('aria-live','polite');
       if (people.querySelector('input:invalid')) { results.replaceChildren(); results.textContent = t('plan.invalidHours'); return; }
       saveFindPreferences();
       const participants = zones.filter(z => findPreferences.people.get(z).included).map(zone => ({ zone, hours: hoursOf(zone), ...findPreferences.people.get(zone) }));
@@ -3847,30 +3893,146 @@ try {
       results.replaceChildren();
       if (!found.length) { results.textContent = t('plan.choosePeople'); return; }
       const searchLabel = document.createElement('p'); searchLabel.className = 'find-intro'; searchLabel.textContent = findPreferences.mode === 'next' ? t('plan.nextHorizon') : t('plan.exploreDate', {date:ymdLabel(planYmd),city:labelOf(src)}); results.append(searchLabel);
-      found.forEach((r, index) => {
-        const button = document.createElement('button'); button.type = 'button'; button.className = 'find-item' + (index === 0 ? ' recommended' : '');
-        button.dataset.start = r.startMs; button.dataset.end = r.endMs; button.dataset.participants = JSON.stringify(r.participants.map(p => p.zone)); button.dataset.mode = findPreferences.mode;
-        const heading = document.createElement('span'); heading.className = 'find-main'; heading.textContent = t(index === 0 ? 'plan.recommended' : 'plan.alternative') + ': ' + durText(findPreferences.duration * 60000); button.append(heading);
-        for (const person of r.participants) {
-          const row = document.createElement('span'); row.className = 'find-local';
-          const format = (ms) => T.fmt(person.zone, { weekday:'short', month:'short', day:'numeric', hour:'2-digit', minute:'2-digit', hour12:!!settings.hour12 }, I.locale).format(new Date(ms));
-          row.textContent = `${labelOf(person.zone)}: ${format(r.startMs)} / ${format(r.endMs)}: ${t('plan.reason.' + person.reason)}`; button.append(row);
-        }
-        if (r.startMs < now) { const warning = document.createElement('strong'); warning.textContent = t('plan.pastWarning'); button.append(warning); }
-        const explanation = document.createElement('span'); explanation.className = 'find-sub'; explanation.textContent = t(r.avoidParticipants ? 'plan.avoidTradeoff' : 'plan.fairTradeoff', { n:r.working, total:r.total, avoid:r.avoidParticipants }); button.append(explanation); results.append(button);
-      });
+      buildMeetingWorkspace(results, participants, found, from, until, src);
     }
     refresh(); panel.hidden = false; el.planFind.setAttribute('aria-expanded', 'true'); controls.querySelector('select').focus();
   }
+  // Cached search results plus a lightweight single-interval preview. Moving the band never searches the horizon.
+  function buildMeetingWorkspace(host, participants, found, from, until, source) {
+    host.setAttribute('aria-live','off');
+    const quarter = 900000, duration = findPreferences.duration * 60000;
+    const first = Math.ceil(from / quarter) * quarter, last = Math.floor((until - 1) / quarter) * quarter;
+    const trackEnd = last + duration, span = trackEnd - first;
+    let current = found[0], raf = 0, pending = null;
+    const make = (tag, cls, text) => { const node = document.createElement(tag); node.className = cls; if (text) node.textContent = text; return node; };
+    const time = (zone, ms) => T.fmt(zone, { hour:'2-digit', minute:'2-digit', hour12:!!settings.hour12 }, locale()).format(new Date(ms));
+    const date = (zone, ms) => T.fmt(zone, { weekday:'short', month:'short', day:'numeric', year:'numeric' }, locale()).format(new Date(ms));
+    const local = (zone, ms) => `${date(zone, ms)}, ${time(zone, ms)}`;
+    const summary = make('section', 'meeting-summary');
+    const text = make('div', 'meeting-summary-text');
+    const heading = make('h2', 'meeting-headline'), why = make('p', 'meeting-why'), selectedLabel = make('p', 'meeting-selection');
+    const warning = make('p', 'meeting-warning', t('plan.pastWarning'));
+    text.append(heading, selectedLabel, why, warning);
+    const actions = make('div', 'meeting-actions');
+    const share = make('button', 'pill meeting-share find-commit', t('plan.shareTime')); share.type = 'button'; share.dataset.share = 'true';
+    const use = make('button', 'pill find-commit', t('plan.useTime')); use.type = 'button';
+    actions.append(share, use); summary.append(text, actions);
+    const workspace = make('section', 'meeting-workspace'); workspace.setAttribute('aria-label', t('plan.compareLocal'));
+    const guide = make('div', 'meeting-guide'), guideText = make('div', '');
+    guideText.append(make('h3', '', t('plan.seeEveryCity')), make('p', '', t('plan.dragHint')));
+    const legend = make('div', 'meeting-legend');
+    for (const key of ['preferred','yourMeeting']) { const item = make('span', ''); item.append(make('i', 'meeting-swatch ' + key), document.createTextNode(t('plan.' + key))); legend.append(item); }
+    guide.append(guideText, legend); workspace.append(guide);
+    const axis = make('div', 'meeting-axis'), axisLabel = make('span', 'meeting-axis-label', t('plan.axis', {city:labelOf(source)})), ticks = make('div','meeting-ticks');
+    for (let n = 0; n <= 4; n++) {
+      const ms = Math.round((first + (Math.ceil(until/quarter)*quarter-first)*n/4)/quarter)*quarter;
+      const tick = make('span','',time(source,ms)); tick.dataset.tick = n; tick.title = local(source,ms); tick.style.left = `${(ms-first)/span*100}%`;
+      if (n === 0 || n === 4) tick.append(make('small','',T.fmt(source,{month:'short',day:'numeric'},locale()).format(new Date(ms))));
+      ticks.append(tick);
+    }
+    axis.append(axisLabel,ticks); workspace.append(axis);
+    const rows = make('div','meeting-rows'), rowNodes = [];
+    for (const p of participants) {
+      const row = make('div','meeting-city'); row.dataset.zone = p.zone;
+      const identity = make('div','meeting-identity'), name = make('strong','', labelOf(p.zone)), sky = make('span','meeting-sky'); identity.append(name,sky);
+      const body = make('div','meeting-city-body'), readout = make('div','meeting-readout'), values = make('div','');
+      const clock = make('span','meeting-clock'), dates = make('span','meeting-date'), status = make('span','meeting-status'); values.append(clock,dates); readout.append(values,status);
+      const track = make('div','meeting-track'); track.setAttribute('aria-hidden','true');
+      const hours = findPreferences.preset === 'family' ? { start:'09:00',end:'21:00',days:[0,1,2,3,4,5,6] } : p.hours;
+      let spans = T.workSpans(p.zone,hours,first,trackEnd);
+      if (findPreferences.preset === 'family') {
+        const acceptable = T.workSpans(p.zone,{start:p.acceptableStart,end:p.acceptableEnd,days:[0,1,2,3,4,5,6]},first,trackEnd);
+        spans = spans.flatMap(([a,b]) => acceptable.map(([c,d]) => [Math.max(a,c),Math.min(b,d)]).filter(([a,b]) => b>a));
+      }
+      for (const [a,b] of spans) { const work = make('span','meeting-preferred'); work.style.left = `${(a-first)/span*100}%`; work.style.width = `${(b-a)/span*100}%`; track.append(work); }
+      const band = make('span','meeting-band'); track.append(band);
+      body.append(readout,track); row.append(identity,body); rows.append(row); rowNodes.push({p,row,sky,clock,dates,status,band,track});
+      // Capture stays on this stable track; preview updates text/styles without replacing rows.
+      let pointer = null, grab = 0;
+      const move = (event) => { const box = track.getBoundingClientRect(); queue(first + (event.clientX-box.left)/box.width*span-grab); };
+      track.addEventListener('pointerdown', event => {
+        if (event.button !== 0) return;
+        const box = track.getBoundingClientRect(); pointer = event.pointerId;
+        grab = event.target === band ? first + (event.clientX-box.left)/box.width*span-current.startMs : 0;
+        track.setPointerCapture(pointer); event.preventDefault(); move(event);
+      });
+      track.addEventListener('pointermove', event => { if (pointer === event.pointerId) move(event); });
+      const stop = event => { if (pointer !== event.pointerId) return; if (pending !== null) flush(); if (track.hasPointerCapture(pointer)) track.releasePointerCapture(pointer); pointer = null; };
+      track.addEventListener('pointerup',stop); track.addEventListener('pointercancel',stop); track.addEventListener('lostpointercapture',()=>{pointer=null;});
+    }
+    workspace.append(rows);
+    const sliderRow = make('div','meeting-slider-row'), sliderLabel = make('label','',t('plan.moveTime')), slider = make('input','meeting-slider');
+    slider.id = 'meetingPreviewSlider'; slider.type = 'range'; slider.min = '0'; slider.max = String((last-first)/quarter); slider.step = '1'; sliderLabel.htmlFor = slider.id;
+    slider.addEventListener('input', () => queue(first + +slider.value * quarter));
+    slider.addEventListener('change', () => { if (pending !== null) flush(); });
+    sliderRow.append(sliderLabel,slider); workspace.append(sliderRow,make('p','meeting-hint',t('plan.linkedHint')));
+    const alternatives = make('section','meeting-alternatives'); alternatives.append(make('h3','',t('plan.otherCompromise')));
+    const alternativeList = make('div','meeting-options'); alternatives.append(alternativeList);
+    const note = make('p','meeting-sky-note',t('plan.skyMeaning'));
+    host.append(summary,workspace,alternatives,note);
+    function queue(ms) {
+      pending = Math.max(first, Math.min(last, Math.round(ms/quarter)*quarter));
+      if (!raf) raf = requestAnimationFrame(flush);
+    }
+    function flush() {
+      if (raf) cancelAnimationFrame(raf); raf = 0;
+      const ms = pending; pending = null;
+      if (ms === null || ms === current.startMs) return;
+      current = found.find(r => r.startMs === ms) || T.recommendTimes(participants,ms,ms+1,findPreferences.duration,findPreferences.objective,findPreferences.preset)[0];
+      paint();
+    }
+    function paint() {
+      const selected = found.findIndex(r => r.startMs === current.startMs), now = Date.now();
+      host.dataset.previewStart = current.startMs; host.dataset.previewEnd = current.endMs;
+      host.dataset.previewKind = selected === 0 ? 'recommended' : selected > 0 ? 'alternative' : 'custom';
+      heading.textContent = t(current.avoidParticipants ? 'plan.headAvoid' : current.working === current.total ? 'plan.headWorking' : current.maxPersonPenaltyUnits === 0 ? 'plan.headComfortable' : 'plan.headCompromise');
+      selectedLabel.textContent = `${t(selected === 0 ? 'plan.recommended' : selected > 0 ? 'plan.alternative' : 'plan.customTime')}: ${t('plan.range',{start:local(source,current.startMs),end:date(source,current.startMs) === date(source,current.endMs) ? time(source,current.endMs) : local(source,current.endMs)})} (${labelOf(source)})`;
+      why.textContent = current.participants.map(p => t('plan.why.'+p.reason,{city:labelOf(p.zone)})).join(' ');
+      warning.hidden = current.startMs >= now;
+      slider.value = String((current.startMs-first)/quarter); slider.setAttribute('aria-valuetext',`${t('plan.range',{start:local(source,current.startMs),end:local(source,current.endMs)})}, ${labelOf(source)}`);
+      for (const button of [share,use]) { button.dataset.start = current.startMs; button.dataset.end = current.endMs; button.dataset.participants = JSON.stringify(current.participants.map(p=>p.zone)); button.dataset.mode = findPreferences.mode; }
+      rowNodes.forEach((n,index) => {
+        const person = current.participants[index], start = new Date(current.startMs), ll = coordsOf(n.p.zone), hour = localWall(n.p.zone,start).min/60;
+        let family = 'day', night = hour<6 || hour>=20;
+        if (ll && window.WCSun) {
+          const altitude = window.WCSun.altitude(start,ll[0],ll[1]), rising = window.WCSun.altitude(new Date(current.startMs+600000),ll[0],ll[1])>altitude;
+          night = !window.WCSun.isDay(start,ll[0],ll[1]);
+          family = night ? altitude < -12 ? 'night' : altitude < -4 || rising ? 'twilight' : 'dusk' : rising ? altitude <= 6 ? 'dawn' : 'day' : altitude <= 10 ? 'golden' : 'day';
+        } else family = night ? 'night' : 'day';
+        n.row.dataset.sky = family; n.row.classList.toggle('is-night',night);
+        n.row.style.setProperty('--meeting-sky-a',`var(--sky-${family}-a)`); n.row.style.setProperty('--meeting-sky-b',`var(--sky-${family}-b)`);
+        n.sky.textContent = t('phase.'+(ll ? sunPhase(start,ll,hour) : T.phaseOf(hour)));
+        n.clock.textContent = t('plan.range',{start:time(n.p.zone,current.startMs),end:time(n.p.zone,current.endMs)});
+        const a = date(n.p.zone,current.startMs), b = date(n.p.zone,current.endMs); n.dates.textContent = a === b ? a : t('plan.range',{start:a,end:b});
+        n.status.textContent = t('plan.reason.'+person.reason); n.status.dataset.reason = person.reason;
+        n.band.style.left = `${(current.startMs-first)/span*100}%`; n.band.style.width = `${duration/span*100}%`;
+      });
+      alternativeList.replaceChildren();
+      for (const r of found.filter(r=>r.startMs!==current.startMs).slice(0,2)) {
+        const better = r.participants.filter((p,i)=>p.penaltyUnits<current.participants[i].penaltyUnits).map(p=>labelOf(p.zone));
+        const worse = r.participants.filter((p,i)=>p.penaltyUnits>current.participants[i].penaltyUnits).map(p=>labelOf(p.zone));
+        const button = make('button','find-item meeting-option'); button.type = 'button'; button.dataset.start = r.startMs; button.dataset.end = r.endMs;
+        const label = better.length ? t('plan.betterFor',{cities:better.join(', ')}) : t('plan.anotherOption');
+        button.append(make('strong','find-main',label),make('span','meeting-option-time',`${local(source,r.startMs)} (${labelOf(source)})`));
+        const tradeoff = [better.length ? t('plan.easesFor',{cities:better.join(', ')}) : t('plan.noImprovement'), worse.length ? t('plan.harderFor',{cities:worse.join(', ')}) : t('plan.noWorse')].join(' ');
+        button.append(make('span','find-sub',tradeoff));
+        const localSummary = make('span','meeting-option-locals'); localSummary.textContent = r.participants.map(p=>`${labelOf(p.zone)}: ${time(p.zone,r.startMs)}, ${t('plan.reason.'+p.reason)}`).join(' / '); button.append(localSummary);
+        button.addEventListener('click',()=>{current=r;paint();slider.focus({preventScroll:true});}); alternativeList.append(button);
+      }
+      alternatives.hidden = !alternativeList.childElementCount;
+    }
+    paint();
+  }
   el.planFind.addEventListener('click', () => { if (el.planFindPanel.hidden) openFind(); else closeFind(true); });
   el.planFindPanel.addEventListener('click', (e) => {
-    const b = e.target.closest('button.find-item');
+    const b = e.target.closest('button.find-commit');
     if (!b || !settings) return;
     const startMs = +b.dataset.start, endMs = +b.dataset.end;
     if (b.dataset.mode === 'next' && startMs < Date.now()) { openFind(); return; }
     const participants = JSON.parse(b.dataset.participants);
     closeFind(true);
     commitInterval(startMs, endMs, participants);
+    if (b.dataset.share === 'true') copyOut(slotText(), null);
   });
   el.planFindPanel.addEventListener('keydown', (e) => {
     if (e.key !== 'Escape' && e.target.matches('input, select')) return;

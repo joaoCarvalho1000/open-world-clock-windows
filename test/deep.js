@@ -833,9 +833,9 @@ module.exports = (w, app) => {
         const p = document.getElementById('planFindPanel'), b = document.getElementById('planFind');
         return { open: !p.hidden, expanded: b.getAttribute('aria-expanded'), summary: document.getElementById('plannerSummary').textContent,
           heads: [...p.querySelectorAll('.find-head')].map((n) => n.textContent), intro: [...p.querySelectorAll('.find-intro')].map(n => n.textContent).at(-1) || '',
-          starts: [...p.querySelectorAll('.find-item')].map(n => +n.dataset.start), ends: [...p.querySelectorAll('.find-item')].map(n => +n.dataset.end),
+          starts: [p.querySelector('.find-commit'),...p.querySelectorAll('.meeting-option')].filter(Boolean).map(n => +n.dataset.start), ends: [p.querySelector('.find-commit'),...p.querySelectorAll('.meeting-option')].filter(Boolean).map(n => +n.dataset.end),
           mode: p.querySelector('[data-preference=mode]')?.value, objective: p.querySelector('[data-preference=objective]')?.value,
-          local: [...p.querySelectorAll('.recommended .find-local')].map(n => n.textContent), past: !!p.querySelector('.recommended strong'),
+          local: [...p.querySelectorAll('.meeting-city')].map(n => n.textContent), statuses: [...p.querySelectorAll('.meeting-status')].map(n => n.textContent), why:p.querySelector('.meeting-why')?.textContent, past: !!p.querySelector('.meeting-warning:not([hidden])'),
           items: [...p.querySelectorAll('.find-item')].map((n) => [n.className.replace('find-item ', ''), n.querySelector('.find-main').textContent, n.querySelector('.find-sub').textContent]),
           focus: document.activeElement && (document.activeElement.id || document.activeElement.dataset.preference || document.activeElement.className), time: document.getElementById('convTime').value,
           bands: document.querySelectorAll('#planner .plan-best').length, overlaps: document.querySelectorAll('#planner .plan-overlap').length };
@@ -846,14 +846,21 @@ module.exports = (w, app) => {
       await run(() => { const select = document.querySelector('#planFindPanel [data-preference=mode]'); select.value = 'explore'; select.focus(); select.dispatchEvent(new Event('change', { bubbles:true })); });
       bs = await run(findState);
       check('Explore Sep 24 balances five cities at 09:00 New York with three working, no avoid hours and dated reasons', five.length === 5 && bs.summary === 'No overlap' && bs.open && bs.expanded === 'true'
-        && bs.items[0][0] === 'recommended' && bs.items[0][1] === 'Recommended: 1 h' && bs.starts[0] === Date.parse('2026-09-24T13:00:00Z') && bs.ends[0] === Date.parse('2026-09-24T14:00:00Z')
-        && bs.items[0][2] === '3 of 5 working. Everyone within acceptable or preferred hours.' && bs.local.length === 5 && bs.local.every(text => /Sep 24/.test(text))
+        && bs.items.length === 2 && bs.starts[0] === Date.parse('2026-09-24T13:00:00Z') && bs.ends[0] === Date.parse('2026-09-24T14:00:00Z')
+        && bs.statuses.filter(s=>s==='Working').length === 3 && !bs.statuses.includes('Avoid') && bs.why.includes('Singapore') && bs.local.length === 5 && bs.local.every(text => /Sep 24/.test(text))
         && bs.intro === 'Exploring Thu, Sep 24, in New York.' && bs.past === (Date.parse('2026-09-24T13:00:00Z') < Date.now()) && bs.time === '10:00' && bs.focus === 'mode' && bs.bands === 0, JSON.stringify(bs));
+      const linked = await run(async () => {
+        const slider=document.getElementById('meetingPreviewSlider'), track=document.querySelector('.meeting-track'), initial=slider.value;
+        slider.value=String(+slider.value+1);slider.dispatchEvent(new Event('input',{bubbles:true}));slider.dispatchEvent(new Event('change',{bubbles:true}));
+        const moved={start:+document.querySelector('.find-commit').dataset.start,kind:document.querySelector('[data-preview-kind]').dataset.previewKind,sameTrack:document.querySelector('.meeting-track')===track,bands:[...document.querySelectorAll('.meeting-band')].map(n=>n.style.left)};
+        slider.value=initial;slider.dispatchEvent(new Event('input',{bubbles:true}));slider.dispatchEvent(new Event('change',{bubbles:true}));return moved;
+      });
+      check('linked planner preview moves every band by the same quarter hour without replacing its captured track', linked.start===Date.parse('2026-09-24T13:15:00Z') && linked.kind==='custom' && linked.sameTrack && linked.bands.length===5 && new Set(linked.bands).size===1,JSON.stringify(linked));
       await run(() => document.activeElement.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true, cancelable: true }))); await sleep(50);
       bs = await run(findState);
       check('Find a time: Escape closes the panel and returns focus to the button; nothing was selected', !bs.open && bs.expanded === 'false' && bs.focus === 'planFind' && bs.time === '10:00', JSON.stringify(bs));
       await run(() => document.getElementById('planFind').click()); await sleep(100);
-      await run(() => document.querySelector('#planFindPanel .find-item').click()); await sleep(150);
+      await run(() => document.querySelector('#planFindPanel .find-commit:not([data-share])').click()); await sleep(150);
       const bc = await run(() => ({ time: document.getElementById('convTime').value, zone: document.getElementById('convZone').value, ny: document.querySelector('.card[data-zone="America/New_York"] .hm').textContent,
         sel: document.getElementById('planSel').textContent, m: window.WCConverter && window.WCConverter.state ? window.WCConverter.state().meeting : null, focus: document.activeElement && document.activeElement.id }));
       check('picking the balanced compromise commits 09:00 to 10:00 New York with all five participants', bc.time === '09:00' && bc.zone === 'America/New_York' && bc.ny === '09:00' && bc.sel === 'Thu, Sep 24, 09:00 to 10:00 (New York)' && bc.m.startMs === Date.parse('2026-09-24T13:00:00Z') && bc.m.endMs === Date.parse('2026-09-24T14:00:00Z') && bc.m.participants.length === 5 && bc.focus === 'planFind', JSON.stringify(bc));
@@ -861,7 +868,7 @@ module.exports = (w, app) => {
       await run(setConv, '10:00', '2026-07-04', 'America/New_York'); await sleep(100); // Saturday
       await run(() => document.getElementById('planFind').click()); await sleep(100);
       bs = await run(findState);
-      check('Explore weekend retains honest zero-working compromises and never claims a work overlap', bs.mode === 'explore' && bs.items.length === 3 && bs.items.every(item => item[2].startsWith('0 of 5 working.')) && bs.starts[0] === Date.parse('2026-07-04T13:00:00Z') && bs.summary === 'No overlap', JSON.stringify(bs));
+      check('Explore weekend retains honest zero-working compromises and never claims a work overlap', bs.mode === 'explore' && bs.items.length === 2 && bs.statuses.length === 5 && !bs.statuses.includes('Working') && bs.starts[0] === Date.parse('2026-07-04T13:00:00Z') && bs.summary === 'No overlap', JSON.stringify(bs));
       await run(() => document.getElementById('planFind').click());
       await setZonesUI(['Europe/Lisbon', 'Asia/Tokyo'], ['Lisbon', 'Tokyo']);
       await run(() => document.getElementById('btnPlanner').click()); await sleep(150);
@@ -2212,7 +2219,7 @@ module.exports = (w, app) => {
       await run(() => document.getElementById('convClear').click()); await run(setConv, '10:00', '2026-09-24', 'America/New_York'); await sleep(100);
       const best = await run(async () => {
         document.getElementById('planFind').click(); await new Promise(r => setTimeout(r, 50));
-        const button = document.querySelector('#planFindPanel .find-item'), start = +button.dataset.start, end = +button.dataset.end, participants = JSON.parse(button.dataset.participants);
+        const button = document.querySelector('#planFindPanel .find-commit:not([data-share])'), start = +button.dataset.start, end = +button.dataset.end, participants = JSON.parse(button.dataset.participants);
         button.click(); return { start, end, participants, meeting:window.WCConverter.state().meeting, findShown:getComputedStyle(document.getElementById('planFind')).display !== 'none' };
       });
       check('planner: choosing a recommendation commits its exact interval and participants; Find a time stays available', best.meeting.startMs === best.start && best.meeting.endMs === best.end && best.end - best.start === 3600000 && JSON.stringify(best.meeting.participants) === JSON.stringify(best.participants) && best.findShown, JSON.stringify(best));

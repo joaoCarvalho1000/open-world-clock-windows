@@ -539,7 +539,8 @@
       let want = '';
       if (on) {
         const pad = parseFloat(getComputedStyle(planner).paddingBottom) || 0;
-        const natural = Math.ceil(body.getBoundingClientRect().top + body.scrollHeight + pad);
+        const find = $('planFindPanel');
+        const natural = Math.ceil((find.hidden ? body.getBoundingClientRect().top + body.scrollHeight : planner.getBoundingClientRect().top + find.offsetTop + find.offsetHeight) + pad);
         want = $('planFindPanel').hidden ? `min(var(--frame-h), ${natural}px)` : `${natural}px`;
       }
       if (host.style.height !== want) host.style.height = want;
