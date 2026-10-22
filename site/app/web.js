@@ -164,7 +164,7 @@
     const s = W.settings();
     const st = window.WCConverter && window.WCConverter.state();
     if (st && st.error) return '';
-    if (st && st.meeting && st.convert) return W.buildShare(s.zones, null, { zone: st.convert.zone, startMs: st.meeting.startMs, endMs: st.meeting.endMs });
+    if (st && st.meeting && st.convert) return W.buildShare(st.meeting.participants || s.zones, null, { zone: st.meeting.sourceZone || st.convert.zone, startMs: st.meeting.startMs, endMs: st.meeting.endMs });
     return s.zones.length ? W.buildShare(s.zones, currentConversion()) : '';
   };
   // What a Share would carry: 'meeting', 'time', 'cities', 'blocked' (time field error) or 'none' (no city). The host
@@ -248,7 +248,7 @@
     // the meeting's summary and its actions live in the planner: open it (for this visit only, see shim.js linkView)
     const plan = $('btnPlanner');
     if (plan && plan.getAttribute('aria-pressed') !== 'true') plan.click();
-    const ok = window.WCConverter && window.WCConverter.apply(p.z, p.m.startMs, p.m.endMs);
+    const ok = window.WCConverter && window.WCConverter.apply(p.z, p.m.startMs, p.m.endMs, p.zones);
     imported = ok ? { kind: 'meeting', m: p.m } : { kind: 'bad' };
     showImport();
   }
@@ -539,17 +539,19 @@
       let want = '';
       if (on) {
         const pad = parseFloat(getComputedStyle(planner).paddingBottom) || 0;
-        want = `min(var(--frame-h), ${Math.ceil(body.getBoundingClientRect().top + body.scrollHeight + pad)}px)`;
+        const natural = Math.ceil(body.getBoundingClientRect().top + body.scrollHeight + pad);
+        want = $('planFindPanel').hidden ? `min(var(--frame-h), ${natural}px)` : `${natural}px`;
       }
       if (host.style.height !== want) host.style.height = want;
     };
     const queue = () => { if (!queued) { queued = true; requestAnimationFrame(fit); } };
     if (host && app && planner && body && window.ResizeObserver) {
       const ro = new ResizeObserver(queue);
-      const watch = () => { ro.disconnect(); ro.observe(body); for (const n of body.children) ro.observe(n); const head = planner.querySelector('.plan-head'); if (head) ro.observe(head); };
+      const watch = () => { ro.disconnect(); ro.observe(body); ro.observe($('planFindPanel')); for (const n of body.children) ro.observe(n); const head = planner.querySelector('.plan-head'); if (head) ro.observe(head); };
       watch();
       new MutationObserver(() => { watch(); queue(); }).observe(body, { childList: true });
       new MutationObserver(queue).observe(app, { attributes: true, attributeFilter: ['class'] });
+      new MutationObserver(queue).observe($('planFindPanel'), { attributes: true, attributeFilter: ['hidden'] });
       new MutationObserver(queue).observe(planner, { attributes: true, attributeFilter: ['hidden'] });
       window.addEventListener('resize', queue);
     }

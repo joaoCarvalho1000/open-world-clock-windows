@@ -982,6 +982,21 @@ html.backdrop-native .bar input, html.backdrop-native .bar select, html.backdrop
   #zoneSearch:not(:focus), #zoneSearch:not(:focus)::placeholder { forced-color-adjust: none; color: transparent; }
 }
 
+/* Meeting controls use the existing planner palette. */
+.find-controls { display: flex; flex-wrap: wrap; gap: 8px; padding: 4px; }
+.find-controls label, .find-person label { display: flex; flex-direction: column; gap: 4px; }
+.find-controls select, .find-person input[type=time] { min-height: 32px; max-width: 100%; background: var(--bg-solid); color: var(--fg); border: 1px solid var(--fg-dim); border-radius: 6px; font: inherit; padding: 4px; }
+.find-people { padding: 8px 4px; }
+.find-people summary { cursor: pointer; padding: 4px 0; font-weight: 600; }
+.find-person { display: flex; flex-wrap: wrap; gap: 8px; padding: 8px 0; align-items: end; }
+.find-person > label:first-child { flex-direction: row; align-items: center; flex-basis: 100%; }
+.find-item.recommended { background: var(--bg-hover, rgba(127,127,127,.10)); }
+.find-item { gap: 6px; padding: 10px 8px; }
+.find-local { font-variant-numeric: tabular-nums; }
+.find-controls :focus-visible, .find-person :focus-visible, .find-people summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.find-panel { flex: 0 0 auto; position: relative; left: auto; right: auto; max-width: none; max-height: 480px; margin: 8px 0; }
+
 /* ---------- src/renderer/motion/tokens.css ---------- */
 /* Shared motion tokens. Every motion module uses these; do not hardcode durations or easings elsewhere. */
 :root {
