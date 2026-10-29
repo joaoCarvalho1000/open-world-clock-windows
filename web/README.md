@@ -2,7 +2,7 @@
 
 The web version of Open World Clock, live in the hero of the home page, **https://openworldclock.com/**. It is the Windows app's own renderer (`src/renderer/`) running in a browser: the same cards, converter, planner, map, search, shortcuts, themes and languages, from the same source files. Nothing is forked. This folder holds only what a browser needs on top.
 
-The build writes it to `site/app/`, and the home page shows it in a same-origin frame (`#heroApp`). `/app/` is not a page of its own: it says `noindex` (meta and `X-Robots-Tag`), has no canonical, Open Graph, manifest or service worker, and opened on its own it goes to `/` with its hash (`/app/#c=...` becomes `/#c=...`), so older links still open their cities, in the hero.
+The build writes it to `site/app/`, and the home page and dedicated tool pages show it in a same-origin frame (`#heroApp`). `/app/` uses `noindex, indexifembedded` in both its meta tag and `X-Robots-Tag`. This excludes it as a standalone search result while allowing Google to index its content within the parent page. See [Google's embedded indexing guidance](https://developers.google.com/search/blog/2022/01/robots-meta-tag-indexifembedded). It has no canonical, Open Graph, manifest or service worker. Opened on its own it goes to `/` with its hash (`/app/#c=...` becomes `/#c=...`), so older links still open their cities, in the hero.
 
 Free, open source, no telemetry, no account. Cities and settings stay in the browser (`localStorage`, shared with the home page, same origin); the frame makes no requests of its own besides loading its files. The frame loads no analytics: the home page counts the visit, and its `site/assets/analytics.js` listens on the frame's document (same origin) for which parts of the app a visitor tries (`hero_app_used {action}`, real input only, never what is typed or picked; see Analytics in `site/README.md`). Opened on its own, `/app/` sends nothing.
 
@@ -113,7 +113,7 @@ In `site/_headers`: the site-wide policy has `frame-src 'self' https://ko-fi.com
   ! X-Frame-Options
   Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; manifest-src 'none'; worker-src 'none'; media-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; upgrade-insecure-requests
   X-Frame-Options: SAMEORIGIN
-  X-Robots-Tag: noindex
+  X-Robots-Tag: noindex, indexifembedded
 ```
 
 Checked with `wrangler pages dev`. Do not add a `/app` redirect to `site/_redirects`: it would break the frame. `/app/` is not in `sitemap.xml` or `llms.txt`, and no page links to it.

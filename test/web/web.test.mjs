@@ -223,11 +223,11 @@ await check('the app page is only the hero\'s frame: noindex, no canonical, mani
     analytics: !!document.querySelector('script[src*="analytics"]'),
     text: document.head.innerHTML,
   }));
-  eq(head.robots, 'noindex', 'robots meta');
+  eq(head.robots, 'noindex, indexifembedded', 'the app is indexable within its parent page only');
   eq([head.canonical, head.manifest, head.og, head.ld, head.analytics], [false, false, false, false, false], 'canonical, manifest, og, JSON-LD, analytics');
   assert(!/[\u2013\u2014]/.test(head.text), 'no en or em dashes in the head');
   const r = await A.evaluate(async (u) => { const x = await fetch(u); return { robots: x.headers.get('x-robots-tag'), xfo: x.headers.get('x-frame-options'), csp: x.headers.get('content-security-policy') }; }, `${base}/app/`);
-  eq(r.robots, 'noindex', 'X-Robots-Tag');
+  eq(r.robots, 'noindex, indexifembedded', 'the response header agrees with embedded indexing');
   eq(r.xfo, 'SAMEORIGIN', 'X-Frame-Options');
   assert(/frame-ancestors 'self'/.test(r.csp), `frame-ancestors: ${r.csp}`);
   assert(!(await F.evaluate(() => navigator.serviceWorker.getRegistrations().then((x) => x.length))), 'no service worker');
