@@ -195,11 +195,14 @@ jobs:
         run: |
           "$CHROME_PATH" --version
           node test/web/seo.test.mjs
+          node test/web/meeting-planner.test.mjs
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: always()
         with:
           name: website-browser-report
-          path: dist/seo-shots/
+          path: |
+            dist/seo-shots/
+            output/overlap-audit/web/
           if-no-files-found: warn
           retention-days: 14
 

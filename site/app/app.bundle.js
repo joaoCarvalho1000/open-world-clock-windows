@@ -480,8 +480,66 @@ try {
     return { full: pick(cands.filter((c) => c.working === total)), partial: pick(cands.filter((c) => c.working > 0 && c.working < total).sort(cmp)) };
   }
 
+  // Local-only, bounded humane meeting ranking. Integer penalty units are sixths of a point.
+  function recommendTimes(participants, fromMs, untilMs, durationMinutes = 60, objective = 'balanced', preset = 'work') {
+    if (!participants.length || !Number.isFinite(fromMs) || !Number.isFinite(untilMs) || untilMs <= fromMs || untilMs - fromMs > 7 * DAY || !Number.isInteger(durationMinutes) || durationMinutes < 15 || durationMinutes > 120) return [];
+    const minute = 60000, first = Math.ceil(fromMs / (15 * minute)) * 15 * minute;
+    const count = Math.ceil((untilMs - first) / minute) + durationMinutes;
+    const allDays = [0, 1, 2, 3, 4, 5, 6];
+    const distance = (a, b) => Math.min(Math.abs(a - b), 1440 - Math.abs(a - b));
+    const inside = (m, a, b) => a < b ? m >= a && m < b : a > b && (m >= a || m < b);
+    const rows = participants.map((p) => {
+      const work = p.hours || { start: '09:00', end: '17:00', days: [1,2,3,4,5] };
+      const preferred = preset === 'family' ? { start: '09:00', end: '21:00', days: allDays } : work;
+      const a = hhmm(p.acceptableStart || '06:00'), b = hhmm(p.acceptableEnd || '22:00');
+      const ps = hhmm(preferred.start), pe = hhmm(preferred.end);
+      const pieces = offsetPieces(p.zone, first, first + (count + 1) * minute);
+      let piece = 0;
+      const samples = Array.from({ length: Math.max(0, count) }, (_, i) => {
+        const utc = first + i * minute;
+        while (piece + 1 < pieces.length && utc >= pieces[piece][1]) piece++;
+        const wall = utc + pieces[piece][2], m = ((wall / minute % 1440) + 1440) % 1440;
+        const working = workingAtWall(work, wall), pref = workingAtWall(preferred, wall);
+        if (pref && (preset !== 'family' || inside(m, a, b))) return { penalty: 0, reason: working ? 'working' : 'comfortable', working, avoid: false };
+        const acceptable = inside(m, a, b);
+        const nearStart = distance(m, ps), nearEnd = distance(m, pe);
+        const day = new Date(wall).getUTCDay();
+        const offday = preset !== 'family' && !preferred.days.includes(day) && !(ps > pe && m < pe && preferred.days.includes((day + 6) % 7));
+        return { penalty: acceptable ? (offday ? 360 : 120 + Math.min(nearStart, nearEnd)) : 600 + Math.min(distance(m, a), distance(m, b)), reason: !acceptable ? 'avoid' : offday ? 'comfortable' : nearStart <= nearEnd ? 'early' : 'late', working, avoid: !acceptable };
+      });
+      return { p, samples };
+    });
+    const local = (zone, ms) => {
+      const d = new Date(ms), p = parts(zone, d, { ...YMD, hourCycle: 'h23', hour: '2-digit', minute: '2-digit' });
+      return { date: `${p.year}-${p.month}-${p.day}`, time: `${p.hour}:${p.minute}`, offsetMinutes: offsetMinutes(zone, d) };
+    };
+    const candidates = [];
+    for (let startMs = first, index = 0; startMs < untilMs; startMs += 15 * minute, index += 15) {
+      const endMs = startMs + durationMinutes * minute;
+      const people = rows.map(({ p, samples }) => {
+        const interval = samples.slice(index, index + durationMinutes);
+        const worst = interval.reduce((a, b) => b.penalty > a.penalty ? b : a);
+        const working = interval.every((s) => s.working);
+        return { id: p.id || p.zone, zone: p.zone, penaltyUnits: worst.penalty, penalty: worst.penalty / 6, reason: worst.penalty === 0 ? (working ? 'working' : 'comfortable') : worst.reason, working, avoid: interval.some((s) => s.avoid) };
+      });
+      const avoidParticipants = people.filter((p) => p.avoid).length, working = people.filter((p) => p.working).length;
+      const maxPersonPenaltyUnits = Math.max(...people.map((p) => p.penaltyUnits)), sumPersonPenaltyUnits = people.reduce((n, p) => n + p.penaltyUnits, 0);
+      const fairness = [avoidParticipants, maxPersonPenaltyUnits, sumPersonPenaltyUnits, -working, startMs];
+      candidates.push({ startMs, endMs, objective, preset, participants: people, working, total: people.length, avoidParticipants, maxPersonPenaltyUnits, sumPersonPenaltyUnits, score: objective === 'working' ? [-working, ...fairness] : fairness });
+    }
+    candidates.sort((a,b) => { for (let i = 0; i < a.score.length; i++) { const d = a.score[i] - b.score[i]; if (d) return d; } return 0; });
+    const chosen = [];
+    for (const c of candidates) {
+      if (chosen.some((g) => c.startMs < g.endMs && g.startMs < c.endMs)) continue;
+      c.participants.forEach((p) => { p.localStart = local(p.zone, c.startMs); p.localEnd = local(p.zone, c.endMs); });
+      chosen.push(c);
+      if (chosen.length === 3) break;
+    }
+    return chosen;
+  }
+
   window.WCTime = { fmt, parts, offsetMinutes, offsetMinutesUncached, formatOffset, zonedToEpoch, dayDiff, parseTime, splitTimePlace, phaseOf,
-    uniqueClocks, offsetMs, workSpans, worksThroughout, findTimes, _fmtSize: () => fmtCache.size };
+    uniqueClocks, offsetMs, workSpans, worksThroughout, findTimes, recommendTimes, _fmtSize: () => fmtCache.size };
 })();
 } catch (e) { console.error('Open World Clock: time.js failed to start', e); }
 
@@ -601,6 +659,47 @@ try {
 (() => {
   'use strict';
   const en = {
+    'plan.shareTime': 'Share this time', 'plan.useTime': 'Use time in hourly grid',
+    'plan.compareLocal': 'Compare local meeting times', 'plan.seeEveryCity': 'See it from every city',
+    'plan.dragHint': 'Drag the outlined meeting band or move the slider.',
+    'plan.preferred': 'Preferred hours', 'plan.yourMeeting': 'Your meeting', 'plan.axis': '{city} time',
+    'plan.moveTime': 'Move meeting time', 'plan.linkedHint': '15-minute steps. All rows move together.',
+    'plan.otherCompromise': 'A different kind of compromise',
+    'plan.skyMeaning': 'Sky colours describe the local light. Labels describe whether the full meeting fits each person’s day.',
+    'plan.headAvoid': 'Someone is outside their acceptable hours.', 'plan.headWorking': 'In everyone’s working hours.',
+    'plan.headComfortable': 'Preferred hours for everyone.', 'plan.headCompromise': 'A little give and take.',
+    'plan.customTime': 'Custom time',
+    'plan.why.working': '{city} stays in working hours.', 'plan.why.comfortable': '{city} is within acceptable hours.',
+    'plan.why.early': '{city} starts early.', 'plan.why.late': '{city} joins late.', 'plan.why.avoid': '{city} is outside acceptable hours.',
+    'plan.betterFor': 'Easier for {cities}', 'plan.anotherOption': 'Another option',
+    'plan.easesFor': 'Less inconvenience for {cities}.', 'plan.harderFor': 'More inconvenience for {cities}.',
+    'plan.noImprovement': 'No one has an easier time.', 'plan.noWorse': 'No participant has more inconvenience.',
+    'plan.mode': 'Search', 'plan.next': 'Next available', 'plan.explore': 'Explore date',
+    'plan.nextHorizon': 'Upcoming times in the next 48 hours.',
+    'plan.exploreDate': 'Exploring {date}, in {city}.',
+    'plan.pastWarning': 'This time is in the past.',
+    'plan.invalidHours': 'Enter a valid local time to see recommendations.',
+    "plan.objective": "Priority",
+    "plan.balanced": "Balanced",
+    "plan.working": "Working hours",
+    "plan.preset": "Purpose",
+    "plan.work": "Work meeting",
+    "plan.family": "Family call",
+    "plan.duration": "Duration",
+    "plan.participants": "Participants and acceptable hours",
+    "plan.acceptableStart": "Acceptable from",
+    "plan.acceptableEnd": "Acceptable until",
+    "plan.acceptableHint": "Hours are local. An end before the start continues overnight. Explicit working hours take priority in Work meeting.",
+    "plan.choosePeople": "Select at least one participant.",
+    "plan.recommended": "Recommended",
+    "plan.alternative": "Alternative",
+    "plan.reason.working": "Working",
+    "plan.reason.comfortable": "Comfortable",
+    "plan.reason.early": "Early",
+    "plan.reason.late": "Late",
+    "plan.reason.avoid": "Avoid",
+    "plan.avoidTradeoff": "{n} of {total} working. {avoid} outside acceptable hours.",
+    "plan.fairTradeoff": "{n} of {total} working. Everyone within acceptable or preferred hours.",
     'app.title': 'Open World Clock',
     'bar.grip': 'Drag to move',
     'conv.ifIts': 'If it’s',
@@ -746,6 +845,47 @@ try {
     'plan.copy': 'Copy times', 'plan.link': 'Copy link', 'plan.ics': 'Calendar file', 'plan.fix': 'Fix the time to copy or share this meeting',
   };
   const pt = {
+    'plan.shareTime': 'Compartilhar horário', 'plan.useTime': 'Usar horário na grade',
+    'plan.compareLocal': 'Comparar horários locais', 'plan.seeEveryCity': 'Veja pela hora de cada cidade',
+    'plan.dragHint': 'Arraste a faixa da reunião ou mova o controle.',
+    'plan.preferred': 'Horário preferido', 'plan.yourMeeting': 'Sua reunião', 'plan.axis': 'Hora de {city}',
+    'plan.moveTime': 'Mover horário da reunião', 'plan.linkedHint': 'Passos de 15 minutos. Todas as linhas se movem juntas.',
+    'plan.otherCompromise': 'Outra forma de conciliar',
+    'plan.skyMeaning': 'As cores do céu descrevem a luz local. Os rótulos mostram se a reunião inteira cabe no dia de cada pessoa.',
+    'plan.headAvoid': 'Alguém está fora do horário aceitável.', 'plan.headWorking': 'Dentro do expediente de todos.',
+    'plan.headComfortable': 'Horário preferido para todos.', 'plan.headCompromise': 'Um pouco de flexibilidade de cada lado.',
+    'plan.customTime': 'Horário personalizado',
+    'plan.why.working': '{city} continua no expediente.', 'plan.why.comfortable': '{city} está no horário aceitável.',
+    'plan.why.early': '{city} começa cedo.', 'plan.why.late': '{city} participa mais tarde.', 'plan.why.avoid': '{city} está fora do horário aceitável.',
+    'plan.betterFor': 'Mais fácil para {cities}', 'plan.anotherOption': 'Outra opção',
+    'plan.easesFor': 'Menos inconveniência para {cities}.', 'plan.harderFor': 'Mais inconveniência para {cities}.',
+    'plan.noImprovement': 'Não fica mais fácil para ninguém.', 'plan.noWorse': 'Ninguém tem mais inconveniência.',
+    'plan.mode': 'Busca', 'plan.next': 'Próximo horário', 'plan.explore': 'Explorar data',
+    'plan.nextHorizon': 'Próximos horários nas próximas 48 horas.',
+    'plan.exploreDate': 'Explorando {date}, em {city}.',
+    'plan.pastWarning': 'Este horário já passou.',
+    'plan.invalidHours': 'Insira um horário local válido para ver recomendações.',
+    "plan.objective": "Prioridade",
+    "plan.balanced": "Equilibrado",
+    "plan.working": "Expediente",
+    "plan.preset": "Objetivo",
+    "plan.work": "Reunião de trabalho",
+    "plan.family": "Chamada em família",
+    "plan.duration": "Duração",
+    "plan.participants": "Participantes e horários aceitáveis",
+    "plan.acceptableStart": "Aceitável a partir de",
+    "plan.acceptableEnd": "Aceitável até",
+    "plan.acceptableHint": "Horários locais. Um fim anterior ao início continua no dia seguinte. O expediente definido tem prioridade em Reunião de trabalho.",
+    "plan.choosePeople": "Selecione pelo menos um participante.",
+    "plan.recommended": "Recomendado",
+    "plan.alternative": "Alternativa",
+    "plan.reason.working": "Trabalhando",
+    "plan.reason.comfortable": "Confortável",
+    "plan.reason.early": "Cedo",
+    "plan.reason.late": "Tarde",
+    "plan.reason.avoid": "Evitar",
+    "plan.avoidTradeoff": "{n} de {total} no expediente. {avoid} fora do horário aceitável.",
+    "plan.fairTradeoff": "{n} de {total} no expediente. Todos no horário aceitável ou preferido.",
     'app.title': 'Open World Clock',
     'bar.grip': 'Arraste para mover',
     'conv.ifIts': 'Às',
@@ -891,6 +1031,47 @@ try {
     'plan.copy': 'Copiar horários', 'plan.link': 'Copiar link', 'plan.ics': 'Arquivo de calendário', 'plan.fix': 'Corrija o horário para copiar ou compartilhar esta reunião',
   };
   const es = {
+    'plan.shareTime': 'Compartir este horario', 'plan.useTime': 'Usar horario en la cuadrícula',
+    'plan.compareLocal': 'Comparar horas locales', 'plan.seeEveryCity': 'Míralo desde cada ciudad',
+    'plan.dragHint': 'Arrastra la franja de la reunión o mueve el control.',
+    'plan.preferred': 'Horas preferidas', 'plan.yourMeeting': 'Tu reunión', 'plan.axis': 'Hora de {city}',
+    'plan.moveTime': 'Mover hora de la reunión', 'plan.linkedHint': 'Pasos de 15 minutos. Todas las filas se mueven juntas.',
+    'plan.otherCompromise': 'Otra forma de llegar a un acuerdo',
+    'plan.skyMeaning': 'Los colores del cielo describen la luz local. Las etiquetas indican si la reunión completa encaja en el día de cada persona.',
+    'plan.headAvoid': 'Alguien está fuera de sus horas aceptables.', 'plan.headWorking': 'Dentro del horario laboral de todos.',
+    'plan.headComfortable': 'Horas preferidas para todos.', 'plan.headCompromise': 'Un poco de flexibilidad de cada lado.',
+    'plan.customTime': 'Horario personalizado',
+    'plan.why.working': '{city} sigue en horario laboral.', 'plan.why.comfortable': '{city} está en horas aceptables.',
+    'plan.why.early': '{city} empieza temprano.', 'plan.why.late': '{city} participa tarde.', 'plan.why.avoid': '{city} está fuera de sus horas aceptables.',
+    'plan.betterFor': 'Más fácil para {cities}', 'plan.anotherOption': 'Otra opción',
+    'plan.easesFor': 'Menos inconveniencia para {cities}.', 'plan.harderFor': 'Más inconveniencia para {cities}.',
+    'plan.noImprovement': 'No resulta más fácil para nadie.', 'plan.noWorse': 'Nadie tiene más inconveniencia.',
+    'plan.mode': 'Buscar', 'plan.next': 'Próximo horario', 'plan.explore': 'Explorar fecha',
+    'plan.nextHorizon': 'Horarios disponibles en las próximas 48 horas.',
+    'plan.exploreDate': 'Explorando {date}, en {city}.',
+    'plan.pastWarning': 'Este horario ya pasó.',
+    'plan.invalidHours': 'Introduce una hora local válida para ver recomendaciones.',
+    "plan.objective": "Prioridad",
+    "plan.balanced": "Equilibrado",
+    "plan.working": "Horario laboral",
+    "plan.preset": "Objetivo",
+    "plan.work": "Reunión de trabajo",
+    "plan.family": "Llamada familiar",
+    "plan.duration": "Duración",
+    "plan.participants": "Participantes y horas aceptables",
+    "plan.acceptableStart": "Aceptable desde",
+    "plan.acceptableEnd": "Aceptable hasta",
+    "plan.acceptableHint": "Horas locales. Un final anterior al inicio continúa al día siguiente. El horario laboral definido tiene prioridad en Reunión de trabajo.",
+    "plan.choosePeople": "Selecciona al menos un participante.",
+    "plan.recommended": "Recomendado",
+    "plan.alternative": "Alternativa",
+    "plan.reason.working": "Trabajando",
+    "plan.reason.comfortable": "Cómodo",
+    "plan.reason.early": "Temprano",
+    "plan.reason.late": "Tarde",
+    "plan.reason.avoid": "Evitar",
+    "plan.avoidTradeoff": "{n} de {total} en horario laboral. {avoid} fuera del horario aceptable.",
+    "plan.fairTradeoff": "{n} de {total} en horario laboral. Todos en horas aceptables o preferidas.",
     'app.title': 'Open World Clock',
     'bar.grip': 'Arrastra para mover',
     'conv.ifIts': 'A las',
@@ -3323,7 +3504,7 @@ try {
     setInvalid(false); hideConvError();
     // The meeting starts at the converted instant: a planner selection sets its length, any other edit keeps it.
     const want = nextMeeting || meeting; nextMeeting = null;
-    meeting = want && want.endMs > want.startMs ? { startMs: epochMs, endMs: epochMs + (want.endMs - want.startMs) } : null;
+    meeting = want && want.endMs > want.startMs ? { startMs: epochMs, endMs: epochMs + (want.endMs - want.startMs), participants: want.participants } : null;
     convert = { zone, h, mi, epochMs };
     if (document.activeElement !== el.convSlider) el.convSlider.value = h * 60 + Math.round(mi / 15) * 15;
     el.convClear.hidden = false;
@@ -3348,14 +3529,14 @@ try {
     state: () => ({
       error: convError ? convError() : null,
       convert: convert ? { zone: convert.zone, epochMs: convert.epochMs } : null,
-      meeting: meeting ? { startMs: meeting.startMs, endMs: meeting.endMs } : null,
+      meeting: meeting ? { startMs: meeting.startMs, endMs: meeting.endMs, participants: meetingZones(), sourceZone: meetingSource() } : null,
       kind: convError ? 'blocked' : meeting ? 'meeting' : convert ? 'time' : 'cities',
     }),
     // A link's exact meeting (web/web.js): source city, then the interval, committed like a planner selection.
-    apply: (zone, startMs, endMs) => {
+    apply: (zone, startMs, endMs, participants) => {
       if (!settings || !(endMs > startMs) || ![...el.convZone.options].some((o) => o.value === zone)) return false;
       if (el.convZone.value !== zone) el.convZone.value = zone;
-      commitInterval(startMs, endMs);
+      commitInterval(startMs, endMs, participants);
       return !!meeting && meeting.startMs === startMs && meeting.endMs === endMs;
     },
     // Called with state() whenever what a Share would carry changes (the host page's Share label follows it).
@@ -3654,70 +3835,211 @@ try {
     el.planFind.setAttribute('aria-expanded', 'false');
     if (returnFocus) el.planFind.focus({ preventScroll: true }); // the button the panel hung from; a picked result is revealed in the planner, the page stays
   }
+  const findPreferences = { objective: 'balanced', preset: 'work', duration: 60, mode: 'next', people: new Map() };
+  try {
+    const saved = JSON.parse(localStorage.getItem('owc-meeting-preferences') || '{}');
+    if (['balanced','working'].includes(saved.objective)) findPreferences.objective = saved.objective;
+    if (['work','family'].includes(saved.preset)) findPreferences.preset = saved.preset;
+    if ([15,30,45,60,90,120].includes(saved.duration)) findPreferences.duration = saved.duration;
+    for (const [zone,p] of Object.entries(saved.people || {})) if (p && /^([01]\d|2[0-3]):[0-5]\d$/.test(p.acceptableStart) && /^([01]\d|2[0-3]):[0-5]\d$/.test(p.acceptableEnd)) findPreferences.people.set(zone, { included:p.included !== false, acceptableStart:p.acceptableStart, acceptableEnd:p.acceptableEnd });
+  } catch { /* Storage can be unavailable; the planner remains local and usable. */ }
+  function saveFindPreferences() {
+    try { localStorage.setItem('owc-meeting-preferences', JSON.stringify({ ...findPreferences, people:Object.fromEntries(findPreferences.people) })); } catch { /* Keep session preferences when storage is full or unavailable. */ }
+  }
   function openFind() {
     if (!settings || convError || !planYmd) return;
     closeMenu(false); closeChips(false); closeHours(false); closeCopyMenu(false);
-    const src = plannerSource(), zones = settings.zones.filter(supportsZone), hours = zones.map(hoursOf);
-    const dur = meeting ? meeting.endMs - meeting.startMs : 3600000;
-    const prefer = [...new Set([zones.indexOf(LOCAL_ZONE), zones.indexOf(src)])].filter((i) => i >= 0);
-    const hm = (z, ms) => { const p = parts(z, new Date(ms), { hourCycle: 'h23', hour: '2-digit', minute: '2-digit' }); return formatTime(+p.hour % 24, +p.minute); };
-    const range = (r) => t('plan.range', { start: hm(src, r.startMs), end: hm(src, r.endMs) });
-    const nodes = [];
-    const head = (key, vars) => { const h = document.createElement('div'); h.className = 'find-head'; h.textContent = t(key, vars); nodes.push(h); };
-    const item = (r, main, sub, cls) => {
-      const b = document.createElement('button'); b.type = 'button'; b.className = 'find-item ' + cls;
-      b.dataset.start = String(r.startMs); b.dataset.end = String(r.endMs);
-      const a = document.createElement('span'); a.className = 'find-main'; a.textContent = main;
-      const s = document.createElement('span'); s.className = 'find-sub'; s.textContent = sub;
-      b.append(a, s); nodes.push(b);
+    const zones = settings.zones.filter(supportsZone), src = plannerSource(), panel = el.planFindPanel;
+    panel.replaceChildren();
+    const controls = document.createElement('div'); controls.className = 'find-controls';
+    const results = document.createElement('div'); results.setAttribute('aria-live', 'polite');
+    const select = (key, options) => {
+      const label = document.createElement('label'); label.textContent = t('plan.' + key);
+      const input = document.createElement('select'); input.dataset.preference = key;
+      for (const [value, text] of options) { const option = document.createElement('option'); option.value = value; option.textContent = text; input.append(option); }
+      input.value = findPreferences[key];
+      input.addEventListener('change', () => { findPreferences[key] = key === 'duration' ? +input.value : input.value; refresh(); });
+      label.append(input); controls.append(label);
     };
-    const action = (text, run) => {
-      const b = document.createElement('button'); b.type = 'button'; b.className = 'find-action'; b.textContent = text;
-      b.addEventListener('click', run); nodes.push(b);
-    };
-    const found = findDay(src, planYmd, zones, hours, dur, prefer, 3);
-    const intro = document.createElement('div'); intro.className = 'find-intro';
-    intro.textContent = t('plan.findFor', { dur: durText(dur), date: ymdLabel(planYmd), city: labelOf(src) }); nodes.push(intro);
-    if (found.full.length) {
-      head('plan.findAll');
-      for (const r of found.full) item(r, `${range(r)} (${labelOf(src)})`, t('plan.findAllN', { total: r.total }), 'full');
-    } else {
-      if (found.partial.length) {
-        head('plan.findSome');
-        for (const r of found.partial) {
-          const list = r.out.map((i) => labelOf(zones[i])).join(', ');
-          item(r, `${range(r)} (${labelOf(src)})`, t('plan.findSomeN', { n: r.working, total: r.total, list }), 'partial');
-        }
-      } else head('plan.findNone');
-      let next = null, nextYmd = null;
-      for (let k = 1; k <= FIND_DAYS && !next; k++) {
-        const ymd = addYmd(planYmd, k), f = findDay(src, ymd, zones, hours, dur, prefer, 1);
-        if (f.full.length) { next = f.full[0]; nextYmd = ymd; }
+    select('objective', ['balanced','working'].map(k => [k,t('plan.' + k)]));
+    select('preset', ['work','family'].map(k => [k,t('plan.' + k)]));
+    select('duration', [15,30,45,60,90,120].map(m => [m,durText(m * 60000)]));
+    select('mode', ['next','explore'].map(k => [k,t('plan.' + k)]));
+    const people = document.createElement('details'); people.className = 'find-people';
+    const summary = document.createElement('summary'); summary.textContent = t('plan.participants'); people.append(summary);
+    for (const zone of zones) {
+      if (!findPreferences.people.has(zone)) findPreferences.people.set(zone, { included: true, acceptableStart: '06:00', acceptableEnd: '22:00' });
+      const prefs = findPreferences.people.get(zone), row = document.createElement('div'); row.className = 'find-person';
+      const label = document.createElement('label'), check = document.createElement('input'); check.type = 'checkbox'; check.checked = prefs.included;
+      check.addEventListener('change', () => { prefs.included = check.checked; refresh(); });
+      label.append(check, document.createTextNode(labelOf(zone))); row.append(label);
+      for (const key of ['acceptableStart','acceptableEnd']) {
+        const l = document.createElement('label'); l.textContent = t('plan.' + key);
+        const input = document.createElement('input'); input.type = 'time'; input.value = prefs[key]; input.required = true;
+        input.setAttribute('aria-label', labelOf(zone) + ': ' + t('plan.' + key));
+        input.addEventListener('input', () => { if (!input.validity.valid) { results.replaceChildren(); results.textContent = t('plan.invalidHours'); } });
+        input.addEventListener('change', () => { if (input.validity.valid) prefs[key] = input.value; else input.value = prefs[key]; refresh(); });
+        l.append(input); row.append(l);
       }
-      if (next) { head('plan.findNext'); item(next, `${ymdLabel(nextYmd)}, ${range(next)} (${labelOf(src)})`, t('plan.findAllN', { total: next.total }), 'full next'); }
-      else head('plan.findNoNext', { n: FIND_DAYS });
-      // Ways forward that change nothing by themselves: another date, or a look at each city's working hours.
-      if (!next) {
-        head('plan.findTry');
-        action(t('plan.findDate'), () => { closeFind(false); openChips(); });
-        for (const z of zones) action(t('plan.findHours', { city: labelOf(z) }), () => { closeFind(false); openHours(z, el.planFind); });
-      }
+      people.append(row);
     }
-    el.planFindPanel.replaceChildren(...nodes);
-    el.planFindPanel.hidden = false;
-    el.planFind.setAttribute('aria-expanded', 'true');
-    const first = findItems()[0];
-    if (first) first.focus(); else el.planFindPanel.focus();
+    const hint = document.createElement('p'); hint.className = 'find-intro'; hint.textContent = t('plan.acceptableHint'); people.append(hint);
+    panel.append(controls, people, results);
+    function refresh() {
+      results.setAttribute('aria-live','polite');
+      if (people.querySelector('input:invalid')) { results.replaceChildren(); results.textContent = t('plan.invalidHours'); return; }
+      saveFindPreferences();
+      const participants = zones.filter(z => findPreferences.people.get(z).included).map(zone => ({ zone, hours: hoursOf(zone), ...findPreferences.people.get(zone) }));
+      const [y,m,d] = planYmd.split('-').map(Number), [ny,nm,nd] = addYmd(planYmd,1).split('-').map(Number);
+      const now = Date.now(), from = findPreferences.mode === 'next' ? now : T.zonedToEpoch(src,y,m,d,0,0);
+      const until = findPreferences.mode === 'next' ? now + 48 * 3600000 : T.zonedToEpoch(src,ny,nm,nd,0,0);
+      const found = T.recommendTimes(participants, from, until, findPreferences.duration, findPreferences.objective, findPreferences.preset);
+      results.replaceChildren();
+      if (!found.length) { results.textContent = t('plan.choosePeople'); return; }
+      const searchLabel = document.createElement('p'); searchLabel.className = 'find-intro'; searchLabel.textContent = findPreferences.mode === 'next' ? t('plan.nextHorizon') : t('plan.exploreDate', {date:ymdLabel(planYmd),city:labelOf(src)}); results.append(searchLabel);
+      buildMeetingWorkspace(results, participants, found, from, until, src);
+    }
+    refresh(); panel.hidden = false; el.planFind.setAttribute('aria-expanded', 'true'); controls.querySelector('select').focus();
+  }
+  // Cached search results plus a lightweight single-interval preview. Moving the band never searches the horizon.
+  function buildMeetingWorkspace(host, participants, found, from, until, source) {
+    host.setAttribute('aria-live','off');
+    const quarter = 900000, duration = findPreferences.duration * 60000;
+    const first = Math.ceil(from / quarter) * quarter, last = Math.floor((until - 1) / quarter) * quarter;
+    const trackEnd = last + duration, span = trackEnd - first;
+    let current = found[0], raf = 0, pending = null;
+    const make = (tag, cls, text) => { const node = document.createElement(tag); node.className = cls; if (text) node.textContent = text; return node; };
+    const time = (zone, ms) => T.fmt(zone, { hour:'2-digit', minute:'2-digit', hour12:!!settings.hour12 }, locale()).format(new Date(ms));
+    const date = (zone, ms) => T.fmt(zone, { weekday:'short', month:'short', day:'numeric', year:'numeric' }, locale()).format(new Date(ms));
+    const local = (zone, ms) => `${date(zone, ms)}, ${time(zone, ms)}`;
+    const summary = make('section', 'meeting-summary');
+    const text = make('div', 'meeting-summary-text');
+    const heading = make('h2', 'meeting-headline'), why = make('p', 'meeting-why'), selectedLabel = make('p', 'meeting-selection');
+    const warning = make('p', 'meeting-warning', t('plan.pastWarning'));
+    text.append(heading, selectedLabel, why, warning);
+    const actions = make('div', 'meeting-actions');
+    const share = make('button', 'pill meeting-share find-commit', t('plan.shareTime')); share.type = 'button'; share.dataset.share = 'true';
+    const use = make('button', 'pill find-commit', t('plan.useTime')); use.type = 'button';
+    actions.append(share, use); summary.append(text, actions);
+    const workspace = make('section', 'meeting-workspace'); workspace.setAttribute('aria-label', t('plan.compareLocal'));
+    const guide = make('div', 'meeting-guide'), guideText = make('div', '');
+    guideText.append(make('h3', '', t('plan.seeEveryCity')), make('p', '', t('plan.dragHint')));
+    const legend = make('div', 'meeting-legend');
+    for (const key of ['preferred','yourMeeting']) { const item = make('span', ''); item.append(make('i', 'meeting-swatch ' + key), document.createTextNode(t('plan.' + key))); legend.append(item); }
+    guide.append(guideText, legend); workspace.append(guide);
+    const axis = make('div', 'meeting-axis'), axisLabel = make('span', 'meeting-axis-label', t('plan.axis', {city:labelOf(source)})), ticks = make('div','meeting-ticks');
+    for (let n = 0; n <= 4; n++) {
+      const ms = Math.round((first + (Math.ceil(until/quarter)*quarter-first)*n/4)/quarter)*quarter;
+      const tick = make('span','',time(source,ms)); tick.dataset.tick = n; tick.title = local(source,ms); tick.style.left = `${(ms-first)/span*100}%`;
+      if (n === 0 || n === 4) tick.append(make('small','',T.fmt(source,{month:'short',day:'numeric'},locale()).format(new Date(ms))));
+      ticks.append(tick);
+    }
+    axis.append(axisLabel,ticks); workspace.append(axis);
+    const rows = make('div','meeting-rows'), rowNodes = [];
+    for (const p of participants) {
+      const row = make('div','meeting-city'); row.dataset.zone = p.zone;
+      const identity = make('div','meeting-identity'), name = make('strong','', labelOf(p.zone)), sky = make('span','meeting-sky'); identity.append(name,sky);
+      const body = make('div','meeting-city-body'), readout = make('div','meeting-readout'), values = make('div','');
+      const clock = make('span','meeting-clock'), dates = make('span','meeting-date'), status = make('span','meeting-status'); values.append(clock,dates); readout.append(values,status);
+      const track = make('div','meeting-track'); track.setAttribute('aria-hidden','true');
+      const hours = findPreferences.preset === 'family' ? { start:'09:00',end:'21:00',days:[0,1,2,3,4,5,6] } : p.hours;
+      let spans = T.workSpans(p.zone,hours,first,trackEnd);
+      if (findPreferences.preset === 'family') {
+        const acceptable = T.workSpans(p.zone,{start:p.acceptableStart,end:p.acceptableEnd,days:[0,1,2,3,4,5,6]},first,trackEnd);
+        spans = spans.flatMap(([a,b]) => acceptable.map(([c,d]) => [Math.max(a,c),Math.min(b,d)]).filter(([a,b]) => b>a));
+      }
+      for (const [a,b] of spans) { const work = make('span','meeting-preferred'); work.style.left = `${(a-first)/span*100}%`; work.style.width = `${(b-a)/span*100}%`; track.append(work); }
+      const band = make('span','meeting-band'); track.append(band);
+      body.append(readout,track); row.append(identity,body); rows.append(row); rowNodes.push({p,row,sky,clock,dates,status,band,track});
+      // Capture stays on this stable track; preview updates text/styles without replacing rows.
+      let pointer = null, grab = 0;
+      const move = (event) => { const box = track.getBoundingClientRect(); queue(first + (event.clientX-box.left)/box.width*span-grab); };
+      track.addEventListener('pointerdown', event => {
+        if (event.button !== 0 || pointer !== null) return;
+        const box = track.getBoundingClientRect(); pointer = event.pointerId;
+        grab = event.target === band ? first + (event.clientX-box.left)/box.width*span-current.startMs : 0;
+        track.setPointerCapture(pointer); event.preventDefault(); move(event);
+      });
+      track.addEventListener('pointermove', event => { if (pointer === event.pointerId) move(event); });
+      const stop = event => { if (pointer !== event.pointerId) return; if (pending !== null) flush(); if (track.hasPointerCapture(pointer)) track.releasePointerCapture(pointer); pointer = null; };
+      track.addEventListener('pointerup',stop); track.addEventListener('pointercancel',stop); track.addEventListener('lostpointercapture',()=>{pointer=null;});
+    }
+    workspace.append(rows);
+    const sliderRow = make('div','meeting-slider-row'), sliderLabel = make('label','',t('plan.moveTime')), slider = make('input','meeting-slider');
+    slider.id = 'meetingPreviewSlider'; slider.type = 'range'; slider.min = '0'; slider.max = String((last-first)/quarter); slider.step = '1'; sliderLabel.htmlFor = slider.id;
+    slider.addEventListener('input', () => queue(first + +slider.value * quarter));
+    slider.addEventListener('change', () => { if (pending !== null) flush(); });
+    sliderRow.append(sliderLabel,slider); workspace.append(sliderRow,make('p','meeting-hint',t('plan.linkedHint')));
+    const alternatives = make('section','meeting-alternatives'); alternatives.append(make('h3','',t('plan.otherCompromise')));
+    const alternativeList = make('div','meeting-options'); alternatives.append(alternativeList);
+    const note = make('p','meeting-sky-note',t('plan.skyMeaning'));
+    host.append(summary,workspace,alternatives,note);
+    function queue(ms) {
+      pending = Math.max(first, Math.min(last, Math.round(ms/quarter)*quarter));
+      if (!raf) raf = requestAnimationFrame(flush);
+    }
+    function flush() {
+      if (raf) cancelAnimationFrame(raf); raf = 0;
+      const ms = pending; pending = null;
+      if (ms === null || ms === current.startMs) return;
+      current = found.find(r => r.startMs === ms) || T.recommendTimes(participants,ms,ms+1,findPreferences.duration,findPreferences.objective,findPreferences.preset)[0];
+      paint();
+    }
+    function paint() {
+      const selected = found.findIndex(r => r.startMs === current.startMs), now = Date.now();
+      host.dataset.previewStart = current.startMs; host.dataset.previewEnd = current.endMs;
+      host.dataset.previewKind = selected === 0 ? 'recommended' : selected > 0 ? 'alternative' : 'custom';
+      heading.textContent = t(current.avoidParticipants ? 'plan.headAvoid' : current.working === current.total ? 'plan.headWorking' : current.maxPersonPenaltyUnits === 0 ? 'plan.headComfortable' : 'plan.headCompromise');
+      selectedLabel.textContent = `${t(selected === 0 ? 'plan.recommended' : selected > 0 ? 'plan.alternative' : 'plan.customTime')}: ${t('plan.range',{start:local(source,current.startMs),end:date(source,current.startMs) === date(source,current.endMs) ? time(source,current.endMs) : local(source,current.endMs)})} (${labelOf(source)})`;
+      why.textContent = current.participants.map(p => t('plan.why.'+p.reason,{city:labelOf(p.zone)})).join(' ');
+      warning.hidden = current.startMs >= now;
+      slider.value = String((current.startMs-first)/quarter); slider.setAttribute('aria-valuetext',`${t('plan.range',{start:local(source,current.startMs),end:local(source,current.endMs)})}, ${labelOf(source)}`);
+      for (const button of [share,use]) { button.dataset.start = current.startMs; button.dataset.end = current.endMs; button.dataset.participants = JSON.stringify(current.participants.map(p=>p.zone)); button.dataset.mode = findPreferences.mode; }
+      rowNodes.forEach((n,index) => {
+        const person = current.participants[index], start = new Date(current.startMs), ll = coordsOf(n.p.zone), hour = localWall(n.p.zone,start).min/60;
+        let family = 'day', night = hour<6 || hour>=20;
+        if (ll && window.WCSun) {
+          const altitude = window.WCSun.altitude(start,ll[0],ll[1]), rising = window.WCSun.altitude(new Date(current.startMs+600000),ll[0],ll[1])>altitude;
+          night = !window.WCSun.isDay(start,ll[0],ll[1]);
+          family = night ? altitude < -12 ? 'night' : altitude < -4 || rising ? 'twilight' : 'dusk' : rising ? altitude <= 6 ? 'dawn' : 'day' : altitude <= 10 ? 'golden' : 'day';
+        } else family = night ? 'night' : 'day';
+        n.row.dataset.sky = family; n.row.classList.toggle('is-night',night);
+        n.row.style.setProperty('--meeting-sky-a',`var(--sky-${family}-a)`); n.row.style.setProperty('--meeting-sky-b',`var(--sky-${family}-b)`);
+        n.sky.textContent = t('phase.'+(ll ? sunPhase(start,ll,hour) : T.phaseOf(hour)));
+        n.clock.textContent = t('plan.range',{start:time(n.p.zone,current.startMs),end:time(n.p.zone,current.endMs)});
+        const a = date(n.p.zone,current.startMs), b = date(n.p.zone,current.endMs); n.dates.textContent = a === b ? a : t('plan.range',{start:a,end:b});
+        n.status.textContent = t('plan.reason.'+person.reason); n.status.dataset.reason = person.reason;
+        n.band.style.left = `${(current.startMs-first)/span*100}%`; n.band.style.width = `${duration/span*100}%`;
+      });
+      alternativeList.replaceChildren();
+      for (const r of found.filter(r=>r.startMs!==current.startMs).slice(0,2)) {
+        const better = r.participants.filter((p,i)=>p.penaltyUnits<current.participants[i].penaltyUnits).map(p=>labelOf(p.zone));
+        const worse = r.participants.filter((p,i)=>p.penaltyUnits>current.participants[i].penaltyUnits).map(p=>labelOf(p.zone));
+        const button = make('button','find-item meeting-option'); button.type = 'button'; button.dataset.start = r.startMs; button.dataset.end = r.endMs;
+        const label = better.length ? t('plan.betterFor',{cities:better.join(', ')}) : t('plan.anotherOption');
+        button.append(make('strong','find-main',label),make('span','meeting-option-time',`${local(source,r.startMs)} (${labelOf(source)})`));
+        const tradeoff = [better.length ? t('plan.easesFor',{cities:better.join(', ')}) : t('plan.noImprovement'), worse.length ? t('plan.harderFor',{cities:worse.join(', ')}) : t('plan.noWorse')].join(' ');
+        button.append(make('span','find-sub',tradeoff));
+        const localSummary = make('span','meeting-option-locals'); localSummary.textContent = r.participants.map(p=>`${labelOf(p.zone)}: ${time(p.zone,r.startMs)}, ${t('plan.reason.'+p.reason)}`).join(' / '); button.append(localSummary);
+        button.addEventListener('click',()=>{current=r;paint();slider.focus({preventScroll:true});}); alternativeList.append(button);
+      }
+      alternatives.hidden = !alternativeList.childElementCount;
+    }
+    paint();
   }
   el.planFind.addEventListener('click', () => { if (el.planFindPanel.hidden) openFind(); else closeFind(true); });
   el.planFindPanel.addEventListener('click', (e) => {
-    const b = e.target.closest('button.find-item');
+    const b = e.target.closest('button.find-commit');
     if (!b || !settings) return;
     const startMs = +b.dataset.start, endMs = +b.dataset.end;
+    if (b.dataset.mode === 'next' && startMs < Date.now()) { openFind(); return; }
+    const participants = JSON.parse(b.dataset.participants);
     closeFind(true);
-    commitInterval(startMs, endMs);
+    commitInterval(startMs, endMs, participants);
+    if (b.dataset.share === 'true') copyOut(slotText(), null);
   });
   el.planFindPanel.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape' && e.target.matches('input, select')) return;
     const items = findItems(), i = items.indexOf(document.activeElement);
     if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); closeFind(true); }
     else if ((e.key === 'ArrowDown' || e.key === 'ArrowUp') && items.length) {
@@ -3836,7 +4158,8 @@ try {
     const p = el.planner, cs = getComputedStyle(p), px = (v) => parseFloat(v) || 0;
     const head = p.querySelector('.plan-head'), narrow = el.app.classList.contains('plan-narrow');
     const headH = head && head.offsetParent ? head.offsetHeight + px(cs.rowGap) : 0;
-    const height = Math.ceil(p.offsetTop + px(cs.paddingTop) + headH + el.planBody.scrollHeight + px(cs.paddingBottom)) + 1;
+    const findH = el.planFindPanel.hidden ? 0 : el.planFindPanel.offsetHeight + 16 + px(cs.rowGap);
+    const height = Math.ceil(p.offsetTop + px(cs.paddingTop) + headH + findH + el.planBody.scrollHeight + px(cs.paddingBottom)) + 1;
     // the label column at the planner's natural width (--plan-label is clamp(150px, 14vw, 220px): 150 there) plus the
     // 12px column gap; a constant, so a window the user widens does not change what is asked for
     const label = narrow ? 0 : 150 + 12;
@@ -3863,7 +4186,7 @@ try {
     const ro = new ResizeObserver(() => { if (settings && plannerOn()) fitWindow(); });
     const watch = () => {
       ro.disconnect();
-      for (const n of [document.querySelector('.bar'), el.convError, $('tip'), el.planner.querySelector('.plan-head'), el.planBody, ...el.planBody.children]) if (n) ro.observe(n);
+      for (const n of [document.querySelector('.bar'), el.convError, $('tip'), el.planner.querySelector('.plan-head'), el.planFindPanel, el.planBody, ...el.planBody.children]) if (n) ro.observe(n);
     };
     watch();
     new MutationObserver(() => { watch(); if (plannerOn()) fitWindow(); }).observe(el.planBody, { childList: true });
@@ -3892,10 +4215,10 @@ try {
     commitInterval(colEdge(start), colEdge(end));
   }
   // Make [startMs, endMs) the meeting and convert at its start (the date follows, in the source city).
-  function commitInterval(startMs, endMs) {
+  function commitInterval(startMs, endMs, participants) {
     if (!settings || !(endMs > startMs)) return; // never a meeting that ends before it starts
     revealNonce++; // an explicit pick is brought into view even when it is the meeting already selected
-    nextMeeting = { startMs, endMs };
+    nextMeeting = { startMs, endMs, participants: participants ? [...new Set(participants.filter(supportsZone))] : meeting ? meetingZones() : settings.zones.filter(supportsZone) };
     setConvEpoch(startMs);
   }
   // The meeting's hours as columns ({ start, end } whole indexes, for the keyboard), or null.
@@ -3917,8 +4240,10 @@ try {
   const utcOff = (zone, ms) => `UTC${T.formatOffset(Math.round(T.offsetMs(zone, ms) / 60000))}`;
   // "Wed, Oct 14, 09:10 to 11:10 (Lisbon)". The end names its own day when it is another day, both dates carry the year
   // when the year changes, and a repeated wall time (a clock set back) adds the UTC offsets: "(New York, UTC-5 to UTC-5)".
+  const meetingZones = () => (meeting && meeting.participants || settings.zones).filter(supportsZone);
+  const meetingSource = () => meetingZones().includes(plannerSource()) ? plannerSource() : meetingZones()[0];
   const slotLabel = () => {
-    const src = plannerSource(), a = hmIn(src, meeting.startMs), b = hmIn(src, meeting.endMs);
+    const src = meetingSource(), a = hmIn(src, meeting.startMs), b = hmIn(src, meeting.endMs);
     const yearChange = a.ymd.slice(0, 4) !== b.ymd.slice(0, 4), day = yearChange ? ymdYear : ymdLabel;
     const end = a.ymd === b.ymd ? formatTime(b.h, b.mi) : `${day(b.ymd)}, ${formatTime(b.h, b.mi)}`;
     const where = repeatedAt(src, meeting.startMs) || repeatedAt(src, meeting.endMs) ? `${labelOf(src)}, ${t('plan.range', { start: utcOff(src, meeting.startMs), end: utcOff(src, meeting.endMs) })}` : labelOf(src);
@@ -3930,7 +4255,7 @@ try {
     const a = new Date(meeting.startMs), b = new Date(meeting.endMs);
     const hm = (z, d) => { const k = clock(z, d); return k.ampm ? `${k.hm} ${k.ampm}` : k.hm; };
     const iso = (ms) => new Date(ms).toISOString().replace(/\.\d{3}Z$/, 'Z');
-    const lines = settings.zones.filter(supportsZone).map((z) => {
+    const lines = meetingZones().map((z) => {
       const f = T.fmt(z, { weekday: 'short', month: 'short', day: 'numeric' }, locale()), da = f.format(a), db = f.format(b);
       if (hmIn(z, meeting.startMs).ymd === hmIn(z, meeting.endMs).ymd) return `${labelOf(z)}: ${t('plan.range', { start: hm(z, a), end: hm(z, b) })}, ${da}`;
       return `${labelOf(z)}: ${t('plan.range', { start: `${hm(z, a)}, ${da}`, end: `${hm(z, b)}, ${db}` })}`;
@@ -3973,7 +4298,7 @@ try {
   el.planLink.addEventListener('click', () => {
     if (!settings || !meeting || convError || !convert) return;
     if (typeof window.WCShareHash === 'function' && typeof window.wc.shareLink === 'function') { const h = window.WCShareHash(); if (h) copyOut(window.wc.shareLink(h), null); else showPlanStatus(t('plan.linkFailed')); return; }
-    const h = window.WCLink && window.WCLink.build(settings.zones.filter(supportsZone), convert.zone, meeting.startMs, meeting.endMs);
+    const h = window.WCLink && window.WCLink.build(meetingZones(), meetingSource(), meeting.startMs, meeting.endMs);
     if (h) copyOut(window.WCLink.HOME + '#' + h, null); else showPlanStatus(t('plan.linkFailed'));
   });
   // A failed calendar file (or a link that cannot be written exactly) stays said beside the meeting until it is retried,
