@@ -10,6 +10,7 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import vm from 'node:vm';
 import { SITE_DIR } from './check-links.mjs';
+import { DEFAULT_KEY, route } from './lib/posthog-proxy.js';
 
 const CONFIG = readFileSync(join(SITE_DIR, 'assets', 'config.js'), 'utf8');
 const ANALYTICS = readFileSync(join(SITE_DIR, 'assets', 'analytics.js'), 'utf8');
@@ -48,6 +49,20 @@ function load(hostname, { dnt = null, gpc = undefined, protocol = 'https:', lang
 
 test('config.js names openworldclock.com as the only analytics host', () => {
   assert.equal(load('example.com').site.siteHost, 'openworldclock.com');
+});
+
+test('browser ingestion token and both proxy deployments select the same project', () => {
+  const r = load('openworldclock.com');
+  const key = r.site.posthogKey;
+  assert.match(key, /^phc_[A-Za-z0-9]{16,64}$/);
+  assert.equal(r.posthog._i[0][0], key);
+  assert.equal(DEFAULT_KEY, key);
+  for (const file of ['./wrangler.toml', './worker/wrangler.toml']) {
+    const config = readFileSync(new URL(file, import.meta.url), 'utf8');
+    const configured = config.match(/^POSTHOG_KEY\s*=\s*"([^"]+)"/m)?.[1];
+    assert.equal(configured, key, file);
+    assert.ok(route('/array/' + key + '/config', { POSTHOG_KEY: configured }));
+  }
 });
 
 for (const host of ['127.0.0.1', 'localhost', 'open-world-clock.pages.dev', 'abc123.open-world-clock.pages.dev', 'www.openworldclock.com', 'worldclock.download']) {
