@@ -147,6 +147,21 @@ for(const lang of ['en','pt','es']) {
   // Curated links on the tool pages give every new comparison an ordinary crawlable entry point.
   for(const slug of ['time-zone-converter','meeting-planner','world-map']) {
     const f=file(lang,slug);let html=fs.readFileSync(f,'utf8').replace(/<!-- seo-discovery -->[\s\S]*?<!-- \/seo-discovery -->\n?/g,'');
+    if (lang === 'es' && slug === 'time-zone-converter') {
+      const source = path.join(ROOT, 'cloudflare', 'editorial', lang, slug);
+      const metadata = JSON.parse(fs.readFileSync(source + '.json', 'utf8'));
+      html = html.replace(/<title>.*?<\/title>/, `<title>${e(metadata.title)} | Open World Clock</title>`)
+        .replace(/(<meta (?:property="og:title"|name="twitter:title") content=")[^"]*"/g, `$1${e(metadata.title)}"`)
+        .replace(/(<meta (?:name="description"|property="og:description"|name="twitter:description") content=")[^"]*"/g, `$1${e(metadata.description)}"`)
+        .replace(/<main[\s\S]*?<\/main>/, () => fs.readFileSync(source + '.html', 'utf8').trim())
+        .replace(/(<script type="application\/ld\+json">)([\s\S]*?)(<\/script>)/, (_, open, json, close) => {
+          const data = JSON.parse(json);
+          const page = data['@graph'].find(node => node['@type'] === 'WebPage');
+          Object.assign(page, {name:metadata.title, description:metadata.description, dateModified:metadata.modified});
+          data['@graph'] = data['@graph'].filter(node => node['@type'] !== 'FAQPage').concat(metadata.schema);
+          return open + '\n' + JSON.stringify(data, null, 2) + '\n' + close;
+        });
+    }
     const routes=slug==='time-zone-converter'?pairs.map(pair=>[p+pairSlug(pair),w.pairHead(...pair.map(k=>cityName(k,lang)))]):[[p+'world-time-now',w.nowTitle],[p+'utc-time',w.utcTitle],[p+'daylight-saving-meetings',w.dstTitle],[p+'always-on-top-world-clock',w.pinTitle]];
     const block='<!-- seo-discovery -->'+section('explore',slug==='time-zone-converter'?w.routes:w.guides,links(routes))+'<!-- /seo-discovery -->\n';
     html=html.replace(/<section class="cta-band"/,block+'<section class="cta-band"');
