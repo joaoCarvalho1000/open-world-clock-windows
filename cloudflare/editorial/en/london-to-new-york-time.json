@@ -1,7 +1,7 @@
 {
   "title": "London to New York Time Difference & Converter (UK ↔ NYC)",
   "description": "London to New York time difference is usually 5 hours (4 around DST flips). Convert 2pm UK to New York, 8pm NYC to London, pick a date, and share.",
-  "modified": "2026-10-05",
+  "modified": "2026-10-30",
   "schema": [
     {
       "@type": "FAQPage",
@@ -19,7 +19,7 @@
           "name": "What is 2pm UK time in New York?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "On a normal 5-hour day, 14:00 in London is 09:00 in New York. Near DST transitions it can be 10:00. Use the converter on this page."
+            "text": "On a normal 5-hour day, 14:00 in London is 09:00 in New York. Near DST transitions it can be 10:00. Use the converter above."
           }
         },
         {

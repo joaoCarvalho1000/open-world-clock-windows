@@ -9,7 +9,8 @@ const ORIGIN='https://openworldclock.com';
 const key=fs.readFileSync(path.join(ROOT,'indexnow-key.txt'),'utf8').trim();
 if(!/^[a-f0-9]{32}$/.test(key)) throw new Error('Invalid IndexNow verification key');
 const stateFile=path.join(ROOT,'.wrangler/seo-indexnow-state.json');
-const previous=fs.existsSync(stateFile)?JSON.parse(fs.readFileSync(stateFile,'utf8')):{};
+let previous = {};
+try { previous = JSON.parse(fs.readFileSync(stateFile, 'utf8')); } catch (error) { if (error.code !== 'ENOENT') throw error; }
 const current={};
 const urls=[...fs.readFileSync(path.join(SITE,'sitemap.xml'),'utf8').matchAll(/<loc>(.*?)<\/loc>/g)].map(m=>m[1]);
 for(const url of urls) {

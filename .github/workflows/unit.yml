@@ -171,6 +171,8 @@ jobs:
         working-directory: cloudflare
       - run: npm audit --audit-level=high
         working-directory: cloudflare
+      - name: Install shared build tooling
+        run: npm ci --ignore-scripts
       - name: Website unit tests and browser settings
         run: node --test 'cloudflare/*.test.mjs' test/web/shim.test.mjs
       - name: Generated site, search metadata, translations and security policy

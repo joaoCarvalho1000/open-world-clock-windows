@@ -2,13 +2,14 @@
 // The shared frame (nav, footer, hreflang) comes from site-chrome.mjs; these tests read the real pages.
 // Run: npm test (in cloudflare/) or node --test cloudflare/site-chrome.test.mjs
 import { test } from 'node:test';
+import { elements, htmlText } from '../scripts/lib/html.mjs';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { check, applyChrome, applyStore, readStore, fileOf, PAGES, LANGS, TAG, HTML_LANG, PREFIX, ORIGIN, SITE_DIR } from './site-chrome.mjs';
 
 const read = (lang, slug) => readFileSync(fileOf(lang, slug), 'utf8');
-const text = (html) => html.replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&gt;/g, '>').replace(/&lt;/g, '<').replace(/\s+/g, ' ').trim();
+const text = htmlText;
 const each = (fn) => { for (const slug of PAGES) for (const lang of LANGS) fn(lang, slug, read(lang, slug)); };
 const alternates = (html) => Object.fromEntries([...html.matchAll(/<link rel="alternate" hreflang="([^"]+)" href="([^"]+)">/g)].map((m) => [m[1], m[2]]));
 
@@ -81,7 +82,7 @@ test('sitemap.xml lists every page in every language, with the same alternates a
   const sitemap = readFileSync(join(SITE_DIR, 'sitemap.xml'), 'utf8');
   for (const slug of PAGES.filter((s) => s !== '404')) for (const lang of LANGS) {
     const loc = ORIGIN + PREFIX[lang] + slug;
-    const entry = (sitemap.match(new RegExp(`<url>\\s*<loc>${loc.replace(/[.?]/g, '\\$&')}</loc>[\\s\\S]*?</url>`)) || [''])[0];
+    const entry = [...sitemap.matchAll(/<url>([\s\S]*?)<\/url>/g)].map(m => m[1]).find(value => (value.match(/<loc>([^<]*)<\/loc>/) || [])[1] === loc) || '';
     assert.ok(entry, loc + ' is in the sitemap');
     const alt = Object.fromEntries([...entry.matchAll(/hreflang="([^"]+)" href="([^"]+)"/g)].map((m) => [m[1], m[2]]));
     assert.deepEqual(alt, alternates(read(lang, slug)), loc);
@@ -95,7 +96,7 @@ test('the Store switch: applyStore flips the hidden attributes and the JSON-LD, 
   const on = applyStore(off, { ...store, live: true });
   assert.match(on, /<a data-store href="x">/);
   assert.match(on, /<a data-store-off hidden href="y">/);
-  assert.match(on, /"installUrl":"https:\/\/apps\.microsoft\.com\/detail\/9TEST"/);
+  assert.equal(JSON.parse(on.slice(on.indexOf('{'))).installUrl, store.storeUrl);
   assert.match(on, /"processorRequirements":"x64 or ARM64"/);
   assert.match(on, /"sameAs":\["https:\/\/apps\.microsoft\.com\/detail\/9TEST","https:\/\/github\.com\/o\/r"\]/);
   assert.equal(applyStore(on, { ...store, live: true }), on, 'applying the same state twice changes nothing');
@@ -106,9 +107,13 @@ test('the Store switch: while storeLive is false no page shows a Store link, win
   const { live, storeUrl } = readStore();
   if (live) return;
   each((lang, slug, html) => {
-    const shown = html.replace(/<(\w+)[^>]*\sdata-store hidden[^>]*>[\s\S]*?<\/\1>/g, '');
-    for (const m of shown.matchAll(/<a [^>]*href="https:\/\/apps\.microsoft\.com[^"]*"/g)) assert.fail(fileOf(lang, slug) + ' shows a Store link: ' + m[0]);
-    assert.ok(!/<code>winget install/.test(shown.replace(/<section[^>]*data-store hidden[\s\S]*?<\/section>/g, '').replace(/<div class="opt" data-store hidden>[\s\S]*?<\/div><\/div>/g, '')), fileOf(lang, slug) + ' shows the winget command');
+    const shown = htmlText(html, { omitHiddenStore: true });
+    // Inspect real parsed anchor ancestry: encoded tags are text, and hidden store subtrees stay hidden.
+    for (const anchor of elements(html).filter(n => n.tag === 'a' && !n.hiddenStore)) {
+      const href = anchor.attr('href');
+      if (href?.startsWith('https:')) assert.notEqual(new URL(href).hostname, 'apps.microsoft.com', fileOf(lang, slug));
+    }
+    assert.ok(!shown.includes('winget install'), fileOf(lang, slug) + ' shows the winget command');
     for (const ld of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) assert.ok(!ld[1].includes(storeUrl), fileOf(lang, slug) + ' JSON-LD links the Store');
   });
 });

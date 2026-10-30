@@ -15,6 +15,7 @@
 //        node scripts/build-web.mjs --check   build to a temporary folder and fail if site/app/ differs (a stale build)
 // Docs: web/README.md
 import fs from 'node:fs';
+import { elements } from './lib/html.mjs';
 import os from 'node:os';
 import path from 'node:path';
 import zlib from 'node:zlib';
@@ -75,8 +76,9 @@ if (!CHECK) {
 
 // ---------- 2. the renderer's page, styles and scripts ----------
 let html = lf(read(path.join(SRC, 'index.html')));
-const styleTags = [...html.matchAll(/<link rel="stylesheet" href="([^"]+)" \/>\n?/g)];
-const scriptTags = [...html.matchAll(/<script src="([^"]+)"><\/script>\n?/g)];
+const rendererElements = elements(html);
+const styleTags = rendererElements.filter(n => n.tag === 'link' && n.attr('rel') === 'stylesheet' && n.attr('href')).map(n => [n.raw + (html.includes(n.raw + '\n') ? '\n' : ''), n.attr('href')]);
+const scriptTags = rendererElements.filter(n => n.tag === 'script' && n.attr('src')).map(n => [n.raw + (html.includes(n.raw + '\n') ? '\n' : ''), n.attr('src')]);
 if (!styleTags.length || !scriptTags.length) fail('no stylesheets or scripts found in src/renderer/index.html');
 if (scriptTags[scriptTags.length - 1][1] !== 'app.js') fail('app.js must be the last script in src/renderer/index.html');
 // every renderer file must be loaded by the page, so nothing is left out of the bundles by mistake

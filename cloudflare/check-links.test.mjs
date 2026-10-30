@@ -58,7 +58,7 @@ function stub(overrides = {}) {
   fn.calls = calls;
   return fn;
 }
-const run = (fetchImpl, siteDir = dir) => checkLinks({ fetchImpl, siteDir, version: VERSION, storePace: 0, storeBackoff: [0, 0] });
+const run = (fetchImpl, siteDir = dir) => checkLinks({ fetchImpl, siteDir, version: VERSION, storePace: 0, storeBackoff: [0, 0], downloadOrigins: [DL] });
 
 before(() => { dir = site(); });
 after(() => { rmSync(dir, { recursive: true, force: true }); });
@@ -67,15 +67,15 @@ test('pass: every link answers, and the downloads match the version and download
   const f = stub();
   const { problems } = await run(f);
   assert.deepEqual(problems, []);
-  assert.ok(f.calls.includes(STORE));
-  assert.ok(f.calls.includes(`https://github.com/${REPO}/issues`));
+  assert.ok(new Set(f.calls).has(STORE));
+  assert.ok(new Set(f.calls).has(`https://github.com/${REPO}/issues`));
   assert.ok(!f.calls.some((u) => u.endsWith('/security/advisories/new')), 'the sign-in-only advisory form is skipped');
-  assert.ok(!f.calls.some((u) => u.includes('github.com/other/') || u.includes('ko-fi.com')), 'only Store and this repo');
+  assert.ok(!f.calls.some((u) => new URL(u).pathname.startsWith('/other/') || new URL(u).hostname === 'ko-fi.com'), 'only Store and this repo');
   assert.ok(!f.calls.some((u) => u.includes('?cid=')), 'campaign-tagged Store links count as the one listing');
-  assert.ok(f.calls.includes(DIRECT_SETUP) && f.calls.includes(DIRECT_PORTABLE), 'the direct Installer and Portable downloads are checked');
+  assert.ok(new Set(f.calls).has(DIRECT_SETUP) && new Set(f.calls).has(DIRECT_PORTABLE), 'the direct Installer and Portable downloads are checked');
   assert.equal(f.calls.filter((u) => u === DIRECT_SETUP).length, 1, 'each download is asked for once');
-  assert.ok(f.calls.includes(`${DL}/Open-World-Clock-1.1.0-portable.exe`), 'an older version linked from the site is checked too');
-  assert.ok(!f.calls.some((u) => u.includes('download.example.org')), 'only the configured download host');
+  assert.ok(new Set(f.calls).has(`${DL}/Open-World-Clock-1.1.0-portable.exe`), 'an older version linked from the site is checked too');
+  assert.ok(!f.calls.some((u) => new URL(u).hostname === 'download.example.org'), 'only the configured download host');
   assert.ok(!f.calls.some((u) => u.startsWith('https://api.github.com/')), 'no GitHub release is looked up');
 });
 
@@ -114,7 +114,7 @@ test('rule 4: the downloads are checked at the URL config.js builds, even when n
     const f = stub();
     const { problems } = await run(f, d);
     assert.deepEqual(problems, []);
-    assert.ok(f.calls.includes(DIRECT_SETUP) && f.calls.includes(DIRECT_PORTABLE));
+    assert.ok(new Set(f.calls).has(DIRECT_SETUP) && new Set(f.calls).has(DIRECT_PORTABLE));
   } finally { rmSync(d, { recursive: true, force: true }); }
 });
 
@@ -125,7 +125,7 @@ test('rule 5: config.js without a downloadBase is reported, and no download is r
     const f = stub();
     const { problems } = await run(f, d);
     assert.deepEqual(problems, ['site/assets/config.js has no downloadBase (the host that serves the installer and portable exe)']);
-    assert.ok(!f.calls.some((u) => u.endsWith('.exe') && u.includes(VERSION) && !u.includes('github.com')));
+    assert.ok(!f.calls.some((u) => u.endsWith('.exe') && u.includes(VERSION) && new URL(u).hostname !== 'github.com'));
   } finally { rmSync(d, { recursive: true, force: true }); }
 });
 
@@ -234,10 +234,10 @@ test('reads the real site: config, download names, and the links it would check'
   const names = downloadPageNames(SITE_DIR);
   assert.deepEqual(names.slice().sort(), [built('portable'), built('setup')], 'download.html names exactly the two files the build makes');
   const urls = collectSiteUrls(SITE_DIR, cfg.githubRepo, cfg.downloadBase);
-  assert.ok(urls.includes('https://github.com/' + cfg.githubRepo));
+  assert.ok(new Set(urls).has('https://github.com/' + cfg.githubRepo));
   for (const kind of ['setup', 'portable']) {
     const direct = cfg.downloadBase + '/' + built(kind);
-    assert.ok(urls.includes(direct), 'the direct ' + kind + ' download is among the checked links');
+    assert.ok(new Set(urls).has(direct), 'the direct ' + kind + ' download is among the checked links');
   }
   assert.ok(!urls.some((u) => u.includes('/releases/download/')), 'no page still sends the exe downloads to GitHub');
   assert.ok(urls.every((u) => u.startsWith('https://apps.microsoft.com/') || u.startsWith(cfg.downloadBase + '/') || u.toLowerCase().startsWith('https://github.com/' + cfg.githubRepo.toLowerCase())));
@@ -378,7 +378,7 @@ test('rules 6 and 7: the download pages in every language name the release files
     mkdirSync(join(d, 'pt'), { recursive: true });
     writeFileSync(join(d, 'pt', 'download.html'), '<code>Open-World-Clock-1.1.0-setup.exe</code> <a href="https://github.com/joaoCarvalho1000/open-world-clock-windows/issues">x</a>');
     assert.ok(downloadPageNames(d).includes('Open-World-Clock-1.1.0-setup.exe'), 'a stale name on pt/download.html is found');
-    assert.ok(collectSiteUrls(d, 'joaoCarvalho1000/open-world-clock-windows').includes('https://github.com/joaoCarvalho1000/open-world-clock-windows/issues'));
+    assert.ok(collectSiteUrls(d, 'joaoCarvalho1000/open-world-clock-windows').some(value => { const url = new URL(value); return url.hostname === 'github.com' && url.pathname === '/joaoCarvalho1000/open-world-clock-windows/issues'; }));
   } finally { rmSync(d, { recursive: true, force: true }); }
 });
 
@@ -392,7 +392,7 @@ test('storeLive false: no Store URL is requested, and a dead Store listing does 
     const { problems } = await run(f, d);
     assert.deepEqual(problems, []);
     assert.ok(!f.calls.some((u) => u.startsWith('https://apps.microsoft.com/')), 'the Store is not asked');
-    assert.ok(f.calls.includes(DIRECT_SETUP) && f.calls.includes(DIRECT_PORTABLE), 'the downloads still are');
+    assert.ok(new Set(f.calls).has(DIRECT_SETUP) && new Set(f.calls).has(DIRECT_PORTABLE), 'the downloads still are');
   } finally { rmSync(d, { recursive: true, force: true }); }
 });
 
