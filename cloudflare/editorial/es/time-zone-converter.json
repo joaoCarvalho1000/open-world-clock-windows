@@ -1,0 +1,37 @@
+{
+  "title": "Convertidor de zonas horarias gratis: ciudades y fechas",
+  "description": "Convierte una hora entre ciudades con fecha y horario de verano incluidos. Escribe 15:00 en Madrid y mira Nueva York. Gratis y sin cuenta.",
+  "published": "2026-09-25",
+  "modified": "2026-10-30",
+  "schema": [
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "¿El convertidor tiene en cuenta el cambio de hora?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sí. Cada conversión usa las reglas de horario de verano de cada ciudad para la fecha elegida. La diferencia entre ciudades puede cambiar durante el año."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Puedo usarlo sin JavaScript?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Los ejemplos y las tablas de esta página se pueden leer sin JavaScript. La herramienta interactiva necesita JavaScript para convertir otras horas y fechas."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Hay app para Windows?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sí. Open World Clock es gratis para Windows 10 y 11 y permite mantener los relojes siempre visibles en el escritorio."
+          }
+        }
+      ]
+    }
+  ]
+}
