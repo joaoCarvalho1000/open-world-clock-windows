@@ -20,7 +20,7 @@ for (const f of pages) {
   const html = readFileSync(join(site, f), 'utf8');
   for (const script of elements(html).filter(n => n.tag === 'script')) {
     if (script.attr('src') !== undefined) continue;
-    const type = script.attr('type');
+    const type = script.attr('type')?.trim();
     if (type && !/^(text|application)\/(javascript|ecmascript)$|^module$/i.test(type)) continue;
     const h = "'sha256-" + createHash('sha256').update(script.content, 'utf8').digest('base64') + "'";
     hashes.set(h, [...(hashes.get(h) || []), f]);
