@@ -1,6 +1,7 @@
 // Search deployment gate. --write-sitemap publishes only canonical HTML pages,
 // with truthful modification dates and reciprocal language alternates.
 import fs from 'node:fs';
+import { elements } from '../scripts/lib/html.mjs';
 import path from 'node:path';
 import { PAGES, LANGS, TAG, ORIGIN, SITE_DIR, PREFIX, fileOf } from './site-chrome.mjs';
 const url = (lang,slug) => ORIGIN+PREFIX[lang]+slug;
@@ -20,13 +21,14 @@ for(const lang of LANGS) for(const slug of PAGES.filter(s=>s!=='404')) {
   if(/<meta[^>]*name="robots"[^>]*content="[^"]*noindex/.test(html)) fail('public page is noindex');
   for(const other of LANGS) if(!html.includes(`hreflang="${TAG[other]}" href="${url(other,slug)}"`)) fail('missing language alternate '+other);
   let modified=dates.get(canonical);
-  for(const m of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) {
-    try { const data=JSON.parse(m[1]);for(const node of data['@graph']||[data]) if(node.dateModified) modified=node.dateModified; }
+  const nodes = elements(html);
+  for(const script of nodes.filter(n => n.tag === 'script' && n.attr('type') === 'application/ld+json')) {
+    try { const data=JSON.parse(script.content);for(const node of data['@graph']||[data]) if(node.dateModified) modified=node.dateModified; }
     catch { fail('invalid JSON-LD'); }
   }
   if(modified && (!/^\d{4}-\d{2}-\d{2}$/.test(modified)||modified>new Date().toISOString().slice(0,10))) fail('invalid lastmod');
-  for(const m of html.matchAll(/<(?:a|img|script|link)\b[^>]*>/g)) {
-    const target=attr(m[0],/^<(?:img|script)/.test(m[0])?'src':'href');
+  for(const node of nodes.filter(n => ['a','img','script','link'].includes(n.tag))) {
+    const target=node.attr(['img','script'].includes(node.tag)?'src':'href');
     if(!target || !target.startsWith('/') || target.startsWith('//')) continue;
     const local=path.join(SITE_DIR,new URL(target,ORIGIN).pathname);
     if(![local,local+'.html',path.join(local,'index.html')].some(p=>fs.existsSync(p))) fail('missing local target '+target);

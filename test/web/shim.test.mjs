@@ -125,8 +125,13 @@ test('VALIDATE has the same keys and gives the same result for every input as sr
   let checked = 0;
   for (const key of mainKeys) {
     for (const input of INPUTS) {
-      const run = (c, v) => evalIn(c, `(() => { const r = ${v}[${JSON.stringify(key)}](${input}); return r === undefined ? 'undefined' : JSON.stringify(r); })()`);
-      assert.equal(run(b.ctx, 'WCWeb.rules.VALIDATE'), run(ctx, 'VALIDATE'), `VALIDATE.${key}(${input})`);
+      const run = (c, web) => {
+        c.testKey = key; c.testInput = evalIn(c, input);
+        return evalIn(c, web
+          ? `(() => { const r = WCWeb.rules.VALIDATE[testKey](testInput); return r === undefined ? 'undefined' : JSON.stringify(r); })()`
+          : `(() => { const r = VALIDATE[testKey](testInput); return r === undefined ? 'undefined' : JSON.stringify(r); })()`);
+      };
+      assert.equal(run(b.ctx, true), run(ctx, false), `VALIDATE.${key}(${input})`);
       checked++;
     }
   }

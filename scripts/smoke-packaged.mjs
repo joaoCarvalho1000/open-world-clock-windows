@@ -58,5 +58,6 @@ try {
   await sleep(800);
   try { rmSync(work, { recursive: true, force: true }); } catch {}
 }
-console.log(`${result.ok ? 'PASS' : 'FAIL'} packaged smoke: ${result.reason}`);
+// Encode control characters from renderer text so one result stays one log record.
+console.log(`${result.ok ? 'PASS' : 'FAIL'} packaged smoke: ${JSON.stringify(result.reason)}`);
 process.exit(result.ok ? 0 : 1);

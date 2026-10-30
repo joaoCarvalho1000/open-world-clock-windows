@@ -28,6 +28,7 @@
 //   OWC_SKIP_LINK_CHECK=1 node ...           skip the check (emergency override): prints a warning and exits 0
 //
 // npm runs it before `npm run deploy` (the predeploy script in package.json), and `npm run links` runs it alone.
+import { linkPolicy, httpsUrl, fetchChecked, DOWNLOAD_ORIGINS } from '../scripts/lib/link-policy.mjs';
 import { readFileSync, readdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -69,22 +70,18 @@ export function readVersion(packageJson = PACKAGE_JSON) {
 
 // Every unique https URL on the Store, on this GitHub repo or on the download host that the site's pages and data
 // files link to.
-export function collectSiteUrls(siteDir, repo, downloadBase) {
+export function collectSiteUrls(siteDir, repo, downloadBase, downloadOrigins = DOWNLOAD_ORIGINS) {
+  const allowed = linkPolicy(repo, downloadBase, downloadOrigins);
   const list = (dir) => { try { return readdirSync(dir).filter((n) => /\.(html|txt)$/.test(n)).map((n) => join(dir, n)); } catch { return []; } };
   const files = [siteDir, ...LANG_DIRS.map((l) => join(siteDir, l))].flatMap(list);
   files.push(join(siteDir, 'api', 'app.json'), join(siteDir, 'site.webmanifest'));
-  const repoBase = 'https://github.com/' + repo.toLowerCase();
-  const dlBase = downloadBase ? String(downloadBase).replace(/\/+$/, '').toLowerCase() + '/' : null;
   const urls = new Set();
   for (const f of files) {
     let text;
     try { text = readFileSync(f, 'utf8'); } catch { continue; }
     for (const m of text.matchAll(/https:\/\/[^\s"'<>()`\\]+/g)) {
       const url = m[0].replace(/&amp;/g, '&').replace(/[.,;:!?]+$/, '');
-      const lower = url.toLowerCase();
-      const onRepo = lower === repoBase || lower.startsWith(repoBase + '/') || lower.startsWith(repoBase + '?') || lower.startsWith(repoBase + '#');
-      const onDownloads = dlBase !== null && lower.startsWith(dlBase);
-      if (!onRepo && !onDownloads && !/^https:\/\/apps\.microsoft\.com\//i.test(url)) continue;
+      if (!allowed(url)) continue;
       if (SKIP_PATHS.some((p) => new URL(url).pathname.endsWith(p))) continue;
       urls.add(url);
     }
@@ -164,22 +161,28 @@ async function drain(res) { try { await res.body?.cancel(); } catch { /* already
 const describe = (res, url) => res.status + (res.url && res.url !== url ? ', ended on ' + res.url : '');
 
 export async function checkLinks({ fetchImpl = globalThis.fetch, siteDir = SITE_DIR, version, config,
-  storePace = 1500, storeBackoff = [3000, 6000] } = {}) {
+  storePace = 1500, storeBackoff = [3000, 6000], downloadOrigins = DOWNLOAD_ORIGINS } = {}) {
   const { storeUrl, storeLive = true, githubRepo, downloadBase, version: siteVersion } = config || readConfig(siteDir);
   if (!version) version = readVersion();
   const problems = [];
   const checked = new Set();
   const repoUrl = 'https://github.com/' + githubRepo;
+  const allowed = linkPolicy(githubRepo, downloadBase, downloadOrigins);
 
   // 8: the site's version builds the direct Installer and Portable URLs, so it must be the version being released
   if (!siteVersion) problems.push('site/assets/config.js has no version, but package.json is ' + version);
   else if (siteVersion !== version) problems.push('site/assets/config.js says ' + siteVersion + ' but package.json is ' + version);
   // 5: the direct Installer and Portable URLs are built from downloadBase
-  const httpsBase = /^https:\/\/[^/]+/i.test(downloadBase || '');
+  const httpsBase = !!httpsUrl(downloadBase);
   if (!downloadBase) problems.push('site/assets/config.js has no downloadBase (the host that serves the installer and portable exe)');
   else if (!httpsBase) problems.push('site/assets/config.js downloadBase ' + downloadBase + ' is not an https URL');
   // 9: the freshness dates in the sitemap, the pages' JSON-LD, llms-full.txt and the privacy policy agree
   problems.push(...checkFreshness(siteDir));
+  // Fail closed before any network call if configuration selects another destination.
+  if (!allowed(repoUrl) || (storeLive && !allowed(storeUrl)) || (httpsBase && !allowed(String(downloadBase).replace(/\/+$/, '') + '/'))) {
+    problems.push('config.js selects a URL outside the link-check destination policy');
+    return { problems, checked: [] };
+  }
 
   // The Store throttles quick repeat visits with a 403 (a live listing answers 200 again a few seconds later), so its
   // requests are spaced out and a 403 or 429 is retried after a pause. Other hosts get one retry on a 5xx.
@@ -191,11 +194,11 @@ export async function checkLinks({ fetchImpl = globalThis.fetch, siteDir = SITE_
     for (let attempt = 0; attempt < tries; attempt++) {
       if (store) { await sleep(lastStoreHit + storePace - Date.now()); lastStoreHit = Date.now(); }
       try {
-        const res = await fetchImpl(url, {
-          method: 'GET', redirect: 'follow',
+        const res = await fetchChecked(fetchImpl, url, {
+          method: 'GET',
           headers: { 'user-agent': UA, accept: 'text/html,application/json;q=0.9,*/*;q=0.8', ...headers },
           signal: AbortSignal.timeout(20000),
-        });
+        }, allowed);
         const retry = attempt < tries - 1 && (store ? res.status === 403 || res.status === 429 || res.status >= 500 : res.status >= 500);
         if (!retry) return res;
         await drain(res);
@@ -251,7 +254,7 @@ export async function checkLinks({ fetchImpl = globalThis.fetch, siteDir = SITE_
   // earns 403s from its throttle.
   const storeKey = (url) => { const u = new URL(url); return (u.origin + u.pathname).toLowerCase(); };
   const storeSeen = new Set([storeKey(storeUrl)]);
-  for (const url of collectSiteUrls(siteDir, githubRepo, downloadBase)) {
+  for (const url of collectSiteUrls(siteDir, githubRepo, downloadBase, downloadOrigins)) {
     if (checked.has(url)) continue;
     if (isStore(url)) {
       if (!storeLive) continue; // hidden until the listing is approved
