@@ -31,6 +31,11 @@
     "electron-builder": "^26.17.0",
     "parse5": "8.0.1"
   },
+  "overrides": {
+    "app-builder-lib": {
+      "minimatch@^10.2.5": "11.0.1"
+    }
+  },
   "build": {
     "appId": "io.joao.worldclock",
     "productName": "Open World Clock",
