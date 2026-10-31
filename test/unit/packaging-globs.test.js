@@ -20,7 +20,7 @@ test('packaging globs preserve directory traversal, dotfiles and exclusions', ()
     ['src/nested', true, true],
     ['src/nested/main.js', false, true],
     ['src/.config.json', false, true],
-    ['src/.smoke', true, false],
+    ['src/.smoke', true, true],
     ['src/.smoke/main.js', false, false],
     ['build', true, true],
     ['build/icon.png', false, true],
