@@ -236,7 +236,7 @@ export function applyStore(html, { live, storeUrl, setupUrl }) {
   html = html.replace(/(\sdata-store(-off)?)(\s+hidden)?(?=[\s>])/g, (m, a, off) => a + ((off ? live : !live) ? ' hidden' : ''));
   html = html.replace(/("installUrl":\s*")[^"]*"/g, `$1${live ? storeUrl : setupUrl}"`);
   html = html.replace(/("processorRequirements":\s*")[^"]*"/g, `$1${live ? 'x64 or ARM64' : 'x64'}"`);
-  const esc = storeUrl.replace(/[.?*+^$()[\]{}|\\/]/g, '\\$&');
+  const esc = RegExp.escape(storeUrl);
   // only the app's sameAs: a Person's list starts with a GitHub profile (github.com/name, no repo), and the Store
   // listing is the app, not its author
   if (live) html = html.replace(/("sameAs":\s*\[)(?!\s*"https:\/\/apps\.microsoft)(?!\s*"https:\/\/github\.com\/[^/"]+")(\s*)/g, `$1$2"${storeUrl}",$2`);
