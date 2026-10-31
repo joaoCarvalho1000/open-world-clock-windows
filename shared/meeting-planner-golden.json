@@ -1,0 +1,5074 @@
+{
+  "version": 1,
+  "penaltyScale": 6,
+  "cases": [
+    {
+      "id": "2026-10-22-balanced",
+      "input": {
+        "participants": [
+          {
+            "id": "Europe/London",
+            "zone": "Europe/London",
+            "hours": {
+              "start": "09:00",
+              "end": "17:00",
+              "days": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          },
+          {
+            "id": "America/New_York",
+            "zone": "America/New_York",
+            "hours": {
+              "start": "09:00",
+              "end": "17:00",
+              "days": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          },
+          {
+            "id": "Pacific/Auckland",
+            "zone": "Pacific/Auckland",
+            "hours": {
+              "start": "09:00",
+              "end": "17:00",
+              "days": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          }
+        ],
+        "fromMs": 1792641600000,
+        "untilMs": 1792728000000,
+        "durationMinutes": 60,
+        "objective": "balanced",
+        "preset": "work"
+      },
+      "expected": [
+        {
+          "startMs": 1792690200000,
+          "endMs": 1792693800000,
+          "objective": "balanced",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "Europe/London",
+              "zone": "Europe/London",
+              "penaltyUnits": 269,
+              "penalty": 44.833333333333336,
+              "reason": "late",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "18:30",
+                "offsetMinutes": 60
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "19:30",
+                "offsetMinutes": 60
+              }
+            },
+            {
+              "id": "America/New_York",
+              "zone": "America/New_York",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "13:30",
+                "offsetMinutes": -240
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "14:30",
+                "offsetMinutes": -240
+              }
+            },
+            {
+              "id": "Pacific/Auckland",
+              "zone": "Pacific/Auckland",
+              "penaltyUnits": 270,
+              "penalty": 45,
+              "reason": "early",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-23",
+                "time": "06:30",
+                "offsetMinutes": 780
+              },
+              "localEnd": {
+                "date": "2026-10-23",
+                "time": "07:30",
+                "offsetMinutes": 780
+              }
+            }
+          ],
+          "working": 1,
+          "total": 3,
+          "avoidParticipants": 0,
+          "maxPersonPenaltyUnits": 270,
+          "sumPersonPenaltyUnits": 539,
+          "score": [
+            0,
+            270,
+            539,
+            -1,
+            1792690200000
+          ]
+        },
+        {
+          "startMs": 1792693800000,
+          "endMs": 1792697400000,
+          "objective": "balanced",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "Europe/London",
+              "zone": "Europe/London",
+              "penaltyUnits": 329,
+              "penalty": 54.833333333333336,
+              "reason": "late",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "19:30",
+                "offsetMinutes": 60
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "20:30",
+                "offsetMinutes": 60
+              }
+            },
+            {
+              "id": "America/New_York",
+              "zone": "America/New_York",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "14:30",
+                "offsetMinutes": -240
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "15:30",
+                "offsetMinutes": -240
+              }
+            },
+            {
+              "id": "Pacific/Auckland",
+              "zone": "Pacific/Auckland",
+              "penaltyUnits": 210,
+              "penalty": 35,
+              "reason": "early",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-23",
+                "time": "07:30",
+                "offsetMinutes": 780
+              },
+              "localEnd": {
+                "date": "2026-10-23",
+                "time": "08:30",
+                "offsetMinutes": 780
+              }
+            }
+          ],
+          "working": 1,
+          "total": 3,
+          "avoidParticipants": 0,
+          "maxPersonPenaltyUnits": 329,
+          "sumPersonPenaltyUnits": 539,
+          "score": [
+            0,
+            329,
+            539,
+            -1,
+            1792693800000
+          ]
+        },
+        {
+          "startMs": 1792697400000,
+          "endMs": 1792701000000,
+          "objective": "balanced",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "Europe/London",
+              "zone": "Europe/London",
+              "penaltyUnits": 389,
+              "penalty": 64.83333333333333,
+              "reason": "late",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "20:30",
+                "offsetMinutes": 60
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "21:30",
+                "offsetMinutes": 60
+              }
+            },
+            {
+              "id": "America/New_York",
+              "zone": "America/New_York",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "15:30",
+                "offsetMinutes": -240
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "16:30",
+                "offsetMinutes": -240
+              }
+            },
+            {
+              "id": "Pacific/Auckland",
+              "zone": "Pacific/Auckland",
+              "penaltyUnits": 150,
+              "penalty": 25,
+              "reason": "early",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-23",
+                "time": "08:30",
+                "offsetMinutes": 780
+              },
+              "localEnd": {
+                "date": "2026-10-23",
+                "time": "09:30",
+                "offsetMinutes": 780
+              }
+            }
+          ],
+          "working": 1,
+          "total": 3,
+          "avoidParticipants": 0,
+          "maxPersonPenaltyUnits": 389,
+          "sumPersonPenaltyUnits": 539,
+          "score": [
+            0,
+            389,
+            539,
+            -1,
+            1792697400000
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-10-22-working",
+      "input": {
+        "participants": [
+          {
+            "id": "Europe/London",
+            "zone": "Europe/London",
+            "hours": {
+              "start": "09:00",
+              "end": "17:00",
+              "days": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          },
+          {
+            "id": "America/New_York",
+            "zone": "America/New_York",
+            "hours": {
+              "start": "09:00",
+              "end": "17:00",
+              "days": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          },
+          {
+            "id": "Pacific/Auckland",
+            "zone": "Pacific/Auckland",
+            "hours": {
+              "start": "09:00",
+              "end": "17:00",
+              "days": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          }
+        ],
+        "fromMs": 1792641600000,
+        "untilMs": 1792728000000,
+        "durationMinutes": 60,
+        "objective": "working",
+        "preset": "work"
+      },
+      "expected": [
+        {
+          "startMs": 1792699200000,
+          "endMs": 1792702800000,
+          "objective": "working",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "Europe/London",
+              "zone": "Europe/London",
+              "penaltyUnits": 419,
+              "penalty": 69.83333333333333,
+              "reason": "late",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "21:00",
+                "offsetMinutes": 60
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "22:00",
+                "offsetMinutes": 60
+              }
+            },
+            {
+              "id": "America/New_York",
+              "zone": "America/New_York",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "16:00",
+                "offsetMinutes": -240
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "17:00",
+                "offsetMinutes": -240
+              }
+            },
+            {
+              "id": "Pacific/Auckland",
+              "zone": "Pacific/Auckland",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-23",
+                "time": "09:00",
+                "offsetMinutes": 780
+              },
+              "localEnd": {
+                "date": "2026-10-23",
+                "time": "10:00",
+                "offsetMinutes": 780
+              }
+            }
+          ],
+          "working": 2,
+          "total": 3,
+          "avoidParticipants": 0,
+          "maxPersonPenaltyUnits": 419,
+          "sumPersonPenaltyUnits": 419,
+          "score": [
+            -2,
+            0,
+            419,
+            419,
+            -2,
+            1792699200000
+          ]
+        },
+        {
+          "startMs": 1792681200000,
+          "endMs": 1792684800000,
+          "objective": "working",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "Europe/London",
+              "zone": "Europe/London",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "16:00",
+                "offsetMinutes": 60
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "17:00",
+                "offsetMinutes": 60
+              }
+            },
+            {
+              "id": "America/New_York",
+              "zone": "America/New_York",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "11:00",
+                "offsetMinutes": -240
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "12:00",
+                "offsetMinutes": -240
+              }
+            },
+            {
+              "id": "Pacific/Auckland",
+              "zone": "Pacific/Auckland",
+              "penaltyUnits": 720,
+              "penalty": 120,
+              "reason": "avoid",
+              "working": false,
+              "avoid": true,
+              "localStart": {
+                "date": "2026-10-23",
+                "time": "04:00",
+                "offsetMinutes": 780
+              },
+              "localEnd": {
+                "date": "2026-10-23",
+                "time": "05:00",
+                "offsetMinutes": 780
+              }
+            }
+          ],
+          "working": 2,
+          "total": 3,
+          "avoidParticipants": 1,
+          "maxPersonPenaltyUnits": 720,
+          "sumPersonPenaltyUnits": 720,
+          "score": [
+            -2,
+            1,
+            720,
+            720,
+            -2,
+            1792681200000
+          ]
+        },
+        {
+          "startMs": 1792677600000,
+          "endMs": 1792681200000,
+          "objective": "working",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "Europe/London",
+              "zone": "Europe/London",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "15:00",
+                "offsetMinutes": 60
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "16:00",
+                "offsetMinutes": 60
+              }
+            },
+            {
+              "id": "America/New_York",
+              "zone": "America/New_York",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "10:00",
+                "offsetMinutes": -240
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "11:00",
+                "offsetMinutes": -240
+              }
+            },
+            {
+              "id": "Pacific/Auckland",
+              "zone": "Pacific/Auckland",
+              "penaltyUnits": 780,
+              "penalty": 130,
+              "reason": "avoid",
+              "working": false,
+              "avoid": true,
+              "localStart": {
+                "date": "2026-10-23",
+                "time": "03:00",
+                "offsetMinutes": 780
+              },
+              "localEnd": {
+                "date": "2026-10-23",
+                "time": "04:00",
+                "offsetMinutes": 780
+              }
+            }
+          ],
+          "working": 2,
+          "total": 3,
+          "avoidParticipants": 1,
+          "maxPersonPenaltyUnits": 780,
+          "sumPersonPenaltyUnits": 780,
+          "score": [
+            -2,
+            1,
+            780,
+            780,
+            -2,
+            1792677600000
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-10-26-balanced",
+      "input": {
+        "participants": [
+          {
+            "id": "Europe/London",
+            "zone": "Europe/London",
+            "hours": {
+              "start": "09:00",
+              "end": "17:00",
+              "days": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          },
+          {
+            "id": "America/New_York",
+            "zone": "America/New_York",
+            "hours": {
+              "start": "09:00",
+              "end": "17:00",
+              "days": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          },
+          {
+            "id": "Pacific/Auckland",
+            "zone": "Pacific/Auckland",
+            "hours": {
+              "start": "09:00",
+              "end": "17:00",
+              "days": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          }
+        ],
+        "fromMs": 1792987200000,
+        "untilMs": 1793073600000,
+        "durationMinutes": 60,
+        "objective": "balanced",
+        "preset": "work"
+      },
+      "expected": [
+        {
+          "startMs": 1793037600000,
+          "endMs": 1793041200000,
+          "objective": "balanced",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "Europe/London",
+              "zone": "Europe/London",
+              "penaltyUnits": 239,
+              "penalty": 39.833333333333336,
+              "reason": "late",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-26",
+                "time": "18:00",
+                "offsetMinutes": 0
+              },
+              "localEnd": {
+                "date": "2026-10-26",
+                "time": "19:00",
+                "offsetMinutes": 0
+              }
+            },
+            {
+              "id": "America/New_York",
+              "zone": "America/New_York",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-26",
+                "time": "14:00",
+                "offsetMinutes": -240
+              },
+              "localEnd": {
+                "date": "2026-10-26",
+                "time": "15:00",
+                "offsetMinutes": -240
+              }
+            },
+            {
+              "id": "Pacific/Auckland",
+              "zone": "Pacific/Auckland",
+              "penaltyUnits": 240,
+              "penalty": 40,
+              "reason": "early",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-27",
+                "time": "07:00",
+                "offsetMinutes": 780
+              },
+              "localEnd": {
+                "date": "2026-10-27",
+                "time": "08:00",
+                "offsetMinutes": 780
+              }
+            }
+          ],
+          "working": 1,
+          "total": 3,
+          "avoidParticipants": 0,
+          "maxPersonPenaltyUnits": 240,
+          "sumPersonPenaltyUnits": 479,
+          "score": [
+            0,
+            240,
+            479,
+            -1,
+            1793037600000
+          ]
+        },
+        {
+          "startMs": 1793041200000,
+          "endMs": 1793044800000,
+          "objective": "balanced",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "Europe/London",
+              "zone": "Europe/London",
+              "penaltyUnits": 299,
+              "penalty": 49.833333333333336,
+              "reason": "late",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-26",
+                "time": "19:00",
+                "offsetMinutes": 0
+              },
+              "localEnd": {
+                "date": "2026-10-26",
+                "time": "20:00",
+                "offsetMinutes": 0
+              }
+            },
+            {
+              "id": "America/New_York",
+              "zone": "America/New_York",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-26",
+                "time": "15:00",
+                "offsetMinutes": -240
+              },
+              "localEnd": {
+                "date": "2026-10-26",
+                "time": "16:00",
+                "offsetMinutes": -240
+              }
+            },
+            {
+              "id": "Pacific/Auckland",
+              "zone": "Pacific/Auckland",
+              "penaltyUnits": 180,
+              "penalty": 30,
+              "reason": "early",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-27",
+                "time": "08:00",
+                "offsetMinutes": 780
+              },
+              "localEnd": {
+                "date": "2026-10-27",
+                "time": "09:00",
+                "offsetMinutes": 780
+              }
+            }
+          ],
+          "working": 1,
+          "total": 3,
+          "avoidParticipants": 0,
+          "maxPersonPenaltyUnits": 299,
+          "sumPersonPenaltyUnits": 479,
+          "score": [
+            0,
+            299,
+            479,
+            -1,
+            1793041200000
+          ]
+        },
+        {
+          "startMs": 1793034000000,
+          "endMs": 1793037600000,
+          "objective": "balanced",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "Europe/London",
+              "zone": "Europe/London",
+              "penaltyUnits": 179,
+              "penalty": 29.833333333333332,
+              "reason": "late",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-26",
+                "time": "17:00",
+                "offsetMinutes": 0
+              },
+              "localEnd": {
+                "date": "2026-10-26",
+                "time": "18:00",
+                "offsetMinutes": 0
+              }
+            },
+            {
+              "id": "America/New_York",
+              "zone": "America/New_York",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-26",
+                "time": "13:00",
+                "offsetMinutes": -240
+              },
+              "localEnd": {
+                "date": "2026-10-26",
+                "time": "14:00",
+                "offsetMinutes": -240
+              }
+            },
+            {
+              "id": "Pacific/Auckland",
+              "zone": "Pacific/Auckland",
+              "penaltyUnits": 300,
+              "penalty": 50,
+              "reason": "early",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-27",
+                "time": "06:00",
+                "offsetMinutes": 780
+              },
+              "localEnd": {
+                "date": "2026-10-27",
+                "time": "07:00",
+                "offsetMinutes": 780
+              }
+            }
+          ],
+          "working": 1,
+          "total": 3,
+          "avoidParticipants": 0,
+          "maxPersonPenaltyUnits": 300,
+          "sumPersonPenaltyUnits": 479,
+          "score": [
+            0,
+            300,
+            479,
+            -1,
+            1793034000000
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-10-26-working",
+      "input": {
+        "participants": [
+          {
+            "id": "Europe/London",
+            "zone": "Europe/London",
+            "hours": {
+              "start": "09:00",
+              "end": "17:00",
+              "days": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          },
+          {
+            "id": "America/New_York",
+            "zone": "America/New_York",
+            "hours": {
+              "start": "09:00",
+              "end": "17:00",
+              "days": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          },
+          {
+            "id": "Pacific/Auckland",
+            "zone": "Pacific/Auckland",
+            "hours": {
+              "start": "09:00",
+              "end": "17:00",
+              "days": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          }
+        ],
+        "fromMs": 1792987200000,
+        "untilMs": 1793073600000,
+        "durationMinutes": 60,
+        "objective": "working",
+        "preset": "work"
+      },
+      "expected": [
+        {
+          "startMs": 1793044800000,
+          "endMs": 1793048400000,
+          "objective": "working",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "Europe/London",
+              "zone": "Europe/London",
+              "penaltyUnits": 359,
+              "penalty": 59.833333333333336,
+              "reason": "late",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-26",
+                "time": "20:00",
+                "offsetMinutes": 0
+              },
+              "localEnd": {
+                "date": "2026-10-26",
+                "time": "21:00",
+                "offsetMinutes": 0
+              }
+            },
+            {
+              "id": "America/New_York",
+              "zone": "America/New_York",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-26",
+                "time": "16:00",
+                "offsetMinutes": -240
+              },
+              "localEnd": {
+                "date": "2026-10-26",
+                "time": "17:00",
+                "offsetMinutes": -240
+              }
+            },
+            {
+              "id": "Pacific/Auckland",
+              "zone": "Pacific/Auckland",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-27",
+                "time": "09:00",
+                "offsetMinutes": 780
+              },
+              "localEnd": {
+                "date": "2026-10-27",
+                "time": "10:00",
+                "offsetMinutes": 780
+              }
+            }
+          ],
+          "working": 2,
+          "total": 3,
+          "avoidParticipants": 0,
+          "maxPersonPenaltyUnits": 359,
+          "sumPersonPenaltyUnits": 359,
+          "score": [
+            -2,
+            0,
+            359,
+            359,
+            -2,
+            1793044800000
+          ]
+        },
+        {
+          "startMs": 1793030400000,
+          "endMs": 1793034000000,
+          "objective": "working",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "Europe/London",
+              "zone": "Europe/London",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-26",
+                "time": "16:00",
+                "offsetMinutes": 0
+              },
+              "localEnd": {
+                "date": "2026-10-26",
+                "time": "17:00",
+                "offsetMinutes": 0
+              }
+            },
+            {
+              "id": "America/New_York",
+              "zone": "America/New_York",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-26",
+                "time": "12:00",
+                "offsetMinutes": -240
+              },
+              "localEnd": {
+                "date": "2026-10-26",
+                "time": "13:00",
+                "offsetMinutes": -240
+              }
+            },
+            {
+              "id": "Pacific/Auckland",
+              "zone": "Pacific/Auckland",
+              "penaltyUnits": 660,
+              "penalty": 110,
+              "reason": "avoid",
+              "working": false,
+              "avoid": true,
+              "localStart": {
+                "date": "2026-10-27",
+                "time": "05:00",
+                "offsetMinutes": 780
+              },
+              "localEnd": {
+                "date": "2026-10-27",
+                "time": "06:00",
+                "offsetMinutes": 780
+              }
+            }
+          ],
+          "working": 2,
+          "total": 3,
+          "avoidParticipants": 1,
+          "maxPersonPenaltyUnits": 660,
+          "sumPersonPenaltyUnits": 660,
+          "score": [
+            -2,
+            1,
+            660,
+            660,
+            -2,
+            1793030400000
+          ]
+        },
+        {
+          "startMs": 1793026800000,
+          "endMs": 1793030400000,
+          "objective": "working",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "Europe/London",
+              "zone": "Europe/London",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-26",
+                "time": "15:00",
+                "offsetMinutes": 0
+              },
+              "localEnd": {
+                "date": "2026-10-26",
+                "time": "16:00",
+                "offsetMinutes": 0
+              }
+            },
+            {
+              "id": "America/New_York",
+              "zone": "America/New_York",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-26",
+                "time": "11:00",
+                "offsetMinutes": -240
+              },
+              "localEnd": {
+                "date": "2026-10-26",
+                "time": "12:00",
+                "offsetMinutes": -240
+              }
+            },
+            {
+              "id": "Pacific/Auckland",
+              "zone": "Pacific/Auckland",
+              "penaltyUnits": 720,
+              "penalty": 120,
+              "reason": "avoid",
+              "working": false,
+              "avoid": true,
+              "localStart": {
+                "date": "2026-10-27",
+                "time": "04:00",
+                "offsetMinutes": 780
+              },
+              "localEnd": {
+                "date": "2026-10-27",
+                "time": "05:00",
+                "offsetMinutes": 780
+              }
+            }
+          ],
+          "working": 2,
+          "total": 3,
+          "avoidParticipants": 1,
+          "maxPersonPenaltyUnits": 720,
+          "sumPersonPenaltyUnits": 720,
+          "score": [
+            -2,
+            1,
+            720,
+            720,
+            -2,
+            1793026800000
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-11-02-balanced",
+      "input": {
+        "participants": [
+          {
+            "id": "Europe/London",
+            "zone": "Europe/London",
+            "hours": {
+              "start": "09:00",
+              "end": "17:00",
+              "days": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          },
+          {
+            "id": "America/New_York",
+            "zone": "America/New_York",
+            "hours": {
+              "start": "09:00",
+              "end": "17:00",
+              "days": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          },
+          {
+            "id": "Pacific/Auckland",
+            "zone": "Pacific/Auckland",
+            "hours": {
+              "start": "09:00",
+              "end": "17:00",
+              "days": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          }
+        ],
+        "fromMs": 1793592000000,
+        "untilMs": 1793678400000,
+        "durationMinutes": 60,
+        "objective": "balanced",
+        "preset": "work"
+      },
+      "expected": [
+        {
+          "startMs": 1793642400000,
+          "endMs": 1793646000000,
+          "objective": "balanced",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "Europe/London",
+              "zone": "Europe/London",
+              "penaltyUnits": 239,
+              "penalty": 39.833333333333336,
+              "reason": "late",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-11-02",
+                "time": "18:00",
+                "offsetMinutes": 0
+              },
+              "localEnd": {
+                "date": "2026-11-02",
+                "time": "19:00",
+                "offsetMinutes": 0
+              }
+            },
+            {
+              "id": "America/New_York",
+              "zone": "America/New_York",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-11-02",
+                "time": "13:00",
+                "offsetMinutes": -300
+              },
+              "localEnd": {
+                "date": "2026-11-02",
+                "time": "14:00",
+                "offsetMinutes": -300
+              }
+            },
+            {
+              "id": "Pacific/Auckland",
+              "zone": "Pacific/Auckland",
+              "penaltyUnits": 240,
+              "penalty": 40,
+              "reason": "early",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-11-03",
+                "time": "07:00",
+                "offsetMinutes": 780
+              },
+              "localEnd": {
+                "date": "2026-11-03",
+                "time": "08:00",
+                "offsetMinutes": 780
+              }
+            }
+          ],
+          "working": 1,
+          "total": 3,
+          "avoidParticipants": 0,
+          "maxPersonPenaltyUnits": 240,
+          "sumPersonPenaltyUnits": 479,
+          "score": [
+            0,
+            240,
+            479,
+            -1,
+            1793642400000
+          ]
+        },
+        {
+          "startMs": 1793646000000,
+          "endMs": 1793649600000,
+          "objective": "balanced",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "Europe/London",
+              "zone": "Europe/London",
+              "penaltyUnits": 299,
+              "penalty": 49.833333333333336,
+              "reason": "late",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-11-02",
+                "time": "19:00",
+                "offsetMinutes": 0
+              },
+              "localEnd": {
+                "date": "2026-11-02",
+                "time": "20:00",
+                "offsetMinutes": 0
+              }
+            },
+            {
+              "id": "America/New_York",
+              "zone": "America/New_York",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-11-02",
+                "time": "14:00",
+                "offsetMinutes": -300
+              },
+              "localEnd": {
+                "date": "2026-11-02",
+                "time": "15:00",
+                "offsetMinutes": -300
+              }
+            },
+            {
+              "id": "Pacific/Auckland",
+              "zone": "Pacific/Auckland",
+              "penaltyUnits": 180,
+              "penalty": 30,
+              "reason": "early",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-11-03",
+                "time": "08:00",
+                "offsetMinutes": 780
+              },
+              "localEnd": {
+                "date": "2026-11-03",
+                "time": "09:00",
+                "offsetMinutes": 780
+              }
+            }
+          ],
+          "working": 1,
+          "total": 3,
+          "avoidParticipants": 0,
+          "maxPersonPenaltyUnits": 299,
+          "sumPersonPenaltyUnits": 479,
+          "score": [
+            0,
+            299,
+            479,
+            -1,
+            1793646000000
+          ]
+        },
+        {
+          "startMs": 1793638800000,
+          "endMs": 1793642400000,
+          "objective": "balanced",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "Europe/London",
+              "zone": "Europe/London",
+              "penaltyUnits": 179,
+              "penalty": 29.833333333333332,
+              "reason": "late",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-11-02",
+                "time": "17:00",
+                "offsetMinutes": 0
+              },
+              "localEnd": {
+                "date": "2026-11-02",
+                "time": "18:00",
+                "offsetMinutes": 0
+              }
+            },
+            {
+              "id": "America/New_York",
+              "zone": "America/New_York",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-11-02",
+                "time": "12:00",
+                "offsetMinutes": -300
+              },
+              "localEnd": {
+                "date": "2026-11-02",
+                "time": "13:00",
+                "offsetMinutes": -300
+              }
+            },
+            {
+              "id": "Pacific/Auckland",
+              "zone": "Pacific/Auckland",
+              "penaltyUnits": 300,
+              "penalty": 50,
+              "reason": "early",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-11-03",
+                "time": "06:00",
+                "offsetMinutes": 780
+              },
+              "localEnd": {
+                "date": "2026-11-03",
+                "time": "07:00",
+                "offsetMinutes": 780
+              }
+            }
+          ],
+          "working": 1,
+          "total": 3,
+          "avoidParticipants": 0,
+          "maxPersonPenaltyUnits": 300,
+          "sumPersonPenaltyUnits": 479,
+          "score": [
+            0,
+            300,
+            479,
+            -1,
+            1793638800000
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-11-02-working",
+      "input": {
+        "participants": [
+          {
+            "id": "Europe/London",
+            "zone": "Europe/London",
+            "hours": {
+              "start": "09:00",
+              "end": "17:00",
+              "days": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          },
+          {
+            "id": "America/New_York",
+            "zone": "America/New_York",
+            "hours": {
+              "start": "09:00",
+              "end": "17:00",
+              "days": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          },
+          {
+            "id": "Pacific/Auckland",
+            "zone": "Pacific/Auckland",
+            "hours": {
+              "start": "09:00",
+              "end": "17:00",
+              "days": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          }
+        ],
+        "fromMs": 1793592000000,
+        "untilMs": 1793678400000,
+        "durationMinutes": 60,
+        "objective": "working",
+        "preset": "work"
+      },
+      "expected": [
+        {
+          "startMs": 1793649600000,
+          "endMs": 1793653200000,
+          "objective": "working",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "Europe/London",
+              "zone": "Europe/London",
+              "penaltyUnits": 359,
+              "penalty": 59.833333333333336,
+              "reason": "late",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-11-02",
+                "time": "20:00",
+                "offsetMinutes": 0
+              },
+              "localEnd": {
+                "date": "2026-11-02",
+                "time": "21:00",
+                "offsetMinutes": 0
+              }
+            },
+            {
+              "id": "America/New_York",
+              "zone": "America/New_York",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-11-02",
+                "time": "15:00",
+                "offsetMinutes": -300
+              },
+              "localEnd": {
+                "date": "2026-11-02",
+                "time": "16:00",
+                "offsetMinutes": -300
+              }
+            },
+            {
+              "id": "Pacific/Auckland",
+              "zone": "Pacific/Auckland",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-11-03",
+                "time": "09:00",
+                "offsetMinutes": 780
+              },
+              "localEnd": {
+                "date": "2026-11-03",
+                "time": "10:00",
+                "offsetMinutes": 780
+              }
+            }
+          ],
+          "working": 2,
+          "total": 3,
+          "avoidParticipants": 0,
+          "maxPersonPenaltyUnits": 359,
+          "sumPersonPenaltyUnits": 359,
+          "score": [
+            -2,
+            0,
+            359,
+            359,
+            -2,
+            1793649600000
+          ]
+        },
+        {
+          "startMs": 1793653200000,
+          "endMs": 1793656800000,
+          "objective": "working",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "Europe/London",
+              "zone": "Europe/London",
+              "penaltyUnits": 419,
+              "penalty": 69.83333333333333,
+              "reason": "late",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-11-02",
+                "time": "21:00",
+                "offsetMinutes": 0
+              },
+              "localEnd": {
+                "date": "2026-11-02",
+                "time": "22:00",
+                "offsetMinutes": 0
+              }
+            },
+            {
+              "id": "America/New_York",
+              "zone": "America/New_York",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-11-02",
+                "time": "16:00",
+                "offsetMinutes": -300
+              },
+              "localEnd": {
+                "date": "2026-11-02",
+                "time": "17:00",
+                "offsetMinutes": -300
+              }
+            },
+            {
+              "id": "Pacific/Auckland",
+              "zone": "Pacific/Auckland",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-11-03",
+                "time": "10:00",
+                "offsetMinutes": 780
+              },
+              "localEnd": {
+                "date": "2026-11-03",
+                "time": "11:00",
+                "offsetMinutes": 780
+              }
+            }
+          ],
+          "working": 2,
+          "total": 3,
+          "avoidParticipants": 0,
+          "maxPersonPenaltyUnits": 419,
+          "sumPersonPenaltyUnits": 419,
+          "score": [
+            -2,
+            0,
+            419,
+            419,
+            -2,
+            1793653200000
+          ]
+        },
+        {
+          "startMs": 1793635200000,
+          "endMs": 1793638800000,
+          "objective": "working",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "Europe/London",
+              "zone": "Europe/London",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-11-02",
+                "time": "16:00",
+                "offsetMinutes": 0
+              },
+              "localEnd": {
+                "date": "2026-11-02",
+                "time": "17:00",
+                "offsetMinutes": 0
+              }
+            },
+            {
+              "id": "America/New_York",
+              "zone": "America/New_York",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-11-02",
+                "time": "11:00",
+                "offsetMinutes": -300
+              },
+              "localEnd": {
+                "date": "2026-11-02",
+                "time": "12:00",
+                "offsetMinutes": -300
+              }
+            },
+            {
+              "id": "Pacific/Auckland",
+              "zone": "Pacific/Auckland",
+              "penaltyUnits": 660,
+              "penalty": 110,
+              "reason": "avoid",
+              "working": false,
+              "avoid": true,
+              "localStart": {
+                "date": "2026-11-03",
+                "time": "05:00",
+                "offsetMinutes": 780
+              },
+              "localEnd": {
+                "date": "2026-11-03",
+                "time": "06:00",
+                "offsetMinutes": 780
+              }
+            }
+          ],
+          "working": 2,
+          "total": 3,
+          "avoidParticipants": 1,
+          "maxPersonPenaltyUnits": 660,
+          "sumPersonPenaltyUnits": 660,
+          "score": [
+            -2,
+            1,
+            660,
+            660,
+            -2,
+            1793635200000
+          ]
+        }
+      ]
+    },
+    {
+      "id": "duration-15",
+      "input": {
+        "participants": [
+          {
+            "id": "Europe/London",
+            "zone": "Europe/London",
+            "hours": {
+              "start": "09:00",
+              "end": "17:00",
+              "days": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          },
+          {
+            "id": "America/New_York",
+            "zone": "America/New_York",
+            "hours": {
+              "start": "09:00",
+              "end": "17:00",
+              "days": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          },
+          {
+            "id": "Pacific/Auckland",
+            "zone": "Pacific/Auckland",
+            "hours": {
+              "start": "09:00",
+              "end": "17:00",
+              "days": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          }
+        ],
+        "fromMs": 1792641600000,
+        "untilMs": 1792728000000,
+        "durationMinutes": 15,
+        "objective": "balanced",
+        "preset": "work"
+      },
+      "expected": [
+        {
+          "startMs": 1792692000000,
+          "endMs": 1792692900000,
+          "objective": "balanced",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "Europe/London",
+              "zone": "Europe/London",
+              "penaltyUnits": 254,
+              "penalty": 42.333333333333336,
+              "reason": "late",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "19:00",
+                "offsetMinutes": 60
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "19:15",
+                "offsetMinutes": 60
+              }
+            },
+            {
+              "id": "America/New_York",
+              "zone": "America/New_York",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "14:00",
+                "offsetMinutes": -240
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "14:15",
+                "offsetMinutes": -240
+              }
+            },
+            {
+              "id": "Pacific/Auckland",
+              "zone": "Pacific/Auckland",
+              "penaltyUnits": 240,
+              "penalty": 40,
+              "reason": "early",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-23",
+                "time": "07:00",
+                "offsetMinutes": 780
+              },
+              "localEnd": {
+                "date": "2026-10-23",
+                "time": "07:15",
+                "offsetMinutes": 780
+              }
+            }
+          ],
+          "working": 1,
+          "total": 3,
+          "avoidParticipants": 0,
+          "maxPersonPenaltyUnits": 254,
+          "sumPersonPenaltyUnits": 494,
+          "score": [
+            0,
+            254,
+            494,
+            -1,
+            1792692000000
+          ]
+        },
+        {
+          "startMs": 1792691100000,
+          "endMs": 1792692000000,
+          "objective": "balanced",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "Europe/London",
+              "zone": "Europe/London",
+              "penaltyUnits": 239,
+              "penalty": 39.833333333333336,
+              "reason": "late",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "18:45",
+                "offsetMinutes": 60
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "19:00",
+                "offsetMinutes": 60
+              }
+            },
+            {
+              "id": "America/New_York",
+              "zone": "America/New_York",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "13:45",
+                "offsetMinutes": -240
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "14:00",
+                "offsetMinutes": -240
+              }
+            },
+            {
+              "id": "Pacific/Auckland",
+              "zone": "Pacific/Auckland",
+              "penaltyUnits": 255,
+              "penalty": 42.5,
+              "reason": "early",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-23",
+                "time": "06:45",
+                "offsetMinutes": 780
+              },
+              "localEnd": {
+                "date": "2026-10-23",
+                "time": "07:00",
+                "offsetMinutes": 780
+              }
+            }
+          ],
+          "working": 1,
+          "total": 3,
+          "avoidParticipants": 0,
+          "maxPersonPenaltyUnits": 255,
+          "sumPersonPenaltyUnits": 494,
+          "score": [
+            0,
+            255,
+            494,
+            -1,
+            1792691100000
+          ]
+        },
+        {
+          "startMs": 1792692900000,
+          "endMs": 1792693800000,
+          "objective": "balanced",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "Europe/London",
+              "zone": "Europe/London",
+              "penaltyUnits": 269,
+              "penalty": 44.833333333333336,
+              "reason": "late",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "19:15",
+                "offsetMinutes": 60
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "19:30",
+                "offsetMinutes": 60
+              }
+            },
+            {
+              "id": "America/New_York",
+              "zone": "America/New_York",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "14:15",
+                "offsetMinutes": -240
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "14:30",
+                "offsetMinutes": -240
+              }
+            },
+            {
+              "id": "Pacific/Auckland",
+              "zone": "Pacific/Auckland",
+              "penaltyUnits": 225,
+              "penalty": 37.5,
+              "reason": "early",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-23",
+                "time": "07:15",
+                "offsetMinutes": 780
+              },
+              "localEnd": {
+                "date": "2026-10-23",
+                "time": "07:30",
+                "offsetMinutes": 780
+              }
+            }
+          ],
+          "working": 1,
+          "total": 3,
+          "avoidParticipants": 0,
+          "maxPersonPenaltyUnits": 269,
+          "sumPersonPenaltyUnits": 494,
+          "score": [
+            0,
+            269,
+            494,
+            -1,
+            1792692900000
+          ]
+        }
+      ]
+    },
+    {
+      "id": "duration-30",
+      "input": {
+        "participants": [
+          {
+            "id": "Europe/London",
+            "zone": "Europe/London",
+            "hours": {
+              "start": "09:00",
+              "end": "17:00",
+              "days": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          },
+          {
+            "id": "America/New_York",
+            "zone": "America/New_York",
+            "hours": {
+              "start": "09:00",
+              "end": "17:00",
+              "days": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          },
+          {
+            "id": "Pacific/Auckland",
+            "zone": "Pacific/Auckland",
+            "hours": {
+              "start": "09:00",
+              "end": "17:00",
+              "days": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          }
+        ],
+        "fromMs": 1792641600000,
+        "untilMs": 1792728000000,
+        "durationMinutes": 30,
+        "objective": "balanced",
+        "preset": "work"
+      },
+      "expected": [
+        {
+          "startMs": 1792691100000,
+          "endMs": 1792692900000,
+          "objective": "balanced",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "Europe/London",
+              "zone": "Europe/London",
+              "penaltyUnits": 254,
+              "penalty": 42.333333333333336,
+              "reason": "late",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "18:45",
+                "offsetMinutes": 60
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "19:15",
+                "offsetMinutes": 60
+              }
+            },
+            {
+              "id": "America/New_York",
+              "zone": "America/New_York",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "13:45",
+                "offsetMinutes": -240
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "14:15",
+                "offsetMinutes": -240
+              }
+            },
+            {
+              "id": "Pacific/Auckland",
+              "zone": "Pacific/Auckland",
+              "penaltyUnits": 255,
+              "penalty": 42.5,
+              "reason": "early",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-23",
+                "time": "06:45",
+                "offsetMinutes": 780
+              },
+              "localEnd": {
+                "date": "2026-10-23",
+                "time": "07:15",
+                "offsetMinutes": 780
+              }
+            }
+          ],
+          "working": 1,
+          "total": 3,
+          "avoidParticipants": 0,
+          "maxPersonPenaltyUnits": 255,
+          "sumPersonPenaltyUnits": 509,
+          "score": [
+            0,
+            255,
+            509,
+            -1,
+            1792691100000
+          ]
+        },
+        {
+          "startMs": 1792692900000,
+          "endMs": 1792694700000,
+          "objective": "balanced",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "Europe/London",
+              "zone": "Europe/London",
+              "penaltyUnits": 284,
+              "penalty": 47.333333333333336,
+              "reason": "late",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "19:15",
+                "offsetMinutes": 60
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "19:45",
+                "offsetMinutes": 60
+              }
+            },
+            {
+              "id": "America/New_York",
+              "zone": "America/New_York",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "14:15",
+                "offsetMinutes": -240
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "14:45",
+                "offsetMinutes": -240
+              }
+            },
+            {
+              "id": "Pacific/Auckland",
+              "zone": "Pacific/Auckland",
+              "penaltyUnits": 225,
+              "penalty": 37.5,
+              "reason": "early",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-23",
+                "time": "07:15",
+                "offsetMinutes": 780
+              },
+              "localEnd": {
+                "date": "2026-10-23",
+                "time": "07:45",
+                "offsetMinutes": 780
+              }
+            }
+          ],
+          "working": 1,
+          "total": 3,
+          "avoidParticipants": 0,
+          "maxPersonPenaltyUnits": 284,
+          "sumPersonPenaltyUnits": 509,
+          "score": [
+            0,
+            284,
+            509,
+            -1,
+            1792692900000
+          ]
+        },
+        {
+          "startMs": 1792689300000,
+          "endMs": 1792691100000,
+          "objective": "balanced",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "Europe/London",
+              "zone": "Europe/London",
+              "penaltyUnits": 224,
+              "penalty": 37.333333333333336,
+              "reason": "late",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "18:15",
+                "offsetMinutes": 60
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "18:45",
+                "offsetMinutes": 60
+              }
+            },
+            {
+              "id": "America/New_York",
+              "zone": "America/New_York",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "13:15",
+                "offsetMinutes": -240
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "13:45",
+                "offsetMinutes": -240
+              }
+            },
+            {
+              "id": "Pacific/Auckland",
+              "zone": "Pacific/Auckland",
+              "penaltyUnits": 285,
+              "penalty": 47.5,
+              "reason": "early",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-23",
+                "time": "06:15",
+                "offsetMinutes": 780
+              },
+              "localEnd": {
+                "date": "2026-10-23",
+                "time": "06:45",
+                "offsetMinutes": 780
+              }
+            }
+          ],
+          "working": 1,
+          "total": 3,
+          "avoidParticipants": 0,
+          "maxPersonPenaltyUnits": 285,
+          "sumPersonPenaltyUnits": 509,
+          "score": [
+            0,
+            285,
+            509,
+            -1,
+            1792689300000
+          ]
+        }
+      ]
+    },
+    {
+      "id": "duration-45",
+      "input": {
+        "participants": [
+          {
+            "id": "Europe/London",
+            "zone": "Europe/London",
+            "hours": {
+              "start": "09:00",
+              "end": "17:00",
+              "days": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          },
+          {
+            "id": "America/New_York",
+            "zone": "America/New_York",
+            "hours": {
+              "start": "09:00",
+              "end": "17:00",
+              "days": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          },
+          {
+            "id": "Pacific/Auckland",
+            "zone": "Pacific/Auckland",
+            "hours": {
+              "start": "09:00",
+              "end": "17:00",
+              "days": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          }
+        ],
+        "fromMs": 1792641600000,
+        "untilMs": 1792728000000,
+        "durationMinutes": 45,
+        "objective": "balanced",
+        "preset": "work"
+      },
+      "expected": [
+        {
+          "startMs": 1792691100000,
+          "endMs": 1792693800000,
+          "objective": "balanced",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "Europe/London",
+              "zone": "Europe/London",
+              "penaltyUnits": 269,
+              "penalty": 44.833333333333336,
+              "reason": "late",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "18:45",
+                "offsetMinutes": 60
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "19:30",
+                "offsetMinutes": 60
+              }
+            },
+            {
+              "id": "America/New_York",
+              "zone": "America/New_York",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "13:45",
+                "offsetMinutes": -240
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "14:30",
+                "offsetMinutes": -240
+              }
+            },
+            {
+              "id": "Pacific/Auckland",
+              "zone": "Pacific/Auckland",
+              "penaltyUnits": 255,
+              "penalty": 42.5,
+              "reason": "early",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-23",
+                "time": "06:45",
+                "offsetMinutes": 780
+              },
+              "localEnd": {
+                "date": "2026-10-23",
+                "time": "07:30",
+                "offsetMinutes": 780
+              }
+            }
+          ],
+          "working": 1,
+          "total": 3,
+          "avoidParticipants": 0,
+          "maxPersonPenaltyUnits": 269,
+          "sumPersonPenaltyUnits": 524,
+          "score": [
+            0,
+            269,
+            524,
+            -1,
+            1792691100000
+          ]
+        },
+        {
+          "startMs": 1792688400000,
+          "endMs": 1792691100000,
+          "objective": "balanced",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "Europe/London",
+              "zone": "Europe/London",
+              "penaltyUnits": 224,
+              "penalty": 37.333333333333336,
+              "reason": "late",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "18:00",
+                "offsetMinutes": 60
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "18:45",
+                "offsetMinutes": 60
+              }
+            },
+            {
+              "id": "America/New_York",
+              "zone": "America/New_York",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "13:00",
+                "offsetMinutes": -240
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "13:45",
+                "offsetMinutes": -240
+              }
+            },
+            {
+              "id": "Pacific/Auckland",
+              "zone": "Pacific/Auckland",
+              "penaltyUnits": 300,
+              "penalty": 50,
+              "reason": "early",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-23",
+                "time": "06:00",
+                "offsetMinutes": 780
+              },
+              "localEnd": {
+                "date": "2026-10-23",
+                "time": "06:45",
+                "offsetMinutes": 780
+              }
+            }
+          ],
+          "working": 1,
+          "total": 3,
+          "avoidParticipants": 0,
+          "maxPersonPenaltyUnits": 300,
+          "sumPersonPenaltyUnits": 524,
+          "score": [
+            0,
+            300,
+            524,
+            -1,
+            1792688400000
+          ]
+        },
+        {
+          "startMs": 1792693800000,
+          "endMs": 1792696500000,
+          "objective": "balanced",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "Europe/London",
+              "zone": "Europe/London",
+              "penaltyUnits": 314,
+              "penalty": 52.333333333333336,
+              "reason": "late",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "19:30",
+                "offsetMinutes": 60
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "20:15",
+                "offsetMinutes": 60
+              }
+            },
+            {
+              "id": "America/New_York",
+              "zone": "America/New_York",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "14:30",
+                "offsetMinutes": -240
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "15:15",
+                "offsetMinutes": -240
+              }
+            },
+            {
+              "id": "Pacific/Auckland",
+              "zone": "Pacific/Auckland",
+              "penaltyUnits": 210,
+              "penalty": 35,
+              "reason": "early",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-23",
+                "time": "07:30",
+                "offsetMinutes": 780
+              },
+              "localEnd": {
+                "date": "2026-10-23",
+                "time": "08:15",
+                "offsetMinutes": 780
+              }
+            }
+          ],
+          "working": 1,
+          "total": 3,
+          "avoidParticipants": 0,
+          "maxPersonPenaltyUnits": 314,
+          "sumPersonPenaltyUnits": 524,
+          "score": [
+            0,
+            314,
+            524,
+            -1,
+            1792693800000
+          ]
+        }
+      ]
+    },
+    {
+      "id": "duration-90",
+      "input": {
+        "participants": [
+          {
+            "id": "Europe/London",
+            "zone": "Europe/London",
+            "hours": {
+              "start": "09:00",
+              "end": "17:00",
+              "days": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          },
+          {
+            "id": "America/New_York",
+            "zone": "America/New_York",
+            "hours": {
+              "start": "09:00",
+              "end": "17:00",
+              "days": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          },
+          {
+            "id": "Pacific/Auckland",
+            "zone": "Pacific/Auckland",
+            "hours": {
+              "start": "09:00",
+              "end": "17:00",
+              "days": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          }
+        ],
+        "fromMs": 1792641600000,
+        "untilMs": 1792728000000,
+        "durationMinutes": 90,
+        "objective": "balanced",
+        "preset": "work"
+      },
+      "expected": [
+        {
+          "startMs": 1792689300000,
+          "endMs": 1792694700000,
+          "objective": "balanced",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "Europe/London",
+              "zone": "Europe/London",
+              "penaltyUnits": 284,
+              "penalty": 47.333333333333336,
+              "reason": "late",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "18:15",
+                "offsetMinutes": 60
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "19:45",
+                "offsetMinutes": 60
+              }
+            },
+            {
+              "id": "America/New_York",
+              "zone": "America/New_York",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "13:15",
+                "offsetMinutes": -240
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "14:45",
+                "offsetMinutes": -240
+              }
+            },
+            {
+              "id": "Pacific/Auckland",
+              "zone": "Pacific/Auckland",
+              "penaltyUnits": 285,
+              "penalty": 47.5,
+              "reason": "early",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-23",
+                "time": "06:15",
+                "offsetMinutes": 780
+              },
+              "localEnd": {
+                "date": "2026-10-23",
+                "time": "07:45",
+                "offsetMinutes": 780
+              }
+            }
+          ],
+          "working": 1,
+          "total": 3,
+          "avoidParticipants": 0,
+          "maxPersonPenaltyUnits": 285,
+          "sumPersonPenaltyUnits": 569,
+          "score": [
+            0,
+            285,
+            569,
+            -1,
+            1792689300000
+          ]
+        },
+        {
+          "startMs": 1792694700000,
+          "endMs": 1792700100000,
+          "objective": "balanced",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "Europe/London",
+              "zone": "Europe/London",
+              "penaltyUnits": 374,
+              "penalty": 62.333333333333336,
+              "reason": "late",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "19:45",
+                "offsetMinutes": 60
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "21:15",
+                "offsetMinutes": 60
+              }
+            },
+            {
+              "id": "America/New_York",
+              "zone": "America/New_York",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "14:45",
+                "offsetMinutes": -240
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "16:15",
+                "offsetMinutes": -240
+              }
+            },
+            {
+              "id": "Pacific/Auckland",
+              "zone": "Pacific/Auckland",
+              "penaltyUnits": 195,
+              "penalty": 32.5,
+              "reason": "early",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-23",
+                "time": "07:45",
+                "offsetMinutes": 780
+              },
+              "localEnd": {
+                "date": "2026-10-23",
+                "time": "09:15",
+                "offsetMinutes": 780
+              }
+            }
+          ],
+          "working": 1,
+          "total": 3,
+          "avoidParticipants": 0,
+          "maxPersonPenaltyUnits": 374,
+          "sumPersonPenaltyUnits": 569,
+          "score": [
+            0,
+            374,
+            569,
+            -1,
+            1792694700000
+          ]
+        },
+        {
+          "startMs": 1792700100000,
+          "endMs": 1792705500000,
+          "objective": "balanced",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "Europe/London",
+              "zone": "Europe/London",
+              "penaltyUnits": 644,
+              "penalty": 107.33333333333333,
+              "reason": "avoid",
+              "working": false,
+              "avoid": true,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "21:15",
+                "offsetMinutes": 60
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "22:45",
+                "offsetMinutes": 60
+              }
+            },
+            {
+              "id": "America/New_York",
+              "zone": "America/New_York",
+              "penaltyUnits": 164,
+              "penalty": 27.333333333333332,
+              "reason": "late",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "16:15",
+                "offsetMinutes": -240
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "17:45",
+                "offsetMinutes": -240
+              }
+            },
+            {
+              "id": "Pacific/Auckland",
+              "zone": "Pacific/Auckland",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-23",
+                "time": "09:15",
+                "offsetMinutes": 780
+              },
+              "localEnd": {
+                "date": "2026-10-23",
+                "time": "10:45",
+                "offsetMinutes": 780
+              }
+            }
+          ],
+          "working": 1,
+          "total": 3,
+          "avoidParticipants": 1,
+          "maxPersonPenaltyUnits": 644,
+          "sumPersonPenaltyUnits": 808,
+          "score": [
+            1,
+            644,
+            808,
+            -1,
+            1792700100000
+          ]
+        }
+      ]
+    },
+    {
+      "id": "duration-120",
+      "input": {
+        "participants": [
+          {
+            "id": "Europe/London",
+            "zone": "Europe/London",
+            "hours": {
+              "start": "09:00",
+              "end": "17:00",
+              "days": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          },
+          {
+            "id": "America/New_York",
+            "zone": "America/New_York",
+            "hours": {
+              "start": "09:00",
+              "end": "17:00",
+              "days": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          },
+          {
+            "id": "Pacific/Auckland",
+            "zone": "Pacific/Auckland",
+            "hours": {
+              "start": "09:00",
+              "end": "17:00",
+              "days": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          }
+        ],
+        "fromMs": 1792641600000,
+        "untilMs": 1792728000000,
+        "durationMinutes": 120,
+        "objective": "balanced",
+        "preset": "work"
+      },
+      "expected": [
+        {
+          "startMs": 1792688400000,
+          "endMs": 1792695600000,
+          "objective": "balanced",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "Europe/London",
+              "zone": "Europe/London",
+              "penaltyUnits": 299,
+              "penalty": 49.833333333333336,
+              "reason": "late",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "18:00",
+                "offsetMinutes": 60
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "20:00",
+                "offsetMinutes": 60
+              }
+            },
+            {
+              "id": "America/New_York",
+              "zone": "America/New_York",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "13:00",
+                "offsetMinutes": -240
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "15:00",
+                "offsetMinutes": -240
+              }
+            },
+            {
+              "id": "Pacific/Auckland",
+              "zone": "Pacific/Auckland",
+              "penaltyUnits": 300,
+              "penalty": 50,
+              "reason": "early",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-23",
+                "time": "06:00",
+                "offsetMinutes": 780
+              },
+              "localEnd": {
+                "date": "2026-10-23",
+                "time": "08:00",
+                "offsetMinutes": 780
+              }
+            }
+          ],
+          "working": 1,
+          "total": 3,
+          "avoidParticipants": 0,
+          "maxPersonPenaltyUnits": 300,
+          "sumPersonPenaltyUnits": 599,
+          "score": [
+            0,
+            300,
+            599,
+            -1,
+            1792688400000
+          ]
+        },
+        {
+          "startMs": 1792695600000,
+          "endMs": 1792702800000,
+          "objective": "balanced",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "Europe/London",
+              "zone": "Europe/London",
+              "penaltyUnits": 419,
+              "penalty": 69.83333333333333,
+              "reason": "late",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "20:00",
+                "offsetMinutes": 60
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "22:00",
+                "offsetMinutes": 60
+              }
+            },
+            {
+              "id": "America/New_York",
+              "zone": "America/New_York",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "15:00",
+                "offsetMinutes": -240
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "17:00",
+                "offsetMinutes": -240
+              }
+            },
+            {
+              "id": "Pacific/Auckland",
+              "zone": "Pacific/Auckland",
+              "penaltyUnits": 180,
+              "penalty": 30,
+              "reason": "early",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-23",
+                "time": "08:00",
+                "offsetMinutes": 780
+              },
+              "localEnd": {
+                "date": "2026-10-23",
+                "time": "10:00",
+                "offsetMinutes": 780
+              }
+            }
+          ],
+          "working": 1,
+          "total": 3,
+          "avoidParticipants": 0,
+          "maxPersonPenaltyUnits": 419,
+          "sumPersonPenaltyUnits": 599,
+          "score": [
+            0,
+            419,
+            599,
+            -1,
+            1792695600000
+          ]
+        },
+        {
+          "startMs": 1792702800000,
+          "endMs": 1792710000000,
+          "objective": "balanced",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "Europe/London",
+              "zone": "Europe/London",
+              "penaltyUnits": 719,
+              "penalty": 119.83333333333333,
+              "reason": "avoid",
+              "working": false,
+              "avoid": true,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "22:00",
+                "offsetMinutes": 60
+              },
+              "localEnd": {
+                "date": "2026-10-23",
+                "time": "00:00",
+                "offsetMinutes": 60
+              }
+            },
+            {
+              "id": "America/New_York",
+              "zone": "America/New_York",
+              "penaltyUnits": 239,
+              "penalty": 39.833333333333336,
+              "reason": "late",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "17:00",
+                "offsetMinutes": -240
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "19:00",
+                "offsetMinutes": -240
+              }
+            },
+            {
+              "id": "Pacific/Auckland",
+              "zone": "Pacific/Auckland",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-23",
+                "time": "10:00",
+                "offsetMinutes": 780
+              },
+              "localEnd": {
+                "date": "2026-10-23",
+                "time": "12:00",
+                "offsetMinutes": 780
+              }
+            }
+          ],
+          "working": 1,
+          "total": 3,
+          "avoidParticipants": 1,
+          "maxPersonPenaltyUnits": 719,
+          "sumPersonPenaltyUnits": 958,
+          "score": [
+            1,
+            719,
+            958,
+            -1,
+            1792702800000
+          ]
+        }
+      ]
+    },
+    {
+      "id": "family",
+      "input": {
+        "participants": [
+          {
+            "id": "Europe/London",
+            "zone": "Europe/London",
+            "hours": {
+              "start": "09:00",
+              "end": "17:00",
+              "days": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          },
+          {
+            "id": "America/New_York",
+            "zone": "America/New_York",
+            "hours": {
+              "start": "09:00",
+              "end": "17:00",
+              "days": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          },
+          {
+            "id": "Pacific/Auckland",
+            "zone": "Pacific/Auckland",
+            "hours": {
+              "start": "09:00",
+              "end": "17:00",
+              "days": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          }
+        ],
+        "fromMs": 1792641600000,
+        "untilMs": 1792728000000,
+        "durationMinutes": 60,
+        "objective": "balanced",
+        "preset": "family"
+      },
+      "expected": [
+        {
+          "startMs": 1792697400000,
+          "endMs": 1792701000000,
+          "objective": "balanced",
+          "preset": "family",
+          "participants": [
+            {
+              "id": "Europe/London",
+              "zone": "Europe/London",
+              "penaltyUnits": 149,
+              "penalty": 24.833333333333332,
+              "reason": "late",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "20:30",
+                "offsetMinutes": 60
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "21:30",
+                "offsetMinutes": 60
+              }
+            },
+            {
+              "id": "America/New_York",
+              "zone": "America/New_York",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "15:30",
+                "offsetMinutes": -240
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "16:30",
+                "offsetMinutes": -240
+              }
+            },
+            {
+              "id": "Pacific/Auckland",
+              "zone": "Pacific/Auckland",
+              "penaltyUnits": 150,
+              "penalty": 25,
+              "reason": "early",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-23",
+                "time": "08:30",
+                "offsetMinutes": 780
+              },
+              "localEnd": {
+                "date": "2026-10-23",
+                "time": "09:30",
+                "offsetMinutes": 780
+              }
+            }
+          ],
+          "working": 1,
+          "total": 3,
+          "avoidParticipants": 0,
+          "maxPersonPenaltyUnits": 150,
+          "sumPersonPenaltyUnits": 299,
+          "score": [
+            0,
+            150,
+            299,
+            -1,
+            1792697400000
+          ]
+        },
+        {
+          "startMs": 1792693800000,
+          "endMs": 1792697400000,
+          "objective": "balanced",
+          "preset": "family",
+          "participants": [
+            {
+              "id": "Europe/London",
+              "zone": "Europe/London",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "comfortable",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "19:30",
+                "offsetMinutes": 60
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "20:30",
+                "offsetMinutes": 60
+              }
+            },
+            {
+              "id": "America/New_York",
+              "zone": "America/New_York",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "14:30",
+                "offsetMinutes": -240
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "15:30",
+                "offsetMinutes": -240
+              }
+            },
+            {
+              "id": "Pacific/Auckland",
+              "zone": "Pacific/Auckland",
+              "penaltyUnits": 210,
+              "penalty": 35,
+              "reason": "early",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-23",
+                "time": "07:30",
+                "offsetMinutes": 780
+              },
+              "localEnd": {
+                "date": "2026-10-23",
+                "time": "08:30",
+                "offsetMinutes": 780
+              }
+            }
+          ],
+          "working": 1,
+          "total": 3,
+          "avoidParticipants": 0,
+          "maxPersonPenaltyUnits": 210,
+          "sumPersonPenaltyUnits": 210,
+          "score": [
+            0,
+            210,
+            210,
+            -1,
+            1792693800000
+          ]
+        },
+        {
+          "startMs": 1792690200000,
+          "endMs": 1792693800000,
+          "objective": "balanced",
+          "preset": "family",
+          "participants": [
+            {
+              "id": "Europe/London",
+              "zone": "Europe/London",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "comfortable",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "18:30",
+                "offsetMinutes": 60
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "19:30",
+                "offsetMinutes": 60
+              }
+            },
+            {
+              "id": "America/New_York",
+              "zone": "America/New_York",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "13:30",
+                "offsetMinutes": -240
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "14:30",
+                "offsetMinutes": -240
+              }
+            },
+            {
+              "id": "Pacific/Auckland",
+              "zone": "Pacific/Auckland",
+              "penaltyUnits": 270,
+              "penalty": 45,
+              "reason": "early",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-23",
+                "time": "06:30",
+                "offsetMinutes": 780
+              },
+              "localEnd": {
+                "date": "2026-10-23",
+                "time": "07:30",
+                "offsetMinutes": 780
+              }
+            }
+          ],
+          "working": 1,
+          "total": 3,
+          "avoidParticipants": 0,
+          "maxPersonPenaltyUnits": 270,
+          "sumPersonPenaltyUnits": 270,
+          "score": [
+            0,
+            270,
+            270,
+            -1,
+            1792690200000
+          ]
+        }
+      ]
+    },
+    {
+      "id": "overnight",
+      "input": {
+        "participants": [
+          {
+            "id": "shift",
+            "zone": "Europe/London",
+            "hours": {
+              "start": "22:00",
+              "end": "06:00",
+              "days": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          }
+        ],
+        "fromMs": 1792695600000,
+        "untilMs": 1792782000000,
+        "durationMinutes": 60,
+        "objective": "balanced",
+        "preset": "work"
+      },
+      "expected": [
+        {
+          "startMs": 1792702800000,
+          "endMs": 1792706400000,
+          "objective": "balanced",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "shift",
+              "zone": "Europe/London",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "22:00",
+                "offsetMinutes": 60
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "23:00",
+                "offsetMinutes": 60
+              }
+            }
+          ],
+          "working": 1,
+          "total": 1,
+          "avoidParticipants": 0,
+          "maxPersonPenaltyUnits": 0,
+          "sumPersonPenaltyUnits": 0,
+          "score": [
+            0,
+            0,
+            0,
+            -1,
+            1792702800000
+          ]
+        },
+        {
+          "startMs": 1792706400000,
+          "endMs": 1792710000000,
+          "objective": "balanced",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "shift",
+              "zone": "Europe/London",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "23:00",
+                "offsetMinutes": 60
+              },
+              "localEnd": {
+                "date": "2026-10-23",
+                "time": "00:00",
+                "offsetMinutes": 60
+              }
+            }
+          ],
+          "working": 1,
+          "total": 1,
+          "avoidParticipants": 0,
+          "maxPersonPenaltyUnits": 0,
+          "sumPersonPenaltyUnits": 0,
+          "score": [
+            0,
+            0,
+            0,
+            -1,
+            1792706400000
+          ]
+        },
+        {
+          "startMs": 1792710000000,
+          "endMs": 1792713600000,
+          "objective": "balanced",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "shift",
+              "zone": "Europe/London",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-23",
+                "time": "00:00",
+                "offsetMinutes": 60
+              },
+              "localEnd": {
+                "date": "2026-10-23",
+                "time": "01:00",
+                "offsetMinutes": 60
+              }
+            }
+          ],
+          "working": 1,
+          "total": 1,
+          "avoidParticipants": 0,
+          "maxPersonPenaltyUnits": 0,
+          "sumPersonPenaltyUnits": 0,
+          "score": [
+            0,
+            0,
+            0,
+            -1,
+            1792710000000
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fractional",
+      "input": {
+        "participants": [
+          {
+            "zone": "Asia/Kathmandu",
+            "hours": {
+              "start": "09:00",
+              "end": "17:00",
+              "days": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          },
+          {
+            "zone": "Asia/Kolkata",
+            "hours": {
+              "start": "09:00",
+              "end": "17:00",
+              "days": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          },
+          {
+            "zone": "Australia/Eucla",
+            "hours": {
+              "start": "09:00",
+              "end": "17:00",
+              "days": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            }
+          }
+        ],
+        "fromMs": 1792627200000,
+        "untilMs": 1792713600000,
+        "durationMinutes": 45,
+        "objective": "balanced",
+        "preset": "work"
+      },
+      "expected": [
+        {
+          "startMs": 1792639800000,
+          "endMs": 1792642500000,
+          "objective": "balanced",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "Asia/Kathmandu",
+              "zone": "Asia/Kathmandu",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "09:15",
+                "offsetMinutes": 345
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "10:00",
+                "offsetMinutes": 345
+              }
+            },
+            {
+              "id": "Asia/Kolkata",
+              "zone": "Asia/Kolkata",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "09:00",
+                "offsetMinutes": 330
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "09:45",
+                "offsetMinutes": 330
+              }
+            },
+            {
+              "id": "Australia/Eucla",
+              "zone": "Australia/Eucla",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "12:15",
+                "offsetMinutes": 525
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "13:00",
+                "offsetMinutes": 525
+              }
+            }
+          ],
+          "working": 3,
+          "total": 3,
+          "avoidParticipants": 0,
+          "maxPersonPenaltyUnits": 0,
+          "sumPersonPenaltyUnits": 0,
+          "score": [
+            0,
+            0,
+            0,
+            -3,
+            1792639800000
+          ]
+        },
+        {
+          "startMs": 1792642500000,
+          "endMs": 1792645200000,
+          "objective": "balanced",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "Asia/Kathmandu",
+              "zone": "Asia/Kathmandu",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "10:00",
+                "offsetMinutes": 345
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "10:45",
+                "offsetMinutes": 345
+              }
+            },
+            {
+              "id": "Asia/Kolkata",
+              "zone": "Asia/Kolkata",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "09:45",
+                "offsetMinutes": 330
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "10:30",
+                "offsetMinutes": 330
+              }
+            },
+            {
+              "id": "Australia/Eucla",
+              "zone": "Australia/Eucla",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "13:00",
+                "offsetMinutes": 525
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "13:45",
+                "offsetMinutes": 525
+              }
+            }
+          ],
+          "working": 3,
+          "total": 3,
+          "avoidParticipants": 0,
+          "maxPersonPenaltyUnits": 0,
+          "sumPersonPenaltyUnits": 0,
+          "score": [
+            0,
+            0,
+            0,
+            -3,
+            1792642500000
+          ]
+        },
+        {
+          "startMs": 1792645200000,
+          "endMs": 1792647900000,
+          "objective": "balanced",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "Asia/Kathmandu",
+              "zone": "Asia/Kathmandu",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "10:45",
+                "offsetMinutes": 345
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "11:30",
+                "offsetMinutes": 345
+              }
+            },
+            {
+              "id": "Asia/Kolkata",
+              "zone": "Asia/Kolkata",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "10:30",
+                "offsetMinutes": 330
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "11:15",
+                "offsetMinutes": 330
+              }
+            },
+            {
+              "id": "Australia/Eucla",
+              "zone": "Australia/Eucla",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "13:45",
+                "offsetMinutes": 525
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "14:30",
+                "offsetMinutes": 525
+              }
+            }
+          ],
+          "working": 3,
+          "total": 3,
+          "avoidParticipants": 0,
+          "maxPersonPenaltyUnits": 0,
+          "sumPersonPenaltyUnits": 0,
+          "score": [
+            0,
+            0,
+            0,
+            -3,
+            1792645200000
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sleep-preference",
+      "input": {
+        "participants": [
+          {
+            "id": "Europe/London",
+            "zone": "Europe/London",
+            "hours": {
+              "start": "09:00",
+              "end": "17:00",
+              "days": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            },
+            "acceptableStart": "08:00",
+            "acceptableEnd": "21:00"
+          },
+          {
+            "id": "America/New_York",
+            "zone": "America/New_York",
+            "hours": {
+              "start": "09:00",
+              "end": "17:00",
+              "days": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            },
+            "acceptableStart": "08:00",
+            "acceptableEnd": "21:00"
+          },
+          {
+            "id": "Pacific/Auckland",
+            "zone": "Pacific/Auckland",
+            "hours": {
+              "start": "09:00",
+              "end": "17:00",
+              "days": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            },
+            "acceptableStart": "08:00",
+            "acceptableEnd": "21:00"
+          }
+        ],
+        "fromMs": 1792641600000,
+        "untilMs": 1792728000000,
+        "durationMinutes": 60,
+        "objective": "balanced",
+        "preset": "work"
+      },
+      "expected": [
+        {
+          "startMs": 1792695600000,
+          "endMs": 1792699200000,
+          "objective": "balanced",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "Europe/London",
+              "zone": "Europe/London",
+              "penaltyUnits": 359,
+              "penalty": 59.833333333333336,
+              "reason": "late",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "20:00",
+                "offsetMinutes": 60
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "21:00",
+                "offsetMinutes": 60
+              }
+            },
+            {
+              "id": "America/New_York",
+              "zone": "America/New_York",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "15:00",
+                "offsetMinutes": -240
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "16:00",
+                "offsetMinutes": -240
+              }
+            },
+            {
+              "id": "Pacific/Auckland",
+              "zone": "Pacific/Auckland",
+              "penaltyUnits": 180,
+              "penalty": 30,
+              "reason": "early",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-23",
+                "time": "08:00",
+                "offsetMinutes": 780
+              },
+              "localEnd": {
+                "date": "2026-10-23",
+                "time": "09:00",
+                "offsetMinutes": 780
+              }
+            }
+          ],
+          "working": 1,
+          "total": 3,
+          "avoidParticipants": 0,
+          "maxPersonPenaltyUnits": 359,
+          "sumPersonPenaltyUnits": 539,
+          "score": [
+            0,
+            359,
+            539,
+            -1,
+            1792695600000
+          ]
+        },
+        {
+          "startMs": 1792699200000,
+          "endMs": 1792702800000,
+          "objective": "balanced",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "Europe/London",
+              "zone": "Europe/London",
+              "penaltyUnits": 659,
+              "penalty": 109.83333333333333,
+              "reason": "avoid",
+              "working": false,
+              "avoid": true,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "21:00",
+                "offsetMinutes": 60
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "22:00",
+                "offsetMinutes": 60
+              }
+            },
+            {
+              "id": "America/New_York",
+              "zone": "America/New_York",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "16:00",
+                "offsetMinutes": -240
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "17:00",
+                "offsetMinutes": -240
+              }
+            },
+            {
+              "id": "Pacific/Auckland",
+              "zone": "Pacific/Auckland",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-23",
+                "time": "09:00",
+                "offsetMinutes": 780
+              },
+              "localEnd": {
+                "date": "2026-10-23",
+                "time": "10:00",
+                "offsetMinutes": 780
+              }
+            }
+          ],
+          "working": 2,
+          "total": 3,
+          "avoidParticipants": 1,
+          "maxPersonPenaltyUnits": 659,
+          "sumPersonPenaltyUnits": 659,
+          "score": [
+            1,
+            659,
+            659,
+            -2,
+            1792699200000
+          ]
+        },
+        {
+          "startMs": 1792692000000,
+          "endMs": 1792695600000,
+          "objective": "balanced",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "Europe/London",
+              "zone": "Europe/London",
+              "penaltyUnits": 299,
+              "penalty": 49.833333333333336,
+              "reason": "late",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "19:00",
+                "offsetMinutes": 60
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "20:00",
+                "offsetMinutes": 60
+              }
+            },
+            {
+              "id": "America/New_York",
+              "zone": "America/New_York",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "14:00",
+                "offsetMinutes": -240
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "15:00",
+                "offsetMinutes": -240
+              }
+            },
+            {
+              "id": "Pacific/Auckland",
+              "zone": "Pacific/Auckland",
+              "penaltyUnits": 660,
+              "penalty": 110,
+              "reason": "avoid",
+              "working": false,
+              "avoid": true,
+              "localStart": {
+                "date": "2026-10-23",
+                "time": "07:00",
+                "offsetMinutes": 780
+              },
+              "localEnd": {
+                "date": "2026-10-23",
+                "time": "08:00",
+                "offsetMinutes": 780
+              }
+            }
+          ],
+          "working": 1,
+          "total": 3,
+          "avoidParticipants": 1,
+          "maxPersonPenaltyUnits": 660,
+          "sumPersonPenaltyUnits": 959,
+          "score": [
+            1,
+            660,
+            959,
+            -1,
+            1792692000000
+          ]
+        }
+      ]
+    },
+    {
+      "id": "no-work",
+      "input": {
+        "participants": [
+          {
+            "id": "Europe/London",
+            "zone": "Europe/London",
+            "hours": {
+              "start": "09:00",
+              "end": "17:00",
+              "days": []
+            }
+          },
+          {
+            "id": "America/New_York",
+            "zone": "America/New_York",
+            "hours": {
+              "start": "09:00",
+              "end": "17:00",
+              "days": []
+            }
+          },
+          {
+            "id": "Pacific/Auckland",
+            "zone": "Pacific/Auckland",
+            "hours": {
+              "start": "09:00",
+              "end": "17:00",
+              "days": []
+            }
+          }
+        ],
+        "fromMs": 1792814400000,
+        "untilMs": 1792900800000,
+        "durationMinutes": 60,
+        "objective": "balanced",
+        "preset": "work"
+      },
+      "expected": [
+        {
+          "startMs": 1792861200000,
+          "endMs": 1792864800000,
+          "objective": "balanced",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "Europe/London",
+              "zone": "Europe/London",
+              "penaltyUnits": 360,
+              "penalty": 60,
+              "reason": "comfortable",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-24",
+                "time": "18:00",
+                "offsetMinutes": 60
+              },
+              "localEnd": {
+                "date": "2026-10-24",
+                "time": "19:00",
+                "offsetMinutes": 60
+              }
+            },
+            {
+              "id": "America/New_York",
+              "zone": "America/New_York",
+              "penaltyUnits": 360,
+              "penalty": 60,
+              "reason": "comfortable",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-24",
+                "time": "13:00",
+                "offsetMinutes": -240
+              },
+              "localEnd": {
+                "date": "2026-10-24",
+                "time": "14:00",
+                "offsetMinutes": -240
+              }
+            },
+            {
+              "id": "Pacific/Auckland",
+              "zone": "Pacific/Auckland",
+              "penaltyUnits": 360,
+              "penalty": 60,
+              "reason": "comfortable",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-25",
+                "time": "06:00",
+                "offsetMinutes": 780
+              },
+              "localEnd": {
+                "date": "2026-10-25",
+                "time": "07:00",
+                "offsetMinutes": 780
+              }
+            }
+          ],
+          "working": 0,
+          "total": 3,
+          "avoidParticipants": 0,
+          "maxPersonPenaltyUnits": 360,
+          "sumPersonPenaltyUnits": 1080,
+          "score": [
+            0,
+            360,
+            1080,
+            0,
+            1792861200000
+          ]
+        },
+        {
+          "startMs": 1792864800000,
+          "endMs": 1792868400000,
+          "objective": "balanced",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "Europe/London",
+              "zone": "Europe/London",
+              "penaltyUnits": 360,
+              "penalty": 60,
+              "reason": "comfortable",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-24",
+                "time": "19:00",
+                "offsetMinutes": 60
+              },
+              "localEnd": {
+                "date": "2026-10-24",
+                "time": "20:00",
+                "offsetMinutes": 60
+              }
+            },
+            {
+              "id": "America/New_York",
+              "zone": "America/New_York",
+              "penaltyUnits": 360,
+              "penalty": 60,
+              "reason": "comfortable",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-24",
+                "time": "14:00",
+                "offsetMinutes": -240
+              },
+              "localEnd": {
+                "date": "2026-10-24",
+                "time": "15:00",
+                "offsetMinutes": -240
+              }
+            },
+            {
+              "id": "Pacific/Auckland",
+              "zone": "Pacific/Auckland",
+              "penaltyUnits": 360,
+              "penalty": 60,
+              "reason": "comfortable",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-25",
+                "time": "07:00",
+                "offsetMinutes": 780
+              },
+              "localEnd": {
+                "date": "2026-10-25",
+                "time": "08:00",
+                "offsetMinutes": 780
+              }
+            }
+          ],
+          "working": 0,
+          "total": 3,
+          "avoidParticipants": 0,
+          "maxPersonPenaltyUnits": 360,
+          "sumPersonPenaltyUnits": 1080,
+          "score": [
+            0,
+            360,
+            1080,
+            0,
+            1792864800000
+          ]
+        },
+        {
+          "startMs": 1792868400000,
+          "endMs": 1792872000000,
+          "objective": "balanced",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "Europe/London",
+              "zone": "Europe/London",
+              "penaltyUnits": 360,
+              "penalty": 60,
+              "reason": "comfortable",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-24",
+                "time": "20:00",
+                "offsetMinutes": 60
+              },
+              "localEnd": {
+                "date": "2026-10-24",
+                "time": "21:00",
+                "offsetMinutes": 60
+              }
+            },
+            {
+              "id": "America/New_York",
+              "zone": "America/New_York",
+              "penaltyUnits": 360,
+              "penalty": 60,
+              "reason": "comfortable",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-24",
+                "time": "15:00",
+                "offsetMinutes": -240
+              },
+              "localEnd": {
+                "date": "2026-10-24",
+                "time": "16:00",
+                "offsetMinutes": -240
+              }
+            },
+            {
+              "id": "Pacific/Auckland",
+              "zone": "Pacific/Auckland",
+              "penaltyUnits": 360,
+              "penalty": 60,
+              "reason": "comfortable",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-25",
+                "time": "08:00",
+                "offsetMinutes": 780
+              },
+              "localEnd": {
+                "date": "2026-10-25",
+                "time": "09:00",
+                "offsetMinutes": 780
+              }
+            }
+          ],
+          "working": 0,
+          "total": 3,
+          "avoidParticipants": 0,
+          "maxPersonPenaltyUnits": 360,
+          "sumPersonPenaltyUnits": 1080,
+          "score": [
+            0,
+            360,
+            1080,
+            0,
+            1792868400000
+          ]
+        }
+      ]
+    },
+    {
+      "id": "new-york-fold",
+      "input": {
+        "participants": [
+          {
+            "zone": "America/New_York",
+            "hours": {
+              "start": "00:00",
+              "end": "04:00",
+              "days": [
+                0
+              ]
+            }
+          }
+        ],
+        "fromMs": 1793505600000,
+        "untilMs": 1793523600000,
+        "durationMinutes": 120,
+        "objective": "balanced",
+        "preset": "work"
+      },
+      "expected": [
+        {
+          "startMs": 1793505600000,
+          "endMs": 1793512800000,
+          "objective": "balanced",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "America/New_York",
+              "zone": "America/New_York",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-11-01",
+                "time": "00:00",
+                "offsetMinutes": -240
+              },
+              "localEnd": {
+                "date": "2026-11-01",
+                "time": "01:00",
+                "offsetMinutes": -300
+              }
+            }
+          ],
+          "working": 1,
+          "total": 1,
+          "avoidParticipants": 0,
+          "maxPersonPenaltyUnits": 0,
+          "sumPersonPenaltyUnits": 0,
+          "score": [
+            0,
+            0,
+            0,
+            -1,
+            1793505600000
+          ]
+        },
+        {
+          "startMs": 1793512800000,
+          "endMs": 1793520000000,
+          "objective": "balanced",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "America/New_York",
+              "zone": "America/New_York",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-11-01",
+                "time": "01:00",
+                "offsetMinutes": -300
+              },
+              "localEnd": {
+                "date": "2026-11-01",
+                "time": "03:00",
+                "offsetMinutes": -300
+              }
+            }
+          ],
+          "working": 1,
+          "total": 1,
+          "avoidParticipants": 0,
+          "maxPersonPenaltyUnits": 0,
+          "sumPersonPenaltyUnits": 0,
+          "score": [
+            0,
+            0,
+            0,
+            -1,
+            1793512800000
+          ]
+        },
+        {
+          "startMs": 1793520000000,
+          "endMs": 1793527200000,
+          "objective": "balanced",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "America/New_York",
+              "zone": "America/New_York",
+              "penaltyUnits": 720,
+              "penalty": 120,
+              "reason": "avoid",
+              "working": false,
+              "avoid": true,
+              "localStart": {
+                "date": "2026-11-01",
+                "time": "03:00",
+                "offsetMinutes": -300
+              },
+              "localEnd": {
+                "date": "2026-11-01",
+                "time": "05:00",
+                "offsetMinutes": -300
+              }
+            }
+          ],
+          "working": 0,
+          "total": 1,
+          "avoidParticipants": 1,
+          "maxPersonPenaltyUnits": 720,
+          "sumPersonPenaltyUnits": 720,
+          "score": [
+            1,
+            720,
+            720,
+            0,
+            1793520000000
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lord-howe-gap",
+      "input": {
+        "participants": [
+          {
+            "zone": "Australia/Lord_Howe",
+            "hours": {
+              "start": "01:00",
+              "end": "04:00",
+              "days": [
+                0
+              ]
+            }
+          }
+        ],
+        "fromMs": 1791036000000,
+        "untilMs": 1791054000000,
+        "durationMinutes": 90,
+        "objective": "balanced",
+        "preset": "work"
+      },
+      "expected": [
+        {
+          "startMs": 1791037800000,
+          "endMs": 1791043200000,
+          "objective": "balanced",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "Australia/Lord_Howe",
+              "zone": "Australia/Lord_Howe",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-04",
+                "time": "01:00",
+                "offsetMinutes": 630
+              },
+              "localEnd": {
+                "date": "2026-10-04",
+                "time": "03:00",
+                "offsetMinutes": 660
+              }
+            }
+          ],
+          "working": 1,
+          "total": 1,
+          "avoidParticipants": 0,
+          "maxPersonPenaltyUnits": 0,
+          "sumPersonPenaltyUnits": 0,
+          "score": [
+            0,
+            0,
+            0,
+            -1,
+            1791037800000
+          ]
+        },
+        {
+          "startMs": 1791053100000,
+          "endMs": 1791058500000,
+          "objective": "balanced",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "Australia/Lord_Howe",
+              "zone": "Australia/Lord_Howe",
+              "penaltyUnits": 615,
+              "penalty": 102.5,
+              "reason": "avoid",
+              "working": false,
+              "avoid": true,
+              "localStart": {
+                "date": "2026-10-04",
+                "time": "05:45",
+                "offsetMinutes": 660
+              },
+              "localEnd": {
+                "date": "2026-10-04",
+                "time": "07:15",
+                "offsetMinutes": 660
+              }
+            }
+          ],
+          "working": 0,
+          "total": 1,
+          "avoidParticipants": 1,
+          "maxPersonPenaltyUnits": 615,
+          "sumPersonPenaltyUnits": 615,
+          "score": [
+            1,
+            615,
+            615,
+            0,
+            1791053100000
+          ]
+        },
+        {
+          "startMs": 1791047700000,
+          "endMs": 1791053100000,
+          "objective": "balanced",
+          "preset": "work",
+          "participants": [
+            {
+              "id": "Australia/Lord_Howe",
+              "zone": "Australia/Lord_Howe",
+              "penaltyUnits": 705,
+              "penalty": 117.5,
+              "reason": "avoid",
+              "working": false,
+              "avoid": true,
+              "localStart": {
+                "date": "2026-10-04",
+                "time": "04:15",
+                "offsetMinutes": 660
+              },
+              "localEnd": {
+                "date": "2026-10-04",
+                "time": "05:45",
+                "offsetMinutes": 660
+              }
+            }
+          ],
+          "working": 0,
+          "total": 1,
+          "avoidParticipants": 1,
+          "maxPersonPenaltyUnits": 705,
+          "sumPersonPenaltyUnits": 705,
+          "score": [
+            1,
+            705,
+            705,
+            0,
+            1791047700000
+          ]
+        }
+      ]
+    },
+    {
+      "id": "family-acceptable-override",
+      "input": {
+        "participants": [
+          {
+            "id": "Europe/London",
+            "zone": "Europe/London",
+            "hours": {
+              "start": "09:00",
+              "end": "17:00",
+              "days": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            },
+            "acceptableStart": "12:00",
+            "acceptableEnd": "18:00"
+          },
+          {
+            "id": "America/New_York",
+            "zone": "America/New_York",
+            "hours": {
+              "start": "09:00",
+              "end": "17:00",
+              "days": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            },
+            "acceptableStart": "12:00",
+            "acceptableEnd": "18:00"
+          },
+          {
+            "id": "Pacific/Auckland",
+            "zone": "Pacific/Auckland",
+            "hours": {
+              "start": "09:00",
+              "end": "17:00",
+              "days": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            },
+            "acceptableStart": "12:00",
+            "acceptableEnd": "18:00"
+          }
+        ],
+        "fromMs": 1792641600000,
+        "untilMs": 1792728000000,
+        "durationMinutes": 60,
+        "objective": "balanced",
+        "preset": "family"
+      },
+      "expected": [
+        {
+          "startMs": 1792684800000,
+          "endMs": 1792688400000,
+          "objective": "balanced",
+          "preset": "family",
+          "participants": [
+            {
+              "id": "Europe/London",
+              "zone": "Europe/London",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "comfortable",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "17:00",
+                "offsetMinutes": 60
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "18:00",
+                "offsetMinutes": 60
+              }
+            },
+            {
+              "id": "America/New_York",
+              "zone": "America/New_York",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "12:00",
+                "offsetMinutes": -240
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "13:00",
+                "offsetMinutes": -240
+              }
+            },
+            {
+              "id": "Pacific/Auckland",
+              "zone": "Pacific/Auckland",
+              "penaltyUnits": 1020,
+              "penalty": 170,
+              "reason": "avoid",
+              "working": false,
+              "avoid": true,
+              "localStart": {
+                "date": "2026-10-23",
+                "time": "05:00",
+                "offsetMinutes": 780
+              },
+              "localEnd": {
+                "date": "2026-10-23",
+                "time": "06:00",
+                "offsetMinutes": 780
+              }
+            }
+          ],
+          "working": 1,
+          "total": 3,
+          "avoidParticipants": 1,
+          "maxPersonPenaltyUnits": 1020,
+          "sumPersonPenaltyUnits": 1020,
+          "score": [
+            1,
+            1020,
+            1020,
+            -1,
+            1792684800000
+          ]
+        },
+        {
+          "startMs": 1792697400000,
+          "endMs": 1792701000000,
+          "objective": "balanced",
+          "preset": "family",
+          "participants": [
+            {
+              "id": "Europe/London",
+              "zone": "Europe/London",
+              "penaltyUnits": 809,
+              "penalty": 134.83333333333334,
+              "reason": "avoid",
+              "working": false,
+              "avoid": true,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "20:30",
+                "offsetMinutes": 60
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "21:30",
+                "offsetMinutes": 60
+              }
+            },
+            {
+              "id": "America/New_York",
+              "zone": "America/New_York",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "working",
+              "working": true,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "15:30",
+                "offsetMinutes": -240
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "16:30",
+                "offsetMinutes": -240
+              }
+            },
+            {
+              "id": "Pacific/Auckland",
+              "zone": "Pacific/Auckland",
+              "penaltyUnits": 810,
+              "penalty": 135,
+              "reason": "avoid",
+              "working": false,
+              "avoid": true,
+              "localStart": {
+                "date": "2026-10-23",
+                "time": "08:30",
+                "offsetMinutes": 780
+              },
+              "localEnd": {
+                "date": "2026-10-23",
+                "time": "09:30",
+                "offsetMinutes": 780
+              }
+            }
+          ],
+          "working": 1,
+          "total": 3,
+          "avoidParticipants": 2,
+          "maxPersonPenaltyUnits": 810,
+          "sumPersonPenaltyUnits": 1619,
+          "score": [
+            2,
+            810,
+            1619,
+            -1,
+            1792697400000
+          ]
+        },
+        {
+          "startMs": 1792701000000,
+          "endMs": 1792704600000,
+          "objective": "balanced",
+          "preset": "family",
+          "participants": [
+            {
+              "id": "Europe/London",
+              "zone": "Europe/London",
+              "penaltyUnits": 869,
+              "penalty": 144.83333333333334,
+              "reason": "avoid",
+              "working": false,
+              "avoid": true,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "21:30",
+                "offsetMinutes": 60
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "22:30",
+                "offsetMinutes": 60
+              }
+            },
+            {
+              "id": "America/New_York",
+              "zone": "America/New_York",
+              "penaltyUnits": 0,
+              "penalty": 0,
+              "reason": "comfortable",
+              "working": false,
+              "avoid": false,
+              "localStart": {
+                "date": "2026-10-22",
+                "time": "16:30",
+                "offsetMinutes": -240
+              },
+              "localEnd": {
+                "date": "2026-10-22",
+                "time": "17:30",
+                "offsetMinutes": -240
+              }
+            },
+            {
+              "id": "Pacific/Auckland",
+              "zone": "Pacific/Auckland",
+              "penaltyUnits": 750,
+              "penalty": 125,
+              "reason": "avoid",
+              "working": true,
+              "avoid": true,
+              "localStart": {
+                "date": "2026-10-23",
+                "time": "09:30",
+                "offsetMinutes": 780
+              },
+              "localEnd": {
+                "date": "2026-10-23",
+                "time": "10:30",
+                "offsetMinutes": 780
+              }
+            }
+          ],
+          "working": 1,
+          "total": 3,
+          "avoidParticipants": 2,
+          "maxPersonPenaltyUnits": 869,
+          "sumPersonPenaltyUnits": 1619,
+          "score": [
+            2,
+            869,
+            1619,
+            -1,
+            1792701000000
+          ]
+        }
+      ]
+    }
+  ]
+}

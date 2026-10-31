@@ -79,7 +79,7 @@ const todayIn = (zone) => new Intl.DateTimeFormat('en-CA', { timeZone: zone, yea
 const results = [];
 async function check(name, fn) {
   const filter = argVal('--filter', '');
-  if (filter && !new RegExp(filter).test(name)) return;
+  if (filter && !name.includes(filter)) return;
   const t0 = Date.now();
   try {
     await fn();

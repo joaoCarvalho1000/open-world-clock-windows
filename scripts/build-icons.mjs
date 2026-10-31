@@ -329,7 +329,8 @@ let changed = 0;
 for (const { rel, make } of outputs) {
   const file = path.join(ROOT, rel);
   const data = make();
-  const same = fs.existsSync(file) && fs.readFileSync(file).equals(data);
+  let same = false;
+  try { same = fs.readFileSync(file).equals(data); } catch (error) { if (error.code !== 'ENOENT') throw error; }
   if (!same) {
     changed++;
     if (!CHECK) {

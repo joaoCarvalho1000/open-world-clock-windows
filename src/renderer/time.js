@@ -236,6 +236,64 @@
     return { full: pick(cands.filter((c) => c.working === total)), partial: pick(cands.filter((c) => c.working > 0 && c.working < total).sort(cmp)) };
   }
 
+  // Local-only, bounded humane meeting ranking. Integer penalty units are sixths of a point.
+  function recommendTimes(participants, fromMs, untilMs, durationMinutes = 60, objective = 'balanced', preset = 'work') {
+    if (!participants.length || !Number.isFinite(fromMs) || !Number.isFinite(untilMs) || untilMs <= fromMs || untilMs - fromMs > 7 * DAY || !Number.isInteger(durationMinutes) || durationMinutes < 15 || durationMinutes > 120) return [];
+    const minute = 60000, first = Math.ceil(fromMs / (15 * minute)) * 15 * minute;
+    const count = Math.ceil((untilMs - first) / minute) + durationMinutes;
+    const allDays = [0, 1, 2, 3, 4, 5, 6];
+    const distance = (a, b) => Math.min(Math.abs(a - b), 1440 - Math.abs(a - b));
+    const inside = (m, a, b) => a < b ? m >= a && m < b : a > b && (m >= a || m < b);
+    const rows = participants.map((p) => {
+      const work = p.hours || { start: '09:00', end: '17:00', days: [1,2,3,4,5] };
+      const preferred = preset === 'family' ? { start: '09:00', end: '21:00', days: allDays } : work;
+      const a = hhmm(p.acceptableStart || '06:00'), b = hhmm(p.acceptableEnd || '22:00');
+      const ps = hhmm(preferred.start), pe = hhmm(preferred.end);
+      const pieces = offsetPieces(p.zone, first, first + (count + 1) * minute);
+      let piece = 0;
+      const samples = Array.from({ length: Math.max(0, count) }, (_, i) => {
+        const utc = first + i * minute;
+        while (piece + 1 < pieces.length && utc >= pieces[piece][1]) piece++;
+        const wall = utc + pieces[piece][2], m = ((wall / minute % 1440) + 1440) % 1440;
+        const working = workingAtWall(work, wall), pref = workingAtWall(preferred, wall);
+        if (pref && (preset !== 'family' || inside(m, a, b))) return { penalty: 0, reason: working ? 'working' : 'comfortable', working, avoid: false };
+        const acceptable = inside(m, a, b);
+        const nearStart = distance(m, ps), nearEnd = distance(m, pe);
+        const day = new Date(wall).getUTCDay();
+        const offday = preset !== 'family' && !preferred.days.includes(day) && !(ps > pe && m < pe && preferred.days.includes((day + 6) % 7));
+        return { penalty: acceptable ? (offday ? 360 : 120 + Math.min(nearStart, nearEnd)) : 600 + Math.min(distance(m, a), distance(m, b)), reason: !acceptable ? 'avoid' : offday ? 'comfortable' : nearStart <= nearEnd ? 'early' : 'late', working, avoid: !acceptable };
+      });
+      return { p, samples };
+    });
+    const local = (zone, ms) => {
+      const d = new Date(ms), p = parts(zone, d, { ...YMD, hourCycle: 'h23', hour: '2-digit', minute: '2-digit' });
+      return { date: `${p.year}-${p.month}-${p.day}`, time: `${p.hour}:${p.minute}`, offsetMinutes: offsetMinutes(zone, d) };
+    };
+    const candidates = [];
+    for (let startMs = first, index = 0; startMs < untilMs; startMs += 15 * minute, index += 15) {
+      const endMs = startMs + durationMinutes * minute;
+      const people = rows.map(({ p, samples }) => {
+        const interval = samples.slice(index, index + durationMinutes);
+        const worst = interval.reduce((a, b) => b.penalty > a.penalty ? b : a);
+        const working = interval.every((s) => s.working);
+        return { id: p.id || p.zone, zone: p.zone, penaltyUnits: worst.penalty, penalty: worst.penalty / 6, reason: worst.penalty === 0 ? (working ? 'working' : 'comfortable') : worst.reason, working, avoid: interval.some((s) => s.avoid) };
+      });
+      const avoidParticipants = people.filter((p) => p.avoid).length, working = people.filter((p) => p.working).length;
+      const maxPersonPenaltyUnits = Math.max(...people.map((p) => p.penaltyUnits)), sumPersonPenaltyUnits = people.reduce((n, p) => n + p.penaltyUnits, 0);
+      const fairness = [avoidParticipants, maxPersonPenaltyUnits, sumPersonPenaltyUnits, -working, startMs];
+      candidates.push({ startMs, endMs, objective, preset, participants: people, working, total: people.length, avoidParticipants, maxPersonPenaltyUnits, sumPersonPenaltyUnits, score: objective === 'working' ? [-working, ...fairness] : fairness });
+    }
+    candidates.sort((a,b) => { for (let i = 0; i < a.score.length; i++) { const d = a.score[i] - b.score[i]; if (d) return d; } return 0; });
+    const chosen = [];
+    for (const c of candidates) {
+      if (chosen.some((g) => c.startMs < g.endMs && g.startMs < c.endMs)) continue;
+      c.participants.forEach((p) => { p.localStart = local(p.zone, c.startMs); p.localEnd = local(p.zone, c.endMs); });
+      chosen.push(c);
+      if (chosen.length === 3) break;
+    }
+    return chosen;
+  }
+
   window.WCTime = { fmt, parts, offsetMinutes, offsetMinutesUncached, formatOffset, zonedToEpoch, dayDiff, parseTime, splitTimePlace, phaseOf,
-    uniqueClocks, offsetMs, workSpans, worksThroughout, findTimes, _fmtSize: () => fmtCache.size };
+    uniqueClocks, offsetMs, workSpans, worksThroughout, findTimes, recommendTimes, _fmtSize: () => fmtCache.size };
 })();

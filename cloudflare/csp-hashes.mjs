@@ -6,6 +6,7 @@
 //
 //   node cloudflare/csp-hashes.mjs          list the hashes and check site/_headers (exit 1 if out of date)
 //   node cloudflare/csp-hashes.mjs --write  rewrite the script-src hashes in site/_headers
+import { elements } from '../scripts/lib/html.mjs';
 import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { dirname, join } from 'node:path';
@@ -17,12 +18,11 @@ const hashes = new Map();
 const pages = ['', 'pt', 'es'].flatMap((d) => { try { return readdirSync(join(site, d)).filter((n) => n.endsWith('.html')).map((n) => (d ? d + '/' : '') + n); } catch { return []; } });
 for (const f of pages) {
   const html = readFileSync(join(site, f), 'utf8');
-  for (const m of html.matchAll(/<script(\s[^>]*)?>([\s\S]*?)<\/script>/gi)) {
-    const attrs = m[1] || '';
-    if (/\ssrc\s*=/i.test(attrs)) continue;
-    const type = (attrs.match(/\stype\s*=\s*["']?([^"'\s>]+)/i) || [])[1];
-    if (type && !/^(text|application)\/(javascript|ecmascript)$|^module$/i.test(type)) continue; // JSON-LD etc. never run
-    const h = "'sha256-" + createHash('sha256').update(m[2], 'utf8').digest('base64') + "'";
+  for (const script of elements(html).filter(n => n.tag === 'script')) {
+    if (script.attr('src') !== undefined) continue;
+    const type = script.attr('type')?.trim();
+    if (type && !/^(text|application)\/(javascript|ecmascript)$|^module$/i.test(type)) continue;
+    const h = "'sha256-" + createHash('sha256').update(script.content, 'utf8').digest('base64') + "'";
     hashes.set(h, [...(hashes.get(h) || []), f]);
   }
 }

@@ -171,6 +171,8 @@ jobs:
         working-directory: cloudflare
       - run: npm audit --audit-level=high
         working-directory: cloudflare
+      - name: Install shared build tooling
+        run: npm ci --ignore-scripts
       - name: Website unit tests and browser settings
         run: node --test 'cloudflare/*.test.mjs' test/web/shim.test.mjs
       - name: Generated site, search metadata, translations and security policy
@@ -195,11 +197,14 @@ jobs:
         run: |
           "$CHROME_PATH" --version
           node test/web/seo.test.mjs
+          node test/web/meeting-planner.test.mjs
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: always()
         with:
           name: website-browser-report
-          path: dist/seo-shots/
+          path: |
+            dist/seo-shots/
+            output/overlap-audit/web/
           if-no-files-found: warn
           retention-days: 14
 

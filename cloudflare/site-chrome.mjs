@@ -252,8 +252,11 @@ export function check({ write = false, siteDir = SITE_DIR } = {}) {
     for (const lang of LANGS) {
       const f = join(siteDir, lang === 'en' ? '' : lang, (slug || 'index') + '.html');
       const name = f.slice(siteDir.length + 1).replace(/\\/g, '/');
-      if (!existsSync(f)) { problems.push('site/' + name + ' is missing'); continue; }
-      const html = readFileSync(f, 'utf8');
+      let html;
+      try { html = readFileSync(f, 'utf8'); } catch (error) {
+        if (error.code !== 'ENOENT') throw error;
+        problems.push('site/' + name + ' is missing'); continue;
+      }
       let out;
       try { out = applyStore(applyChrome(html, lang, slug), store); } catch (e) { problems.push('site/' + name + ': ' + e.message); continue; }
       if (out === html) continue;
