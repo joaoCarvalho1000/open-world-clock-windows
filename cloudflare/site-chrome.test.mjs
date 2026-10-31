@@ -103,6 +103,20 @@ test('the Store switch: applyStore flips the hidden attributes and the JSON-LD, 
   assert.equal(applyStore(on, { ...store, live: false }), off);
 });
 
+test('the Store switch removes only the exact configured sameAs URL', () => {
+  const storeUrl = readStore().storeUrl;
+  const nearMatches = [
+    storeUrl.replace('apps.microsoft.com', 'appsXmicrosoft.com'),
+    storeUrl.replace('apps.microsoft.com', 'apps.microsoftXcom'),
+    storeUrl + '/other',
+    storeUrl + '?other=1',
+  ];
+  const html = JSON.stringify({ sameAs: [...nearMatches, storeUrl, 'https://github.com/o/r'] });
+  const out = applyStore(html, { live: false, storeUrl });
+  assert.deepEqual(JSON.parse(out).sameAs, [...nearMatches, 'https://github.com/o/r']);
+  assert.equal(applyStore(out, { live: false, storeUrl }), out);
+});
+
 test('the Store switch: while storeLive is false no page shows a Store link, winget or a Store JSON-LD link', () => {
   const { live, storeUrl } = readStore();
   if (live) return;

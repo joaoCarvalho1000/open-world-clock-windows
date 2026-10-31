@@ -47,7 +47,7 @@ The canonical origin `https://openworldclock.com` is already written into the HT
    - Project settings > Web analytics: turn on **Cookieless server hash mode**. Without it PostHog drops the site's events (the site runs `cookieless_mode: 'always'`).
    - Project settings: turn on **Discard client IP data**. The privacy page says IPs are not stored, so this must be on.
    - Copy the **Project API key** (`phc_...`) into `site/assets/config.js` (`posthogKey`) and into `POSTHOG_KEY` in `wrangler.toml` (the proxy only serves that project's remote config), and set `posthogUi` to your region.
-3. Node 20 or newer. From this folder: `npm ci` (installs the pinned Wrangler from `package-lock.json`).
+3. Node 24 or newer, matching the repository runtime requirement. From this folder: `npm ci` (installs the pinned Wrangler from `package-lock.json`).
 
 ## 2. Create the Pages project and deploy
 
