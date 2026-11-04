@@ -88,7 +88,7 @@ v1.4.0: plan a meeting from start to finish.
 - Updates: an Updates group in Settings. The installer and portable exe (not code-signed) only ask openworldclock.com for the latest version number, never download anything, and check automatically only if you turn that on. The Microsoft Store keeps the Store build up to date.
 
 
-Unreleased (2026-11-04): time-zone rule updates.
+v1.4.2 (2026-11-04): time-zone rule updates.
 - Apply Canada's permanent 2026 offsets on hosts with older time-zone data: UTC-7 for most of British Columbia, UTC-6 for Alberta and the Northwest Territories, and UTC-5 for Manitoba and aligned northwestern Ontario communities. Keep saved IANA identifiers and historical dates.
 - Apply Morocco and Western Sahara's September 20, 2026 move to UTC, including both occurrences of the repeated hour. Keep Cuba at UTC-4 from November 1, 2026 until its scheduled November 7, 2027 fallback, then resume the host's seasonal rules.
 - Add PCT and ABT search aliases and regression coverage for old runtime data, exact transition boundaries, conversion, work schedules and widgets.

@@ -89,13 +89,13 @@ This installs the same Microsoft Store build, so it gets Store updates too. The 
 ### Option 3: Installer
 
 1. Download the setup file, `Open-World-Clock-1.4.2-setup.exe`, directly: https://download.openworldclock.com/Open-World-Clock-1.4.2-setup.exe (the download page, https://openworldclock.com/download, links the same file).
-   SHA-256: `3faffc0b6d5215aad85f95aac88b2be663778ece6cafd7e2368ca29a0710caa3`
+   SHA-256: `ada05879e2736ed8380614d66cd6109f19a46e2446251008c9d66740af42e7e4`
 2. Run it. It installs for your Windows user only, needs no admin rights, and adds Open World Clock shortcuts to the Start menu and the desktop.
 
 ### Option 4: Portable exe
 
 1. Download the portable file, `Open-World-Clock-1.4.2-portable.exe`, directly: https://download.openworldclock.com/Open-World-Clock-1.4.2-portable.exe
-   SHA-256: `b3f3eb850b07943a29969ee69ef038517879031ba4a4c1c72d425db49f75d86a`
+   SHA-256: `f2553333beb796332036676e74bd3f907cccfdf7df0c01360126785cafa0d285`
 2. Run it from any folder. Nothing is installed, and it never updates itself.
 
 The installer and the portable exe are x64 only. On an ARM64 PC, use the Microsoft Store.
