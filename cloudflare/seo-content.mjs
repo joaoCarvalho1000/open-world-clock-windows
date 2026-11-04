@@ -20,7 +20,7 @@ export const pairs = [
 export const pairSlug = ([a, b]) => `${a}-to-${b}-time`;
 // Two live tools with their own search task: the current time in many places, and UTC itself.
 export const toolSlugs = ['world-time-now', 'utc-time'];
-export const extraSlugs = [...pairs.map(pairSlug), ...toolSlugs, 'daylight-saving-meetings', 'always-on-top-world-clock', 'press', 'android-beta', 'mobile-terms'];
+export const extraSlugs = [...pairs.map(pairSlug), ...toolSlugs, 'daylight-saving-meetings', 'canada-time-zone-changes-2026', 'always-on-top-world-clock', 'press', 'android-beta', 'mobile-terms'];
 // Major cities for the live world-time table: one per region and rule set, not a ranking.
 export const worldCities = [
   ['America/Los_Angeles', 'Los Angeles', 'Los Angeles', 'Los Ángeles'],
@@ -88,7 +88,7 @@ export const copy = {
     difference: 'The difference changes with the date', season: 'Seasonal time differences',
     seasonIntro: 'The same local hour can land differently as clocks change. These examples use 09:00 in the first city.',
     dateCol: 'Date in source city', day: 'next day', previous: 'previous day',
-    source: 'Time zone rules come from the browser’s IANA data. Keep your browser updated. Abbreviations can be ambiguous; use the city and date.',
+    source: 'Time zone rules use the browser’s IANA data, with compatibility rules for the 2026 Canadian, Moroccan and Cuban changes. Keep your browser updated. Use the city and date, since abbreviations can be ambiguous.',
     pairLead: (a,b) => `Compare ${a} and ${b}, choose a date, and share the result. Open the planner to find shared working hours.`,
     pairTitle: (a,b) => `${a} to ${b} Time Converter`,
     pairHead: (a,b) => `${a} to ${b}`, calendar: 'Dates matter. These are worked examples, not a fixed year-round offset.',
@@ -132,7 +132,7 @@ export const copy = {
     desktop: 'Tenha no seu desktop Windows', nojs: 'Ative o JavaScript para usar a ferramenta. Os exemplos abaixo funcionam sem ele.',
     routes: 'Comece com duas cidades', related: 'Continue explorando', examples: 'Alguns horários para comparar', date: 'Exemplos de 1 de outubro de 2026. Escolha outra data no conversor acima.',
     difference: 'A diferença depende da data', season: 'Diferenças ao longo do ano', seasonIntro: 'O mesmo horário local pode mudar de correspondência quando os relógios mudam. Os exemplos partem das 09:00 na primeira cidade.',
-    dateCol: 'Data na cidade de origem', day: 'dia seguinte', previous: 'dia anterior', source: 'As regras de fuso vêm dos dados IANA do navegador. Mantenha-o atualizado. Abreviações podem ser ambíguas; prefira a cidade e a data.',
+    dateCol: 'Data na cidade de origem', day: 'dia seguinte', previous: 'dia anterior', source: 'As regras usam os dados IANA do navegador, com compatibilidade para as mudanças de 2026 no Canadá, Marrocos e Cuba. Mantenha o navegador atualizado. Prefira a cidade e a data, pois abreviações podem ser ambíguas.',
     pairLead: (a,b) => `Compare ${a} e ${b}, escolha a data e compartilhe o resultado. Abra o planejador para encontrar um expediente em comum.`,
     pairTitle: (a,b) => `Horário de ${a} para ${b} : Conversor`, pairHead: (a,b) => `${a} e ${b}`, calendar: 'A data importa. São exemplos calculados, não uma diferença fixa para o ano todo.',
     dst: 'Os relógios mudam. Suas reuniões também podem mudar.', dstTitle: 'Horário de Verão nos EUA e Europa: Reuniões em 2026',
@@ -170,7 +170,7 @@ export const copy = {
     loading: 'Cargando los relojes…', retry: 'Volver a intentar', share: 'Compartir', hint: 'Gratis y sin cuenta. Tus ciudades guardadas siguen siendo tuyas.', desktop: 'Tenlo en tu escritorio Windows', nojs: 'Activa JavaScript para usar la herramienta. Los ejemplos de abajo funcionan sin él.',
     routes: 'Empieza con dos ciudades', related: 'Sigue explorando', examples: 'Algunas horas para comparar', date: 'Ejemplos del 1 de octubre de 2026. Elige otra fecha en el convertidor.',
     difference: 'La diferencia depende de la fecha', season: 'Diferencias a lo largo del año', seasonIntro: 'La misma hora local puede corresponder a otra cuando cambian los relojes. Los ejemplos parten de las 09:00 en la primera ciudad.',
-    dateCol: 'Fecha en la ciudad de origen', day: 'día siguiente', previous: 'día anterior', source: 'Las reglas horarias vienen de los datos IANA del navegador. Mantenlo actualizado. Las abreviaturas pueden ser ambiguas; usa la ciudad y la fecha.',
+    dateCol: 'Fecha en la ciudad de origen', day: 'día siguiente', previous: 'día anterior', source: 'Las reglas usan los datos IANA del navegador, con compatibilidad para los cambios de 2026 en Canadá, Marruecos y Cuba. Mantén el navegador actualizado. Usa la ciudad y la fecha, ya que las abreviaturas pueden ser ambiguas.',
     pairLead: (a,b) => `Compara ${a} y ${b}, elige una fecha y comparte el resultado. Abre el planificador para encontrar horas laborales en común.`,
     pairTitle: (a,b) => `Hora de ${a} a ${b} : Convertidor`, pairHead: (a,b) => `${a} y ${b}`, calendar: 'La fecha importa. Son ejemplos calculados, no una diferencia fija para todo el año.',
     dst: 'Cambian los relojes. Tus reuniones también pueden cambiar.', dstTitle: 'Horario de Verano en EE. UU. y Europa: Reuniones de 2026',

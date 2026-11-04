@@ -1,0 +1,52 @@
+{
+  "title": "Canada Time Zone Changes 2026: BC, Alberta and Manitoba",
+  "description": "British Columbia, Alberta and Manitoba stopped changing clocks in 2026. See permanent UTC offsets, regional exceptions and meeting-time examples.",
+  "published": "2026-11-04",
+  "modified": "2026-11-04",
+  "schema": [
+    {
+      "@type": "Article",
+      "@id": "https://openworldclock.com/canada-time-zone-changes-2026#article",
+      "headline": "Canada’s 2026 time zone changes, explained",
+      "datePublished": "2026-11-04",
+      "dateModified": "2026-11-04",
+      "mainEntityOfPage": {
+        "@id": "https://openworldclock.com/canada-time-zone-changes-2026#page"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "João Carvalho",
+        "url": "https://github.com/joaoCarvalho1000"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Did all of Canada stop changing clocks?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Toronto, Montréal, Ottawa, Halifax and St. John’s still observe seasonal clock changes. The 2026 decisions affect the regions listed above."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Will Vancouver change clocks in March 2027?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Under the current rules, Vancouver stays on UTC-7. Alberta and the Northwest Territories stay on UTC-6, while Manitoba and the affected northwestern Ontario communities stay on UTC-5."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why might my computer show the wrong Canadian time?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "An older browser, operating system or calendar service may still have the previous rules. Install its available updates and select the right city. Open World Clock includes compatibility rules for these 2026 changes."
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -434,6 +434,15 @@ expectOffset('America/St_Johns', utc(2026, 7, 15, 12), -150); expectOffset('Asia
 expectOffset('Pacific/Chatham', utc(2026, 7, 15, 12), 765); expectOffset('Pacific/Chatham', utc(2026, 1, 15, 12), 825);
 expectOffset('America/Sao_Paulo', utc(2026, 1, 15, 12), -180);
 
+// Exact boundaries for the newly announced Morocco and Cuba rules.
+for (const [zone, instants] of [
+  ...['Africa/Casablanca', 'Africa/El_Aaiun'].map(z => [z, [utc(2026, 9, 20, 0, 59, 59), utc(2026, 9, 20, 1), utc(2027, 7, 1, 12)]]),
+  ...['America/Havana', 'Cuba'].map(z => [z, [utc(2026, 11, 1, 5), utc(2027, 1, 15, 12), utc(2027, 11, 7, 4, 59, 59), utc(2027, 11, 7, 5)]]),
+]) for (const ms of instants) {
+  const o = T.offsetMinutes(zone, new Date(ms));
+  G.offsets.push({ zone, epochMs: ms, offsetMinutes: o, formatted: T.formatOffset(o) });
+}
+
 section('zonedToEpoch');
 // zonedToEpoch
 function zoneNote(zone, y, m, d, h, mi) {

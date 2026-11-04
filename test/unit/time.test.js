@@ -224,3 +224,102 @@ test('offsetMinutesUncached matches offsetMinutes and leaves the cache alone', {
   assert.equal(T._fmtSize(), size);
   assert.ok(size >= before);
 });
+
+const canadianZones = {
+  'America/Vancouver': 7, 'Canada/Pacific': 7,
+  'America/Edmonton': 6, 'America/Yellowknife': 6, 'Canada/Mountain': 6,
+  'America/Inuvik': 6,
+  'America/Winnipeg': 5, 'America/Rainy_River': 5, 'Canada/Central': 5,
+};
+
+test('tzdb 2026c-f: Morocco fallback and Cuba temporary exception have exact boundaries', () => {
+  for (const zone of ['Africa/Casablanca', 'Africa/El_Aaiun']) {
+    const change = Date.parse('2026-09-20T01:00:00Z');
+    assert.equal(T.offsetMinutes(zone, new Date(change - 1)), 60, zone);
+    assert.equal(T.offsetMinutes(zone, new Date(change)), 0, zone);
+    assert.equal(T.offsetMinutesUncached(zone, new Date('2027-07-01T12:00Z')), 0, zone);
+    assert.equal(T.zonedToEpoch(zone, 2026, 9, 20, 1, 30), Date.parse('2026-09-20T00:30Z'), zone + ' overlap chooses earlier');
+    assert.equal(T.zonedToEpoch(zone, 2026, 9, 20, 2, 30), Date.parse('2026-09-20T02:30Z'), zone);
+    assert.equal(T.fmt(zone, { hour: '2-digit', hourCycle: 'h23' }).format(new Date('2026-11-04T12:00Z')), '12', zone);
+  }
+  for (const zone of ['America/Havana', 'Cuba']) {
+    for (const text of ['2026-11-01T05:00Z', '2027-01-15T12:00Z', '2027-03-14T05:00Z', '2027-11-07T04:59:59Z']) {
+      assert.equal(T.offsetMinutes(zone, new Date(text)), -240, zone + text);
+      assert.equal(T.offsetMinutesUncached(zone, new Date(text)), -240, zone + text);
+    }
+    assert.equal(T.offsetMinutes(zone, new Date('2026-01-15T12:00Z')), -300, zone + ' historical winter');
+    assert.equal(T.offsetMinutes(zone, new Date('2027-11-07T05:00Z')), -300, zone + ' exception ends');
+    assert.equal(T.zonedToEpoch(zone, 2027, 3, 14, 0, 30), Date.parse('2027-03-14T04:30Z'), zone + ' no spring gap');
+    assert.equal(T.zonedToEpoch(zone, 2027, 11, 7, 0, 30), Date.parse('2027-11-07T04:30Z'), zone + ' autumn overlap restored');
+  }
+});
+
+test('Canadian 2026 permanent time: historical offsets, final spring gap, no autumn overlap', () => {
+  for (const [zone, west] of Object.entries(canadianZones)) {
+    assert.equal(T.offsetMinutes(zone, new Date('2026-01-15T12:00Z')), -(west + 1) * 60, zone);
+    const spring = Date.UTC(2026, 2, 8, west + 3);
+    assert.equal(T.offsetMinutes(zone, new Date(spring - 1)), -(west + 1) * 60, zone);
+    assert.equal(T.offsetMinutes(zone, new Date(spring)), -west * 60, zone);
+    assert.equal(T.zonedToEpoch(zone, 2026, 3, 8, 2, 30), Date.UTC(2026, 2, 8, west + 3, 30), zone);
+    for (const day of ['2026-11-01', '2026-12-31', '2027-01-15', '2027-07-15']) {
+      const date = new Date(day + 'T12:00Z');
+      assert.equal(T.offsetMinutes(zone, date), -west * 60, zone + day);
+      assert.equal(T.offsetMinutesUncached(zone, date), -west * 60, zone + day);
+      const p = T.parts(zone, date, { hour: '2-digit', hourCycle: 'h23' });
+      assert.equal(+p.hour, 12 - west, zone + day);
+    }
+    assert.equal(T.zonedToEpoch(zone, 2026, 11, 1, 2, 30), Date.UTC(2026, 10, 1, west + 2, 30), zone);
+    assert.equal(T.zonedToEpoch(zone, 2027, 3, 14, 2, 30), Date.UTC(2027, 2, 14, west + 2, 30), zone);
+    // The same cached formatter must work across dates, in both directions.
+    const f = T.fmt(zone, { hour: '2-digit', hourCycle: 'h23' });
+    assert.equal(f.format(new Date('2027-01-15T12:00Z')), String(12 - west).padStart(2, '0'));
+    assert.equal(f.format(new Date('2026-01-15T12:00Z')), String(11 - west).padStart(2, '0'));
+  }
+  // Neighbours still changing clocks, and existing permanent-time regions.
+  for (const [zone, expected] of Object.entries({
+    'America/Toronto': -300, 'America/Denver': -420, 'America/Chicago': -360,
+    'America/Los_Angeles': -480, 'America/Rankin_Inlet': -360, 'America/Cambridge_Bay': -420,
+    'America/Regina': -360, 'America/Whitehorse': -420, 'America/Dawson_Creek': -420,
+  })) assert.equal(T.offsetMinutes(zone, new Date('2027-01-15T12:00Z')), expected, zone);
+});
+
+test('Canadian rules agree on stale and updated host time-zone databases', () => {
+  const stale = { 7: 'America/Los_Angeles', 6: 'America/Denver', 5: 'America/Chicago' };
+  for (const updated of [false, true]) {
+    const window = {};
+    const hostIntl = { DateTimeFormat: function(locale, opts) {
+      const west = canadianZones[opts.timeZone];
+      const timeZone = west ? (updated ? 'Etc/GMT+' + west : stale[west]) : opts.timeZone;
+      return new Intl.DateTimeFormat(locale, { ...opts, timeZone });
+    } };
+    vm.runInNewContext(fs.readFileSync(file, 'utf8'), { window, Intl: hostIntl, Date, Math });
+    for (const [zone, west] of Object.entries(canadianZones)) {
+      const date = new Date('2027-01-15T12:00Z');
+      assert.equal(window.WCTime.offsetMinutes(zone, date), -west * 60, zone);
+      assert.equal(window.WCTime.fmt(zone, { hour: '2-digit', hourCycle: 'h23' }).format(date), String(12 - west).padStart(2, '0'));
+    }
+  }
+});
+
+test('time helpers used by the Windows tray expose the same rules through CommonJS', () => {
+  const trayTime = require('../../src/renderer/time');
+  assert.equal(trayTime.fmt('America/Vancouver', { hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }, 'en-GB')
+    .format(new Date('2026-11-04T12:00Z')), '05:00');
+});
+
+test('website demo clocks match the renderer for Canadian dates', () => {
+  const demo = fs.readFileSync(path.resolve(__dirname, '../../site/assets/demo.js'), 'utf8');
+  const start = demo.indexOf('  // IANA tzdb 2026b-e.');
+  const end = demo.indexOf('  // dates people read', start);
+  assert.ok(start >= 0 && end > start);
+  const ctx = vm.createContext({ Intl, Date });
+  vm.runInContext(demo.slice(start, end) + '; this.demoFmt = fmt;', ctx);
+  for (const [zone, west] of Object.entries(canadianZones)) {
+    const f = ctx.demoFmt(zone, { hour: '2-digit', hourCycle: 'h23' });
+    for (const [text, hour] of [['2026-01-15T12:00Z', 11 - west], ['2026-11-01T12:00Z', 12 - west], ['2027-07-15T12:00Z', 12 - west]]) {
+      const date = new Date(text);
+      assert.equal(f.format(date), String(hour).padStart(2, '0'), zone + text);
+      assert.equal(+f.formatToParts(date).find(p => p.type === 'hour').value, hour, zone + text);
+    }
+  }
+});

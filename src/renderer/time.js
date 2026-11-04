@@ -6,12 +6,48 @@
   const FMT_CAP = 300;
   const fmtCache = new Map();
 
+  // IANA tzdb 2026b-e: these regions no longer fall back in November 2026.
+  // Keep the original IANA id in settings and use the host's historical rules before
+  // the final spring-forward. Fixed-offset formatting also works with older ICU data.
+  // Source: https://data.iana.org/time-zones/tzdb/NEWS
+  // Keep in sync with TimeMath.swift and the Canadian golden vectors.
+  const CANADA = {
+    'America/Vancouver': 7, 'Canada/Pacific': 7,
+    'America/Edmonton': 6, 'America/Yellowknife': 6, 'Canada/Mountain': 6,
+    'America/Inuvik': 6,
+    'America/Winnipeg': 5, 'America/Rainy_River': 5, 'Canada/Central': 5,
+  };
+  // tzdb 2026c/f. Cuba's exception is bounded: seasonal changes resume in November 2027.
+  const RECENT_RULES = {
+    'Africa/Casablanca': [Date.UTC(2026, 8, 20, 1), Infinity, 'Etc/UTC'],
+    'Africa/El_Aaiun': [Date.UTC(2026, 8, 20, 1), Infinity, 'Etc/UTC'],
+    'America/Havana': [Date.UTC(2026, 10, 1, 5), Date.UTC(2027, 10, 7, 5), 'Etc/GMT+4'],
+    'Cuba': [Date.UTC(2026, 10, 1, 5), Date.UTC(2027, 10, 7, 5), 'Etc/GMT+4'],
+  };
+  function effectiveZone(zone, date) {
+    const rule = Object.hasOwn(RECENT_RULES, zone) ? RECENT_RULES[zone] : null;
+    if (rule && +date >= rule[0] && +date < rule[1]) return rule[2];
+    const west = Object.hasOwn(CANADA, zone) ? CANADA[zone] : null;
+    // 2026-03-08 02:00 standard time: final forward transition in each region.
+    return west !== null && +date >= Date.UTC(2026, 2, 8, 3 + west)
+      ? 'Etc/GMT+' + west : zone;
+  }
+
   function fmt(zone, opts, locale) {
     const loc = locale || 'en-US';
     const key = loc + '|' + zone + JSON.stringify(opts);
     let f = fmtCache.get(key);
     if (f) { fmtCache.delete(key); fmtCache.set(key, f); return f; } // most recently used goes last
     f = new Intl.DateTimeFormat(loc, { timeZone: zone, ...opts });
+    if ((Object.hasOwn(CANADA, zone) || Object.hasOwn(RECENT_RULES, zone)) && !(opts && opts.timeZone)) {
+      const historical = f;
+      const at = (date) => effectiveZone(zone, date) === zone ? historical : fmt(effectiveZone(zone, date), opts, loc);
+      f = {
+        format: (date = Date.now()) => at(date).format(date),
+        formatToParts: (date = Date.now()) => at(date).formatToParts(date),
+        resolvedOptions: () => historical.resolvedOptions(),
+      };
+    }
     if (fmtCache.size >= FMT_CAP) fmtCache.delete(fmtCache.keys().next().value);
     fmtCache.set(key, f);
     return f;
@@ -33,7 +69,7 @@
   function offsetMinutes(zone, date) { return offsetFrom(fmt(zone, OFFSET_OPTS), date); }
   // The same without the cache, for one-off passes over every zone (an offset search), which would otherwise push
   // the cards' formatters out of it.
-  function offsetMinutesUncached(zone, date) { return offsetFrom(new Intl.DateTimeFormat('en-US', { timeZone: zone, ...OFFSET_OPTS }), date); }
+  function offsetMinutesUncached(zone, date) { return offsetFrom(new Intl.DateTimeFormat('en-US', { timeZone: effectiveZone(zone, date), ...OFFSET_OPTS }), date); }
   // "+5:30", "-7", "+0"
   function formatOffset(mins) {
     const sign = mins < 0 ? '-' : '+';
@@ -294,6 +330,8 @@
     return chosen;
   }
 
-  window.WCTime = { fmt, parts, offsetMinutes, offsetMinutesUncached, formatOffset, zonedToEpoch, dayDiff, parseTime, splitTimePlace, phaseOf,
+  const api = { fmt, parts, offsetMinutes, offsetMinutesUncached, formatOffset, zonedToEpoch, dayDiff, parseTime, splitTimePlace, phaseOf,
     uniqueClocks, offsetMs, workSpans, worksThroughout, findTimes, recommendTimes, _fmtSize: () => fmtCache.size };
+  if (typeof module !== 'undefined' && module.exports) module.exports = api;
+  else window.WCTime = api;
 })();

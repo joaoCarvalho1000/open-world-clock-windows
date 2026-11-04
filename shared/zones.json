@@ -2229,6 +2229,12 @@
     ]
   },
   "abbreviations": {
+    "pct": [
+      "America/Vancouver"
+    ],
+    "abt": [
+      "America/Edmonton"
+    ],
     "est": [
       "America/New_York",
       "America/Toronto"

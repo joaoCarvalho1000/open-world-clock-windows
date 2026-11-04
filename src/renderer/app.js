@@ -957,6 +957,7 @@
 
   // Abbreviations map to representative zones (first = most common meaning).
   const ABBR = {
+    pct: ['America/Vancouver'], abt: ['America/Edmonton'],
     est: ['America/New_York', 'America/Toronto'], edt: ['America/New_York', 'America/Toronto'], et: ['America/New_York'],
     cst: ['America/Chicago', 'America/Mexico_City', 'Asia/Shanghai', 'America/Havana'], cdt: ['America/Chicago'], ct: ['America/Chicago'],
     mst: ['America/Denver', 'America/Phoenix'], mdt: ['America/Denver'], mt: ['America/Denver'],
