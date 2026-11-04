@@ -1,0 +1,52 @@
+{
+  "title": "Zonas horarias de Canadá en 2026: BC, Alberta y Manitoba",
+  "description": "Columbia Británica, Alberta y Manitoba dejaron de cambiar los relojes en 2026. Consulta los desfases UTC, las excepciones y ejemplos para reuniones.",
+  "published": "2026-11-04",
+  "modified": "2026-11-04",
+  "schema": [
+    {
+      "@type": "Article",
+      "@id": "https://openworldclock.com/es/canada-time-zone-changes-2026#article",
+      "headline": "Qué cambió en las zonas horarias de Canadá en 2026",
+      "datePublished": "2026-11-04",
+      "dateModified": "2026-11-04",
+      "mainEntityOfPage": {
+        "@id": "https://openworldclock.com/es/canada-time-zone-changes-2026#page"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "João Carvalho",
+        "url": "https://github.com/joaoCarvalho1000"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "¿Todo Canadá dejó de cambiar los relojes?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Toronto, Montréal, Ottawa, Halifax y St. John’s siguen ajustándolos por temporada. Las decisiones de 2026 afectan a las regiones indicadas arriba."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Vancouver cambiará los relojes en marzo de 2027?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Según las reglas actuales, Vancouver permanece en UTC-7. Alberta y los Territorios del Noroeste permanecen en UTC-6, mientras Manitoba y las comunidades afectadas del noroeste de Ontario permanecen en UTC-5."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Por qué mi computadora puede mostrar mal la hora de Canadá?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Un navegador, sistema operativo o servicio de calendario antiguo puede conservar las reglas anteriores. Instala las actualizaciones disponibles y selecciona la ciudad correcta. Open World Clock incluye reglas de compatibilidad para estos cambios de 2026."
+          }
+        }
+      ]
+    }
+  ]
+}

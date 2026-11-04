@@ -1741,6 +1741,28 @@ await check('screenshots: 390 and 1440, light and dark (the hero, converting, pl
   for (const scheme of ['light', 'dark']) for (const width of [1440, 390]) await shootSet(scheme, width);
 });
 
+await check('Canadian permanent time: shared conversions agree across winter and the cancelled 2027 spring change', async () => {
+  const ctx = await browser.createBrowserContext();
+  try {
+    const page = await openPage(ctx);
+    for (const day of ['2026-11-01', '2027-03-14']) {
+      const frame = await openHome(page, '#c=America/Vancouver,America/Edmonton,America/Winnipeg,America/Los_Angeles,America/Toronto&t=' + day + 'T09:30&z=America/Vancouver');
+      const shown = await cards(frame);
+      for (const [zone, time] of Object.entries({
+        'America/Vancouver': '9:30', 'America/Edmonton': '10:30', 'America/Winnipeg': '11:30',
+      })) {
+        const card = shown.find(c => c.zone === zone);
+        assert(card, zone + ' card');
+        eq(card.hm.replace(/^0/, ''), time, zone + ' on ' + day);
+        assert(card.converted, zone + ' converted');
+      }
+      const offsets = await frame.evaluate(() => ['America/Vancouver', 'America/Edmonton', 'America/Winnipeg'].map(z => window.WCTime.offsetMinutes(z, new Date('2027-01-15T12:00Z'))));
+      eq(JSON.stringify(offsets), '[-420,-360,-300]', 'Canadian winter offsets');
+      noErrors(page, 'Canadian conversions');
+    }
+  } finally { await ctx.close(); }
+});
+
 // ======================= metrics =======================
 // The home page's own paint: the headline is the largest paint and renders at once; the app's frame, with its height
 // reserved in CSS, moves nothing when it fills.

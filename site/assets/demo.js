@@ -59,11 +59,33 @@
   doc.addEventListener('wc:theme', function () { themeListeners.forEach(function (fn) { fn(); }); });
 
   /* ---------------- time helpers (from the app) ---------------- */
+  // IANA tzdb 2026b-e. Keep in sync with src/renderer/time.js and TimeMath.swift.
+  var CANADA = {
+    'America/Vancouver': 7, 'Canada/Pacific': 7,
+    'America/Edmonton': 6, 'America/Yellowknife': 6, 'Canada/Mountain': 6,
+    'America/Inuvik': 6,
+    'America/Winnipeg': 5, 'America/Rainy_River': 5, 'Canada/Central': 5
+  };
+  function effectiveZone(zone, date) {
+    if ((zone === 'Africa/Casablanca' || zone === 'Africa/El_Aaiun') && +date >= Date.UTC(2026, 8, 20, 1)) return 'Etc/UTC';
+    if ((zone === 'America/Havana' || zone === 'Cuba') && +date >= Date.UTC(2026, 10, 1, 5) && +date < Date.UTC(2027, 10, 7, 5)) return 'Etc/GMT+4';
+    var west = Object.prototype.hasOwnProperty.call(CANADA, zone) ? CANADA[zone] : null;
+    return west !== null && +date >= Date.UTC(2026, 2, 8, 3 + west) ? 'Etc/GMT+' + west : zone;
+  }
   var fmtCache = new Map();
   function fmt(zone, opts) {
     var key = zone + JSON.stringify(opts);
     var f = fmtCache.get(key);
-    if (!f) { var o = Object.assign({ timeZone: zone }, opts), loc = o.locale || 'en-US'; delete o.locale; f = new Intl.DateTimeFormat(loc, o); fmtCache.set(key, f); }
+    if (!f) {
+      var o = Object.assign({ timeZone: zone }, opts), loc = o.locale || 'en-US'; delete o.locale;
+      var historical = new Intl.DateTimeFormat(loc, o);
+      if (Object.prototype.hasOwnProperty.call(CANADA, zone) || ['Africa/Casablanca', 'Africa/El_Aaiun', 'America/Havana', 'Cuba'].indexOf(zone) >= 0) {
+        var at = function (date) { return effectiveZone(zone, date) === zone ? historical : fmt(effectiveZone(zone, date), opts); };
+        f = { format: function (date) { return at(date).format(date); },
+          formatToParts: function (date) { return at(date).formatToParts(date); } };
+      } else f = historical;
+      fmtCache.set(key, f);
+    }
     return f;
   }
   // dates people read (weekdays, months) in the page's language; fmt stays en-US for the numbers the math reads

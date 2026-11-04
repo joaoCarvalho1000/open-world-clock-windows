@@ -8,6 +8,7 @@ const { createReloadGuard } = require('./reload-guard');
 const { prefers12h } = require('./locale-prefs');
 const { createSettingsStore } = require('./settings-store');
 const { buildIcs, validIcsRequest, htmlTable } = require('./share-format');
+const WCTime = require('./renderer/time');
 const { checkUpdateConfig, DOWNLOAD_PAGE } = require('./update-config');
 const { createUpdateController, discoverLatest, electronUpdaterBackend } = require('./update-controller');
 const { createBalloonTracker } = require('./tray-balloon');
@@ -788,8 +789,8 @@ function trayTime(zone, ms, h12) {
   const key = zone + (h12 ? '|12' : '|24');
   let f = trayFormatters.get(key);
   if (!f) {
-    f = new Intl.DateTimeFormat(h12 ? 'en-US' : 'en-GB', h12 ? { timeZone: zone, hour: 'numeric', minute: '2-digit', hour12: true }
-      : { timeZone: zone, hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
+    f = WCTime.fmt(zone, h12 ? { hour: 'numeric', minute: '2-digit', hour12: true }
+      : { hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }, h12 ? 'en-US' : 'en-GB');
     trayFormatters.set(key, f);
   }
   return f.format(ms);

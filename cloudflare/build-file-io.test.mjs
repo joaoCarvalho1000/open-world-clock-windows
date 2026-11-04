@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
-import { check } from './site-chrome.mjs';
+import { check, PAGES, LANGS } from './site-chrome.mjs';
 
 test('chrome checks report missing files but do not hide other read failures', () => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'owc-chrome-io-'));
@@ -12,7 +12,7 @@ test('chrome checks report missing files but do not hide other read failures', (
     fs.mkdirSync(path.join(root, 'assets'));
     fs.copyFileSync(new URL('../site/assets/config.js', import.meta.url), path.join(root, 'assets/config.js'));
     const missing = check({ siteDir: root });
-    assert.equal(missing.length, 90);
+    assert.equal(missing.length, PAGES.length * LANGS.length);
     assert.ok(missing.every(message => message.endsWith(' is missing')));
     fs.mkdirSync(path.join(root, 'index.html'));
     assert.throws(() => check({ siteDir: root }), error => error.code === 'EISDIR' || error.code === 'EACCES');

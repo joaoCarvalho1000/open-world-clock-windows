@@ -19,6 +19,8 @@ The website is also written natively in Brazilian Portuguese and in Spanish, the
 
 ## Features
 
+- [Canada time zone changes in 2026](https://openworldclock.com/canada-time-zone-changes-2026): permanent offsets, B.C. regional exceptions, official sources and dated meeting examples for Canada
+
 - [Features](https://openworldclock.com/features): every feature with screenshots, from sunrise and sunset per city to the converter, time scrubber, meeting planner, world map, layouts, languages, keyboard and accessibility
 - [Time zone converter](https://openworldclock.com/time-zone-converter): a working converter to try in the browser, plus typing a time in any city, scrubbing with the mouse wheel, +1 day markers, daylight saving gaps and overlaps, example conversions, copying the result
 - [Meeting planner](https://openworldclock.com/meeting-planner): working hours and days per city, night shifts, the overlap band and summary, worked examples

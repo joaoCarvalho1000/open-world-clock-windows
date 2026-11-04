@@ -755,8 +755,8 @@
     {
       "zone": "Africa/Casablanca",
       "epochMs": 1798761599000,
-      "offsetMinutes": 60,
-      "formatted": "+1"
+      "offsetMinutes": 0,
+      "formatted": "+0"
     },
     {
       "zone": "America/New_York",
@@ -769,6 +769,90 @@
       "epochMs": 1772953200001,
       "offsetMinutes": -240,
       "formatted": "-4"
+    },
+    {
+      "zone": "Africa/Casablanca",
+      "epochMs": 1789865999000,
+      "offsetMinutes": 60,
+      "formatted": "+1"
+    },
+    {
+      "zone": "Africa/Casablanca",
+      "epochMs": 1789866000000,
+      "offsetMinutes": 0,
+      "formatted": "+0"
+    },
+    {
+      "zone": "Africa/Casablanca",
+      "epochMs": 1814443200000,
+      "offsetMinutes": 0,
+      "formatted": "+0"
+    },
+    {
+      "zone": "Africa/El_Aaiun",
+      "epochMs": 1789865999000,
+      "offsetMinutes": 60,
+      "formatted": "+1"
+    },
+    {
+      "zone": "Africa/El_Aaiun",
+      "epochMs": 1789866000000,
+      "offsetMinutes": 0,
+      "formatted": "+0"
+    },
+    {
+      "zone": "Africa/El_Aaiun",
+      "epochMs": 1814443200000,
+      "offsetMinutes": 0,
+      "formatted": "+0"
+    },
+    {
+      "zone": "America/Havana",
+      "epochMs": 1793509200000,
+      "offsetMinutes": -240,
+      "formatted": "-4"
+    },
+    {
+      "zone": "America/Havana",
+      "epochMs": 1800014400000,
+      "offsetMinutes": -240,
+      "formatted": "-4"
+    },
+    {
+      "zone": "America/Havana",
+      "epochMs": 1825563599000,
+      "offsetMinutes": -240,
+      "formatted": "-4"
+    },
+    {
+      "zone": "America/Havana",
+      "epochMs": 1825563600000,
+      "offsetMinutes": -300,
+      "formatted": "-5"
+    },
+    {
+      "zone": "Cuba",
+      "epochMs": 1793509200000,
+      "offsetMinutes": -240,
+      "formatted": "-4"
+    },
+    {
+      "zone": "Cuba",
+      "epochMs": 1800014400000,
+      "offsetMinutes": -240,
+      "formatted": "-4"
+    },
+    {
+      "zone": "Cuba",
+      "epochMs": 1825563599000,
+      "offsetMinutes": -240,
+      "formatted": "-4"
+    },
+    {
+      "zone": "Cuba",
+      "epochMs": 1825563600000,
+      "offsetMinutes": -300,
+      "formatted": "-5"
     }
   ],
   "zonedToEpoch": [

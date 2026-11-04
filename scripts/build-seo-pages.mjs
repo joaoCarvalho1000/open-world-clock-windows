@@ -111,6 +111,8 @@ function generate(lang,slug,title,heading,description,body,tool='',zones='') {
 }
 for(const lang of ['en','pt','es']) {
   const w=copy[lang],p=prefix(lang);
+  const canada = JSON.parse(fs.readFileSync(path.join(ROOT, 'cloudflare', 'editorial', lang, 'canada-time-zone-changes-2026.json'), 'utf8'));
+  generate(lang, 'canada-time-zone-changes-2026', canada.title, canada.title, canada.description, '');
   const beta = JSON.parse(fs.readFileSync(path.join(ROOT, 'cloudflare', 'editorial', lang, 'android-beta.json'), 'utf8'));
   generate(lang, 'android-beta', beta.title, beta.title, beta.description, '');
   const mobileTerms = JSON.parse(fs.readFileSync(path.join(ROOT, 'cloudflare', 'editorial', lang, 'mobile-terms.json'), 'utf8'));
@@ -171,4 +173,4 @@ for(const lang of ['en','pt','es']) {
     fs.writeFileSync(f,html);
   }
 }
-console.log('Built 45 curated pages and tool discovery links in three languages.');
+console.log('Built curated pages and tool discovery links in three languages.');

@@ -136,6 +136,7 @@ ${[li('features', w.features), li('download', w.download), li('android-beta', w.
   li('world-map', w.map), li('windows-clock-alternative', w.alt),
   li('multiple-time-zones-windows', w.fMulti), li('world-time-buddy-alternative', w.wtb),
   li('daylight-saving-meetings', searchLabels[0]), li('always-on-top-world-clock', searchLabels[1]),
+  li('canada-time-zone-changes-2026', {en:'Canada time changes 2026',pt:'Horários do Canadá em 2026',es:'Horarios de Canadá en 2026'}[lang]),
   li('press', searchLabels[2]), li('privacy', w.privacy), li('support', w.help)].join('\n')}
       <li><a data-link="repo" href="${REPO}">${w.source}</a></li>
       <li><a href="${KOFI}" target="_blank" rel="noopener" data-kofi="footer">${w.kofi}</a></li>
