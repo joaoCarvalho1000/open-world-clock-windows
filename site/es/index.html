@@ -42,7 +42,7 @@
 <link rel="apple-touch-icon" href="/assets/icon-180.png">
 <link rel="manifest" href="/site.webmanifest">
 <link rel="preload" href="/assets/fonts/outfit-var.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/site.css?v=9b3a01d04b">
+<link rel="stylesheet" href="/assets/site.css?v=768f269cf1">
 <script>(function(){var d=document.documentElement,n=navigator,p='system';try{p=localStorage.getItem('wc-theme')||'system'}catch(e){}d.setAttribute('data-theme-pref',p);if(p==='light'||p==='dark')d.setAttribute('data-theme',p);d.classList.add('js');if((n.userAgentData&&n.userAgentData.mobile)||/Android|iPhone|iPod/.test(n.userAgent||''))d.classList.add('not-windows')})();</script>
 
 <script type="application/ld+json">
@@ -108,6 +108,11 @@
   <section class="hero" aria-labelledby="h1">
     <div class="sun" aria-hidden="true"></div>
     <div class="wrap hero-inner">
+      <aside class="beta-banner" aria-labelledby="betaBannerTitle">
+        <span class="beta-banner-badge">Beta para Android</span>
+        <div class="beta-banner-text"><p class="beta-banner-title" id="betaBannerTitle">Open World Clock llega a Android</p><p class="beta-banner-sub">Únete al grupo de pruebas para probar la beta antes. Requiere un móvil Android y una cuenta de Google.</p></div>
+        <a class="beta-banner-cta" href="/es/android-beta"><span>Unirme a la beta</span><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </aside>
       <div class="hero-head">
         <p class="hero-where" id="rdWhere">&nbsp;</p>
         <h1 id="h1"><span class="h1-big">El reloj mundial que le faltaba a Windows.</span> <span class="h1-sub">Gratis de verdad, de código abierto y sin letra pequeña.</span></h1>
@@ -119,7 +124,6 @@
           <button class="btn btn-tinted share-link" type="button"><svg class="i" aria-hidden="true"><use href="#i-share"/></svg><span>Compartir el enlace</span></button>
         </div>
         <p class="dl-note" data-store-off hidden>Gratis para Windows 10 y 11, x64, unos 90 MB. Todavía no tiene firma de código, así que SmartScreen puede mostrar un aviso la primera vez (<a href="/es/download#smartscreen">qué hacer</a>).</p>
-        <p class="share-note">¿Usas Android? <a href="/es/android-beta">Participa en la beta para Android</a> y ayuda a probar la app móvil.</p>
       </div>
       <!-- the real app (site/app/, built from the Windows app's own code), live in a window -->
       <div class="hero-app" id="demo">

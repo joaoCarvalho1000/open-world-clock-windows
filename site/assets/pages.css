@@ -57,7 +57,7 @@
 .beta-android { width: 104px; height: auto; margin-bottom: 24px; }
 .beta-page .pg-hero h1 { max-width: 22ch; margin-top: 0; }
 .beta-page h1 sup { font-size: .3em; vertical-align: super; margin-left: 2px; }
-.beta-page .pg-lede { max-width: 48ch; }
+.beta-page .pg-lede { max-width: 56ch; }
 .beta-steps { display: grid; gap: 32px; list-style: none; padding: 0; margin: 40px 0 0; max-width: 980px; }
 .beta-steps > li { display: flex; flex-direction: column; align-items: flex-start; }
 .beta-steps h2 { font-size: 1.5rem; font-weight: 500; letter-spacing: -.02em; }
@@ -76,7 +76,7 @@
 .beta-help > summary { width: fit-content; min-height: 44px; padding: 10px 0; color: var(--fg-2); font-size: inherit; font-weight: 500; }
 .beta-help p { padding: 0; margin: 0 0 16px; color: var(--fg-2); line-height: 1.6; }
 .beta-help .beta-credit { font-size: .8125rem; }
-@media (min-width: 760px) { .beta-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 64px; } .beta-steps p { min-height: 3.2em; } }
+@media (min-width: 900px) { .beta-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 48px; } .beta-steps p { min-height: 6.4em; } }
 @media (max-width: 520px) { .beta-android { width: 76px; margin-bottom: 20px; } }
 .pg-cta { display: flex; flex-wrap: wrap; gap: var(--s3); margin-top: var(--s8); }
 .pg-facts { display: flex; flex-wrap: wrap; gap: var(--s2) var(--s5); margin: var(--s5) 0 0; padding: 0; list-style: none; font-size: .9375rem; color: var(--fg-2); }
