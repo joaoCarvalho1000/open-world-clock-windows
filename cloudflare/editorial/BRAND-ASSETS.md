@@ -1,6 +1,6 @@
 # Android beta brand assets
 
-The beta guide uses locally hosted, unmodified official artwork. These assets identify the platform and the two external destinations. They do not imply Google endorsement.
+The beta guide and homepage banner use locally hosted, unmodified official artwork. These assets identify the platform and the two external destinations. They do not imply Google endorsement.
 
 - `site/assets/brands/android.svg`: https://developer.android.com/static/images/brand/android-head_3D.svg. Android robot artwork under CC BY 3.0. The required attribution and license link appear in each beta page's help section. Source guidelines: https://developer.android.com/distribute/marketing-tools/brand-guidelines.
 - `site/assets/brands/google-groups.png`: https://fonts.gstatic.com/s/i/productlogos/groups/v9/web-48dp/logo_groups_color_2x_web_48dp.png. The Google Groups product icon shown on the destination page.
