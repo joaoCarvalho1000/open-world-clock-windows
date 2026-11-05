@@ -1,0 +1,48 @@
+/* Android platform identity on the homepage. Keep the official robot artwork unchanged. */
+.beta-banner {
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr) auto;
+  grid-template-areas: "logo copy action";
+  gap: 20px;
+  max-width: 56rem;
+  padding: 20px;
+  color: #092b1b;
+  background: #3ddc84;
+  box-shadow: 0 8px 28px rgb(9 43 27 / 20%);
+}
+.beta-banner-logo {
+  grid-area: logo;
+  display: block;
+  width: 88px;
+  height: 88px;
+  padding: 12px;
+  box-sizing: border-box;
+  object-fit: contain;
+  background: #fff;
+  border-radius: 16px;
+}
+.beta-banner-text { grid-area: copy; }
+.beta-banner-sub { color: #123c29; }
+.beta-banner-cta {
+  grid-area: action;
+  color: #fff;
+  background: #092b1b;
+}
+.beta-banner-cta:hover { color: #fff; background: #154b31; }
+.beta-banner a:focus-visible { outline-color: #092b1b; outline-offset: 4px; }
+.android-credit { padding-block: 24px; color: var(--fg-2); font-size: .75rem; line-height: 1.6; }
+.android-credit a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+@media (max-width: 800px) {
+  .beta-banner {
+    grid-template-columns: 64px minmax(0, 1fr);
+    grid-template-areas: "logo copy" "action action";
+    gap: 16px;
+    padding: 16px;
+  }
+  .beta-banner-logo { width: 64px; height: 64px; padding: 8px; border-radius: 12px; }
+  .beta-banner-cta { width: 100%; justify-content: center; }
+}
+@media (max-width: 360px) {
+  .beta-banner { grid-template-columns: 52px minmax(0, 1fr); gap: 12px; }
+  .beta-banner-logo { width: 52px; height: 52px; padding: 6px; }
+}
