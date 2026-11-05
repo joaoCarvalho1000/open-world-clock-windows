@@ -42,7 +42,7 @@
 <link rel="apple-touch-icon" href="assets/icon-180.png">
 <link rel="manifest" href="site.webmanifest">
 <link rel="preload" href="assets/fonts/outfit-var.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/site.css?v=9b3a01d04b">
+<link rel="stylesheet" href="assets/site.css?v=34eb694728">
 <script>(function(){var d=document.documentElement,n=navigator,p='system';try{p=localStorage.getItem('wc-theme')||'system'}catch(e){}d.setAttribute('data-theme-pref',p);if(p==='light'||p==='dark')d.setAttribute('data-theme',p);d.classList.add('js');if((n.userAgentData&&n.userAgentData.mobile)||/Android|iPhone|iPod/.test(n.userAgent||''))d.classList.add('not-windows')})();</script>
 
 <script type="application/ld+json">
@@ -108,6 +108,11 @@
   <section class="hero" aria-labelledby="h1">
     <div class="sun" aria-hidden="true"></div>
     <div class="wrap hero-inner">
+      <aside class="beta-banner" aria-labelledby="betaBannerTitle">
+        <span class="beta-banner-badge">Android beta</span>
+        <div class="beta-banner-text"><p class="beta-banner-title" id="betaBannerTitle">Open World Clock is coming to Android</p><p class="beta-banner-sub">Join the tester group to try the beta early. Needs an Android phone and a Google account.</p></div>
+        <a class="beta-banner-cta" href="/android-beta"><span>Join the Android beta</span><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </aside>
       <div class="hero-head">
         <p class="hero-where" id="rdWhere">&nbsp;</p>
         <h1 id="h1"><span class="h1-big">The world clock Windows should have shipped with.</span> <span class="h1-sub">Completely free, open source, no strings attached.</span></h1>
@@ -119,7 +124,6 @@
           <button class="btn btn-tinted share-link" type="button"><svg class="i" aria-hidden="true"><use href="#i-share"/></svg><span>Share the link</span></button>
         </div>
         <p class="dl-note" data-store-off hidden>Free for Windows 10 and 11, x64, about 90 MB. It isn’t code-signed yet, so SmartScreen may warn you the first time (<a href="/download#smartscreen">what to do</a>).</p>
-        <p class="share-note">On Android? <a href="/android-beta">Join the Android beta</a> and help test the mobile app.</p>
       </div>
       <!-- the real app (site/app/, built from the Windows app's own code), live in a window -->
       <div class="hero-app" id="demo">

@@ -415,6 +415,22 @@ html { scrollbar-color: color-mix(in oklch, var(--fg-2) 45%, transparent) transp
 .not-windows .cta-row .other-dl { display: none; }
 .share-note { margin-top: var(--s3); max-width: 44ch; font-size: .95rem; color: var(--hero-fg-2, var(--fg-2)); }
 .pg-hero .share-note { color: var(--fg-2); }
+/* Android beta banner: the first thing in the hero, on a solid blue that holds white text in light and dark themes */
+.beta-banner { align-self: stretch; display: flex; align-items: center; gap: var(--s4); max-width: 52rem; margin: 0 auto; padding: 14px 14px 14px 18px; border-radius: 16px; color: #fff; background: oklch(0.42 0.17 257); box-shadow: 0 8px 28px oklch(0.3 0.12 257 / .35); text-align: left; }
+.beta-banner-badge { flex: none; padding: 4px 10px; border-radius: 999px; background: #fff; color: oklch(0.36 0.15 257); font-size: .75rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; white-space: nowrap; }
+.beta-banner-text { flex: 1 1 auto; min-width: 0; }
+.beta-banner-text p { margin: 0; }
+.beta-banner-title { font-size: 1.0625rem; font-weight: 600; letter-spacing: -.01em; }
+.beta-banner-sub { margin-top: 2px !important; font-size: .9rem; line-height: 1.4; color: oklch(0.95 0.03 250); }
+.beta-banner-cta { flex: none; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 18px; border-radius: 999px; background: #fff; color: oklch(0.36 0.15 257); font-weight: 600; text-decoration: none; white-space: nowrap; }
+.beta-banner-cta:hover { background: oklch(0.96 0.02 250); }
+.beta-banner-cta .i { width: 18px; height: 18px; }
+.beta-banner a:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+@media (max-width: 640px) {
+  .beta-banner { flex-wrap: wrap; padding: 16px; gap: 10px 12px; }
+  .beta-banner-text { flex-basis: 100%; order: 2; }
+  .beta-banner-cta { order: 3; width: 100%; justify-content: center; }
+}
 /* the quiet line under the direct-download buttons (while storeLive is false): size, price, SmartScreen */
 .dl-note { margin-top: var(--s3); max-width: 52ch; font-size: .875rem; line-height: 1.5; color: var(--fg-2); text-wrap: pretty; }
 .dl-note a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
