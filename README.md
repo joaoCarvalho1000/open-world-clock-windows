@@ -78,6 +78,18 @@ The installer and portable exe are not code-signed yet, so SmartScreen may show 
 
 **System requirements:** Windows 10 or 11. The Microsoft Store build runs natively on x64 and ARM64. The installer and the portable exe are x64 only. Nothing else to install.
 
+## Free online tools
+
+The website also has standalone tools that need no install:
+
+- [Time zone converter](https://openworldclock.com/time-zone-converter): convert a time between any cities, on any date.
+- [Meeting planner](https://openworldclock.com/meeting-planner): find the hours when everyone is at work.
+- [Live day and night world map](https://openworldclock.com/world-map): see where the sun is up right now.
+- [UTC time now](https://openworldclock.com/utc-time) and [world time now](https://openworldclock.com/world-time-now).
+- [Daylight saving and meetings](https://openworldclock.com/daylight-saving-meetings): which meetings move when clocks change.
+
+The site is also in [Portuguese](https://openworldclock.com/pt/) and [Spanish](https://openworldclock.com/es/).
+
 ## What it does
 
 **Clocks**
