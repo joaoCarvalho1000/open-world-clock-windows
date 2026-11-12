@@ -169,6 +169,14 @@ for(const lang of ['en','pt','es']) {
     html=html.replace(/<section class="cta-band"/,block+'<section class="cta-band"');
     html=html.replace(/<!-- planner-guide -->[\s\S]*?<!-- \/planner-guide -->\n?/g,'');
     if(slug==='meeting-planner') html=html.replace(/<section class="pg-sec" id="more"/,'<!-- planner-guide -->'+plannerGuide(lang)+'<!-- /planner-guide -->\n<section class="pg-sec" id="more"');
+    html=html.replace(/<!-- map-answer -->[\s\S]*?<!-- \/map-answer -->\n?/g,'');
+    if(slug==='world-map' && w.mapAnswerH && w.mapAnswer) {
+      const answer='<!-- map-answer -->'+section('night-now',w.mapAnswerH,`<p>${e(w.mapAnswer)}</p>`)+'<!-- /map-answer -->\n';
+      html=html.replace(/<section class="pg-sec"[^>]*\bid="shows"/,answer+'$&');
+      // Bump freshness only for this Spanish answer edit; other pages keep their dates.
+      html=html.replace(/("url": "https:\/\/openworldclock\.com\/es\/world-map"[\s\S]*?"dateModified": ")[^"]+(")/,
+        (_, open, close) => open + '2026-11-12' + close);
+    }
     html=html.replace(/<nav class="tool-nav"[\s\S]*?<\/nav>/,toolNav(lang,{'time-zone-converter':'converter','meeting-planner':'planner','world-map':'map'}[slug]));
     fs.writeFileSync(f,html);
   }

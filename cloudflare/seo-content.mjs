@@ -164,6 +164,9 @@ export const copy = {
     utcStampH: 'Cómo leer una hora en UTC', utcStamp: 'Una Z al final, como en 2026-01-15T14:00Z, indica UTC. La misma hora UTC cae en horas locales distintas cuando cambian los relojes:',
     utcSources: 'Fuentes',
     home: 'Inicio', converter: 'Convertidor de zona horaria', planner: 'Planificador de reuniones', map: 'Mapa de día y noche',
+    // Long-tail answer for /es/world-map (issue #26 / experiment owc-es-map-answer). Spanish page only.
+    mapAnswerH: '¿En qué parte del mundo es de noche ahora?',
+    mapAnswer: 'Abre el mapa: la zona sombreada muestra dónde es de noche en este momento y un pequeño sol marca el punto de la Tierra donde el sol está en el cenit. El borde de la sombra es donde ahora mismo está amaneciendo o anocheciendo. La sombra empieza justo antes de la puesta de sol y se vuelve noche cerrada cuando el sol está 12° bajo el horizonte.',
     toolTitles: ['Convertidor de Horas: Qué Hora Es en Cada Ciudad', 'Planificador de Reuniones: Mejor Hora entre Zonas Horarias', 'Mapa Mundial de Día y Noche en Vivo'],
     toolHeads: ['¿Qué hora es en cada ciudad?', 'Encuentra una hora que les venga bien a todos.', 'Mira dónde el mundo está despierto.'],
     toolLeads: ['¿Qué hora es en Ciudad de México, Madrid o Buenos Aires? Escribe una hora, elige la ciudad y compara, con horario de verano incluido.', 'Añade las ciudades y ajusta sus horarios laborales. Mira la mejor hora de reunión para todos y copia el resultado.', 'Sigue el día y la noche por el planeta. Elige una hora para ver el mundo en ese momento.'],
